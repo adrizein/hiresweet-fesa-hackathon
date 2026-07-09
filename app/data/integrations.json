@@ -1,0 +1,59 @@
+[
+  {
+    "id": "hubspot",
+    "name": "HubSpot",
+    "category": "CRM",
+    "status": "connected",
+    "description": "Contact history and dedup before any draft (read-only).",
+    "detail": "Server token configured in .env, never exposed to the front end. Feeds contact_status."
+  },
+  {
+    "id": "sillage",
+    "name": "Sillage",
+    "category": "Signals",
+    "status": "connected",
+    "description": "Buying signals: funding rounds, hiring waves, executive moves (Block A)."
+  },
+  {
+    "id": "fullenrich",
+    "name": "FullEnrich",
+    "category": "Enrichment",
+    "status": "available",
+    "description": "Verified emails and phone numbers of contacts (people[])."
+  },
+  {
+    "id": "claude",
+    "name": "Claude",
+    "category": "Orchestrator",
+    "status": "connected",
+    "description": "Triage, routing, briefs, drafts, and fail-closed gate."
+  },
+  {
+    "id": "gmail",
+    "name": "Gmail",
+    "category": "Outreach",
+    "status": "available",
+    "description": "Email drafts ready for review. Never auto-sent."
+  },
+  {
+    "id": "slack",
+    "name": "Slack",
+    "category": "Comms",
+    "status": "available",
+    "description": "Notifies the sales owner when an account moves to human review."
+  },
+  {
+    "id": "granola",
+    "name": "Granola",
+    "category": "Meetings",
+    "status": "available",
+    "description": "Call history to enrich relational context."
+  },
+  {
+    "id": "notion",
+    "name": "Notion",
+    "category": "Ops",
+    "status": "available",
+    "description": "Tracking of activated accounts and ongoing processes."
+  }
+]

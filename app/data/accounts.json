@@ -1,0 +1,1383 @@
+[
+  {
+    "id": "acct_mirakl",
+    "name": "Mirakl",
+    "domain": "mirakl.com",
+    "url": "https://mirakl.com",
+    "size": "?",
+    "location": "France",
+    "stage": "?",
+    "linkedin_url": "https://linkedin.com/company/mirakl",
+    "signals": [
+      {
+        "type": "placement_history",
+        "detail": "9 placement(s) HireSweet between 2020-08-07 and 2025-01-06 (last one 549 days ago), sales owner Lamia",
+        "detected_at": "2025-01-06",
+        "source": "sheet Revenue (deals-history)"
+      },
+      {
+        "type": "job_update",
+        "detail": "Jérôme Guillot has held the position of Director of Engineering since 2025-04-01",
+        "detected_at": "2025-04-01",
+        "source": "sillage"
+      },
+      {
+        "type": "job_update",
+        "detail": "Julie Horville has held the position of Ecosystem Marketing Director EMEA since 2026-07-01",
+        "detected_at": "2026-07-01",
+        "source": "sillage"
+      }
+    ],
+    "verdict": {
+      "tier": "GO",
+      "why": "Dormant client: 9 placement(s) between 2020-08 and 2025-01, silent for 18 months. Legitimate reactivation, traceable history."
+    },
+    "investors": [],
+    "connections": [
+      {
+        "entity": "Historique HireSweet x Mirakl",
+        "kind": "client",
+        "relation": "9 placement(s) delivered, sales owner Lamia",
+        "strength": "moyenne",
+        "detail": "First placement 2020-08-07, last 2025-01-06. Most involved Talent Partner: Hugo. Source: Revenue sheet, unrounded figures."
+      }
+    ],
+    "people": [
+      {
+        "name": "Laure Guillot",
+        "role": "Director of People, EMEA & Social Affairs",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/laure-guillot-8058155b",
+        "highlighted": true,
+        "contact_status": "client",
+        "pitch": "Mirakl, Laure Guillot, Director of People, EMEA & Social Affairs. We've already delivered 9 hire(s) there, the last one in 2025-01.",
+        "brief": {
+          "why": "Director of People, EMEA & Social Affairs at Mirakl. This is the role that carries the hiring pain on this account, and the account has already hired with us.",
+          "limits": "Silent for 18 months: don't write as if the relationship were warm. Check with the sales owner that no recent exchange contradicts this silence.",
+          "angle": "Reactivation via history: 9 hires already done together, reopen on the current need rather than the product.",
+          "social_proof": [
+            "9 placement(s) already delivered at Mirakl between 2020-08 and 2025-01 (source: Revenue sheet)",
+            "Relationship tracked internally by Lamia on the sales side"
+          ]
+        },
+        "draft": "Hi Laure,\n\nWe worked together on nine hires at Mirakl between 2020 and January 2025, then lost touch.\n\nI see two Directors of Engineering in place now and an org that's shifted since. If you have open tech roles right now, I can send you profiles within five days, same mechanics as before: you only pay if you hire.\n\nIs this relevant on your side at the moment?\n\nMathieu"
+      },
+      {
+        "name": "Nagi Letaifa",
+        "role": "Chief Technical Officer",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/nagi-letaifa",
+        "highlighted": false,
+        "contact_status": "client",
+        "pitch": "Mirakl, Nagi Letaifa, Chief Technical Officer. We've already delivered 9 hire(s) there, the last one in 2025-01.",
+        "brief": {
+          "why": "Chief Technical Officer at Mirakl. This is the role that carries the hiring pain on this account, and the account has already hired with us.",
+          "limits": "Silent for 18 months: don't write as if the relationship were warm. Check with the sales owner that no recent exchange contradicts this silence.",
+          "angle": "Reactivation via history: 9 hires already done together, reopen on the current need rather than the product.",
+          "social_proof": [
+            "9 placement(s) already delivered at Mirakl between 2020-08 and 2025-01 (source: Revenue sheet)",
+            "Relationship tracked internally by Lamia on the sales side"
+          ]
+        },
+        "draft": null
+      },
+      {
+        "name": "Jérôme Guillot",
+        "role": "Director of Engineering",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/jérôme-guillot-28941b8",
+        "highlighted": false,
+        "contact_status": "client",
+        "pitch": "Mirakl, Jérôme Guillot, Director of Engineering. We've already delivered 9 hire(s) there, the last one in 2025-01.",
+        "brief": {
+          "why": "Director of Engineering at Mirakl. This is the role that carries the hiring pain on this account, and the account has already hired with us.",
+          "limits": "Silent for 18 months: don't write as if the relationship were warm. Check with the sales owner that no recent exchange contradicts this silence.",
+          "angle": "Reactivation via history: 9 hires already done together, reopen on the current need rather than the product.",
+          "social_proof": [
+            "9 placement(s) already delivered at Mirakl between 2020-08 and 2025-01 (source: Revenue sheet)",
+            "Relationship tracked internally by Lamia on the sales side"
+          ]
+        },
+        "draft": null
+      },
+      {
+        "name": "Jean-Yves Cazac",
+        "role": "Director of Engineering",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/jean-yves-cazac-9708b02",
+        "highlighted": false,
+        "contact_status": "client",
+        "pitch": "Mirakl, Jean-Yves Cazac, Director of Engineering. We've already delivered 9 hire(s) there, the last one in 2025-01.",
+        "brief": {
+          "why": "Director of Engineering at Mirakl. This is the role that carries the hiring pain on this account, and the account has already hired with us.",
+          "limits": "Silent for 18 months: don't write as if the relationship were warm. Check with the sales owner that no recent exchange contradicts this silence.",
+          "angle": "Reactivation via history: 9 hires already done together, reopen on the current need rather than the product.",
+          "social_proof": [
+            "9 placement(s) already delivered at Mirakl between 2020-08 and 2025-01 (source: Revenue sheet)",
+            "Relationship tracked internally by Lamia on the sales side"
+          ]
+        },
+        "draft": null
+      },
+      {
+        "name": "Quentin Drilholle",
+        "role": "Head of Sales House",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/quentindrilholle",
+        "highlighted": false,
+        "contact_status": "client",
+        "pitch": "Mirakl, Quentin Drilholle, Head of Sales House. We've already delivered 9 hire(s) there, the last one in 2025-01.",
+        "brief": {
+          "why": "Head of Sales House at Mirakl. This is the role that carries the hiring pain on this account, and the account has already hired with us.",
+          "limits": "Silent for 18 months: don't write as if the relationship were warm. Check with the sales owner that no recent exchange contradicts this silence.",
+          "angle": "Reactivation via history: 9 hires already done together, reopen on the current need rather than the product.",
+          "social_proof": [
+            "9 placement(s) already delivered at Mirakl between 2020-08 and 2025-01 (source: Revenue sheet)",
+            "Relationship tracked internally by Lamia on the sales side"
+          ]
+        },
+        "draft": null
+      },
+      {
+        "name": "Laure Menissier",
+        "role": "Director, AI & Analytics",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/laure-menissier-2930a888",
+        "highlighted": false,
+        "contact_status": "client",
+        "pitch": "Mirakl, Laure Menissier, Director, AI & Analytics. We've already delivered 9 hire(s) there, the last one in 2025-01.",
+        "brief": {
+          "why": "Director, AI & Analytics at Mirakl. This is the role that carries the hiring pain on this account, and the account has already hired with us.",
+          "limits": "Silent for 18 months: don't write as if the relationship were warm. Check with the sales owner that no recent exchange contradicts this silence.",
+          "angle": "Reactivation via history: 9 hires already done together, reopen on the current need rather than the product.",
+          "social_proof": [
+            "9 placement(s) already delivered at Mirakl between 2020-08 and 2025-01 (source: Revenue sheet)",
+            "Relationship tracked internally by Lamia on the sales side"
+          ]
+        },
+        "draft": null
+      },
+      {
+        "name": "Julie Horville",
+        "role": "Ecosystem Marketing Director EMEA",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/juliehorville",
+        "highlighted": false,
+        "contact_status": "client",
+        "pitch": "Mirakl, Julie Horville, Ecosystem Marketing Director EMEA. We've already delivered 9 hire(s) there, the last one in 2025-01.",
+        "brief": {
+          "why": "Ecosystem Marketing Director EMEA at Mirakl. This is the role that carries the hiring pain on this account, and the account has already hired with us.",
+          "limits": "Silent for 18 months: don't write as if the relationship were warm. Check with the sales owner that no recent exchange contradicts this silence.",
+          "angle": "Reactivation via history: 9 hires already done together, reopen on the current need rather than the product.",
+          "social_proof": [
+            "9 placement(s) already delivered at Mirakl between 2020-08 and 2025-01 (source: Revenue sheet)",
+            "Relationship tracked internally by Lamia on the sales side"
+          ]
+        },
+        "draft": null
+      }
+    ]
+  },
+  {
+    "id": "acct_doctrine",
+    "name": "Doctrine",
+    "domain": "doctrine.fr",
+    "url": "https://doctrine.fr",
+    "size": "?",
+    "location": "France",
+    "stage": "?",
+    "linkedin_url": "https://linkedin.com/company/doctrine",
+    "signals": [
+      {
+        "type": "placement_history",
+        "detail": "21 placement(s) HireSweet between 2016-11-07 and 2025-11-05 (last one 246 days ago), sales owner Cloé",
+        "detected_at": "2025-11-05",
+        "source": "sheet Revenue (deals-history)"
+      }
+    ],
+    "verdict": {
+      "tier": "GO",
+      "why": "Dormant client: 21 placement(s) between 2016-11 and 2025-11, silent for 8 months. Legitimate reactivation, traceable history."
+    },
+    "investors": [],
+    "connections": [
+      {
+        "entity": "Historique HireSweet x Doctrine",
+        "kind": "client",
+        "relation": "21 placement(s) delivered, sales owner Cloé",
+        "strength": "forte",
+        "detail": "First placement 2016-11-07, last 2025-11-05. Most involved Talent Partner: Alice. Source: Revenue sheet, unrounded figures."
+      }
+    ],
+    "people": [
+      {
+        "name": "Pauline Chavallard",
+        "role": "Head of Engineering",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/pauline-chavallard-9542945a",
+        "highlighted": true,
+        "contact_status": "client",
+        "pitch": "Doctrine, Pauline Chavallard, Head of Engineering. We've already delivered 21 hire(s) there, the last one in 2025-11.",
+        "brief": {
+          "why": "Head of Engineering at Doctrine. This is the role that carries the hiring pain on this account, and the account has already hired with us.",
+          "limits": "Silent for 8 months: don't write as if the relationship were warm. Check with the sales owner that no recent exchange contradicts this silence.",
+          "angle": "Reactivation via history: 21 hires already done together, reopen on the current need rather than the product.",
+          "social_proof": [
+            "21 placement(s) already delivered at Doctrine between 2016-11 and 2025-11 (source: Revenue sheet)",
+            "Relationship tracked internally by Cloé on the sales side"
+          ]
+        },
+        "draft": "Hi Pauline,\n\nDoctrine and HireSweet: twenty-one hires since 2016, the last one in November.\n\nYou took over engineering leadership in January 2025. If you're structuring the team this year, we already know your technical bar and your process timelines, which saves us the first two weeks.\n\nGot time to talk?\n\nMathieu"
+      },
+      {
+        "name": "Christophe Jolif",
+        "role": "VP, Engineering",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/cjolif",
+        "highlighted": false,
+        "contact_status": "client",
+        "pitch": "Doctrine, Christophe Jolif, VP, Engineering. We've already delivered 21 hire(s) there, the last one in 2025-11.",
+        "brief": {
+          "why": "VP, Engineering at Doctrine. This is the role that carries the hiring pain on this account, and the account has already hired with us.",
+          "limits": "Silent for 8 months: don't write as if the relationship were warm. Check with the sales owner that no recent exchange contradicts this silence.",
+          "angle": "Reactivation via history: 21 hires already done together, reopen on the current need rather than the product.",
+          "social_proof": [
+            "21 placement(s) already delivered at Doctrine between 2016-11 and 2025-11 (source: Revenue sheet)",
+            "Relationship tracked internally by Cloé on the sales side"
+          ]
+        },
+        "draft": null
+      },
+      {
+        "name": "Guillaume Carrere",
+        "role": "CEO",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/guillaume-carrère-7aaa5920",
+        "highlighted": false,
+        "contact_status": "client",
+        "pitch": "Doctrine, Guillaume Carrere, CEO. We've already delivered 21 hire(s) there, the last one in 2025-11.",
+        "brief": {
+          "why": "CEO at Doctrine. This is the role that carries the hiring pain on this account, and the account has already hired with us.",
+          "limits": "Silent for 8 months: don't write as if the relationship were warm. Check with the sales owner that no recent exchange contradicts this silence.",
+          "angle": "Reactivation via history: 21 hires already done together, reopen on the current need rather than the product.",
+          "social_proof": [
+            "21 placement(s) already delivered at Doctrine between 2016-11 and 2025-11 (source: Revenue sheet)",
+            "Relationship tracked internally by Cloé on the sales side"
+          ]
+        },
+        "draft": null
+      }
+    ]
+  },
+  {
+    "id": "acct_tomorro",
+    "name": "Tomorro",
+    "domain": "tomorro.com",
+    "url": "https://tomorro.com",
+    "size": "?",
+    "location": "France",
+    "stage": "?",
+    "linkedin_url": "https://linkedin.com/company/gotomorro",
+    "signals": [
+      {
+        "type": "placement_history",
+        "detail": "4 placement(s) HireSweet between 2022-01-25 and 2025-06-02 (last one 402 days ago), sales owner Mathieu",
+        "detected_at": "2025-06-02",
+        "source": "sheet Revenue (deals-history)"
+      },
+      {
+        "type": "hiring_declared",
+        "detail": "Gary Lellouche explicitly displays 'Hiring' in their LinkedIn title (\"Head of Sales @Tomorro | Hiring | ex PayFit\")",
+        "detected_at": "2026-07-09",
+        "source": "sillage"
+      },
+      {
+        "type": "job_update",
+        "detail": "Matthieu Ruellan has held the position of Head of Sales Mid-Market since 2026-07-01",
+        "detected_at": "2026-07-01",
+        "source": "sillage"
+      }
+    ],
+    "verdict": {
+      "tier": "GO",
+      "why": "Dormant client: 4 placement(s) between 2022-01 and 2025-06, silent for 13 months. Legitimate reactivation, traceable history."
+    },
+    "investors": [],
+    "connections": [
+      {
+        "entity": "Historique HireSweet x Tomorro",
+        "kind": "client",
+        "relation": "4 placement(s) delivered, sales owner Mathieu",
+        "strength": "moyenne",
+        "detail": "First placement 2022-01-25, last 2025-06-02. Most involved Talent Partner: Hugo. Source: Revenue sheet, unrounded figures."
+      }
+    ],
+    "people": [
+      {
+        "name": "Gary Lellouche",
+        "role": "Head of Sales",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/gary-lellouche",
+        "highlighted": true,
+        "contact_status": "client",
+        "pitch": "Tomorro, Gary Lellouche, Head of Sales. We've already delivered 4 hire(s) there, the last one in 2025-06.",
+        "brief": {
+          "why": "Head of Sales at Tomorro. This is the role that carries the hiring pain on this account, and the account has already hired with us.",
+          "limits": "Silent for 13 months: don't write as if the relationship were warm. Check with the sales owner that no recent exchange contradicts this silence.",
+          "angle": "Reactivation via history: 4 hires already done together, reopen on the current need rather than the product.",
+          "social_proof": [
+            "4 placement(s) already delivered at Tomorro between 2022-01 and 2025-06 (source: Revenue sheet)",
+            "Relationship tracked internally by Mathieu on the sales side"
+          ]
+        },
+        "draft": "Hi Gary,\n\nYour LinkedIn title says 'Hiring,' and Matthieu just joined on mid-market. The sales team is growing, and tech usually follows.\n\nWe did four hires together back in the Leeway days, the last one in June 2025. You know how it works: first profiles within five days, zero euros if you don't hire anyone.\n\nWhat are you looking for right now?\n\nMathieu"
+      },
+      {
+        "name": "Matthieu Ruellan",
+        "role": "Head of Sales Mid-Market",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/matthieu-ruellan-570b86128",
+        "highlighted": false,
+        "contact_status": "client",
+        "pitch": "Tomorro, Matthieu Ruellan, Head of Sales Mid-Market. We've already delivered 4 hire(s) there, the last one in 2025-06.",
+        "brief": {
+          "why": "Head of Sales Mid-Market at Tomorro. This is the role that carries the hiring pain on this account, and the account has already hired with us.",
+          "limits": "Silent for 13 months: don't write as if the relationship were warm. Check with the sales owner that no recent exchange contradicts this silence.",
+          "angle": "Reactivation via history: 4 hires already done together, reopen on the current need rather than the product.",
+          "social_proof": [
+            "4 placement(s) already delivered at Tomorro between 2022-01 and 2025-06 (source: Revenue sheet)",
+            "Relationship tracked internally by Mathieu on the sales side"
+          ]
+        },
+        "draft": null
+      }
+    ]
+  },
+  {
+    "id": "acct_bitstack",
+    "name": "Bitstack",
+    "domain": "bitstack-app.com",
+    "url": "https://bitstack-app.com",
+    "size": "?",
+    "location": "France",
+    "stage": "?",
+    "linkedin_url": "https://linkedin.com/company/bitstack-app",
+    "signals": [
+      {
+        "type": "placement_history",
+        "detail": "4 placement(s) HireSweet between 2024-04-15 and 2025-06-17 (last one 387 days ago), sales owner Léo",
+        "detected_at": "2025-06-17",
+        "source": "sheet Revenue (deals-history)"
+      }
+    ],
+    "verdict": {
+      "tier": "GO",
+      "why": "Dormant client: 4 placement(s) between 2024-04 and 2025-06, silent for 12 months. Legitimate reactivation, traceable history."
+    },
+    "investors": [],
+    "connections": [
+      {
+        "entity": "Historique HireSweet x Bitstack",
+        "kind": "client",
+        "relation": "4 placement(s) delivered, sales owner Léo",
+        "strength": "moyenne",
+        "detail": "First placement 2024-04-15, last 2025-06-17. Most involved Talent Partner: Hugo. Source: Revenue sheet, unrounded figures."
+      }
+    ],
+    "people": [
+      {
+        "name": "Alexandre Roubaud",
+        "role": "Co-founder & CEO",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/alexandreroubaud",
+        "highlighted": false,
+        "contact_status": "client",
+        "pitch": "Bitstack, Alexandre Roubaud, Co-founder & CEO. We've already delivered 4 hire(s) there, the last one in 2025-06.",
+        "brief": {
+          "why": "Co-founder & CEO at Bitstack. This is the role that carries the hiring pain on this account, and the account has already hired with us.",
+          "limits": "Silent for 12 months: don't write as if the relationship were warm. Check with the sales owner that no recent exchange contradicts this silence.",
+          "angle": "Reactivation via history: 4 hires already done together, reopen on the current need rather than the product.",
+          "social_proof": [
+            "4 placement(s) already delivered at Bitstack between 2024-04 and 2025-06 (source: Revenue sheet)",
+            "Relationship tracked internally by Léo on the sales side"
+          ]
+        },
+        "draft": null
+      },
+      {
+        "name": "Kabir Sethi",
+        "role": "Co-founder & CTO",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/kabir-set",
+        "highlighted": true,
+        "contact_status": "client",
+        "pitch": "Bitstack, Kabir Sethi, Co-founder & CTO. We've already delivered 4 hire(s) there, the last one in 2025-06.",
+        "brief": {
+          "why": "Co-founder & CTO at Bitstack. This is the role that carries the hiring pain on this account, and the account has already hired with us.",
+          "limits": "Silent for 12 months: don't write as if the relationship were warm. Check with the sales owner that no recent exchange contradicts this silence.",
+          "angle": "Reactivation via history: 4 hires already done together, reopen on the current need rather than the product.",
+          "social_proof": [
+            "4 placement(s) already delivered at Bitstack between 2024-04 and 2025-06 (source: Revenue sheet)",
+            "Relationship tracked internally by Léo on the sales side"
+          ]
+        },
+        "draft": "Hi Kabir,\n\nFour hires at Bitstack between April 2024 and June 2025, then nothing for a year.\n\nYou're still CTO, so the technical context doesn't need re-explaining. If you're opening roles this year, we can restart quickly.\n\nWhere are you at on the team side?\n\nMathieu"
+      }
+    ]
+  },
+  {
+    "id": "acct_inato",
+    "name": "Inato",
+    "domain": "inato.com",
+    "url": "https://inato.com",
+    "size": "?",
+    "location": "France",
+    "stage": "?",
+    "linkedin_url": "https://linkedin.com/company/inato",
+    "signals": [
+      {
+        "type": "placement_history",
+        "detail": "6 placement(s) HireSweet between 2019-06-24 and 2025-01-20 (last one 535 days ago), sales owner Mathieu",
+        "detected_at": "2025-01-20",
+        "source": "sheet Revenue (deals-history)"
+      }
+    ],
+    "verdict": {
+      "tier": "GO",
+      "why": "Dormant client: 6 placement(s) between 2019-06 and 2025-01, silent for 17 months. Legitimate reactivation, traceable history."
+    },
+    "investors": [],
+    "connections": [
+      {
+        "entity": "Historique HireSweet x Inato",
+        "kind": "client",
+        "relation": "6 placement(s) delivered, sales owner Mathieu",
+        "strength": "moyenne",
+        "detail": "First placement 2019-06-24, last 2025-01-20. Most involved Talent Partner: Hugo. Source: Revenue sheet, unrounded figures."
+      }
+    ],
+    "people": [
+      {
+        "name": "Bastien Duret",
+        "role": "Chief Technology Officer",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/bastienduret",
+        "highlighted": true,
+        "contact_status": "client",
+        "pitch": "Inato, Bastien Duret, Chief Technology Officer. We've already delivered 6 hire(s) there, the last one in 2025-01.",
+        "brief": {
+          "why": "Chief Technology Officer at Inato. This is the role that carries the hiring pain on this account, and the account has already hired with us.",
+          "limits": "Silent for 17 months: don't write as if the relationship were warm. Check with the sales owner that no recent exchange contradicts this silence.",
+          "angle": "Reactivation via history: 6 hires already done together, reopen on the current need rather than the product.",
+          "social_proof": [
+            "6 placement(s) already delivered at Inato between 2019-06 and 2025-01 (source: Revenue sheet)",
+            "Relationship tracked internally by Mathieu on the sales side"
+          ]
+        },
+        "draft": "Hi Bastien,\n\nWe placed six people at Inato, the last one in January 2025.\n\nNothing since. If the tech team needs to grow in 2026, we'd be starting with the context already in mind rather than from scratch.\n\nAre you hiring right now?\n\nMathieu"
+      }
+    ]
+  },
+  {
+    "id": "acct_kolecto",
+    "name": "Kolecto",
+    "domain": "kolecto.fr",
+    "url": "https://kolecto.fr",
+    "size": "?",
+    "location": "France",
+    "stage": "?",
+    "linkedin_url": "https://linkedin.com/company/kolecto",
+    "signals": [
+      {
+        "type": "placement_history",
+        "detail": "1 placement(s) HireSweet between 2026-03-10 and 2026-03-10 (last one 121 days ago), sales owner Léo",
+        "detected_at": "2026-03-10",
+        "source": "sheet Revenue (deals-history)"
+      }
+    ],
+    "verdict": {
+      "tier": "GO",
+      "why": "Dormant client: 1 placement(s) between 2026-03 and 2026-03, silent for 4 months. Legitimate reactivation, traceable history."
+    },
+    "investors": [],
+    "connections": [
+      {
+        "entity": "Historique HireSweet x Kolecto",
+        "kind": "client",
+        "relation": "1 placement(s) delivered, sales owner Léo",
+        "strength": "forte",
+        "detail": "First placement 2026-03-10, last 2026-03-10. Most involved Talent Partner: Kévin. Source: Revenue sheet, unrounded figures."
+      }
+    ],
+    "people": [
+      {
+        "name": "Fabien Gautier",
+        "role": "Head of Sales",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/fabien-gautier-commerce",
+        "highlighted": true,
+        "contact_status": "client",
+        "pitch": "Kolecto, Fabien Gautier, Head of Sales. We've already delivered 1 hire(s) there, the last one in 2026-03.",
+        "brief": {
+          "why": "Head of Sales at Kolecto. This is the role that carries the hiring pain on this account, and the account has already hired with us.",
+          "limits": "Silent for 4 months: don't write as if the relationship were warm. Check with the sales owner that no recent exchange contradicts this silence.",
+          "angle": "Reactivation via history: 1 hires already done together, reopen on the current need rather than the product.",
+          "social_proof": [
+            "1 placement(s) already delivered at Kolecto between 2026-03 and 2026-03 (source: Revenue sheet)",
+            "Relationship tracked internally by Léo on the sales side"
+          ]
+        },
+        "draft": null
+      }
+    ]
+  },
+  {
+    "id": "acct_emerton",
+    "name": "Emerton",
+    "domain": "emerton.co",
+    "url": "https://emerton.co",
+    "size": "?",
+    "location": "France",
+    "stage": "?",
+    "linkedin_url": "https://linkedin.com/company/emerton",
+    "signals": [
+      {
+        "type": "placement_history",
+        "detail": "4 placement(s) HireSweet between 2022-09-14 and 2025-06-18 (last one 386 days ago), sales owner Cloé",
+        "detected_at": "2025-06-18",
+        "source": "sheet Revenue (deals-history)"
+      }
+    ],
+    "verdict": {
+      "tier": "GO",
+      "why": "Dormant client: 4 placement(s) between 2022-09 and 2025-06, silent for 12 months. Legitimate reactivation, traceable history."
+    },
+    "investors": [],
+    "connections": [
+      {
+        "entity": "Historique HireSweet x Emerton",
+        "kind": "client",
+        "relation": "4 placement(s) delivered, sales owner Cloé",
+        "strength": "moyenne",
+        "detail": "First placement 2022-09-14, last 2025-06-18. Most involved Talent Partner: Hugo. Source: Revenue sheet, unrounded figures."
+      }
+    ],
+    "people": []
+  },
+  {
+    "id": "acct_theodo",
+    "name": "Theodo",
+    "domain": "theodo.fr",
+    "url": "https://theodo.fr",
+    "size": "?",
+    "location": "France",
+    "stage": "?",
+    "linkedin_url": "https://linkedin.com/company/theodo",
+    "signals": [
+      {
+        "type": "no_signal",
+        "detail": "No signal detected: no placement history, no recent Sillage activity",
+        "detected_at": "2026-07-09",
+        "source": "sillage"
+      }
+    ],
+    "verdict": {
+      "tier": "EXPLORE",
+      "why": "No HireSweet placement history: net-new account. Qualify the need before engaging."
+    },
+    "investors": [],
+    "connections": [],
+    "people": [
+      {
+        "name": "François Baligant",
+        "role": "Group CTO & Partner Cybersecurity",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/fbaligant",
+        "highlighted": true,
+        "contact_status": "never",
+        "pitch": "Theodo, François Baligant, Group CTO & Partner Cybersecurity. No shared history, net-new account.",
+        "brief": {
+          "why": "Group CTO & Partner Cybersecurity at Theodo, likely entry point for tech hiring topics.",
+          "limits": "Unqualified account: no usable history, no dated buying signal.",
+          "angle": "Qualify the need first. Don't open with an offer.",
+          "social_proof": []
+        },
+        "draft": null
+      },
+      {
+        "name": "Quentin Pleple",
+        "role": "CTO AI Modernization",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/qpleple",
+        "highlighted": false,
+        "contact_status": "never",
+        "pitch": "Theodo, Quentin Pleple, CTO AI Modernization. No shared history, net-new account.",
+        "brief": {
+          "why": "CTO AI Modernization at Theodo, likely entry point for tech hiring topics.",
+          "limits": "Unqualified account: no usable history, no dated buying signal.",
+          "angle": "Qualify the need first. Don't open with an offer.",
+          "social_proof": []
+        },
+        "draft": null
+      },
+      {
+        "name": "Jessica Lebrun",
+        "role": "Head of Sales Cloud Data IA",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/jessica-lebrun-9b546814",
+        "highlighted": false,
+        "contact_status": "never",
+        "pitch": "Theodo, Jessica Lebrun, Head of Sales Cloud Data IA. No shared history, net-new account.",
+        "brief": {
+          "why": "Head of Sales Cloud Data IA at Theodo, likely entry point for tech hiring topics.",
+          "limits": "Unqualified account: no usable history, no dated buying signal.",
+          "angle": "Qualify the need first. Don't open with an offer.",
+          "social_proof": []
+        },
+        "draft": null
+      },
+      {
+        "name": "Noemie Parker",
+        "role": "Group Partner Healthtech & CEO Theodo France",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/noemie-parker-1387868b",
+        "highlighted": false,
+        "contact_status": "never",
+        "pitch": "Theodo, Noemie Parker, Group Partner Healthtech & CEO Theodo France. No shared history, net-new account.",
+        "brief": {
+          "why": "Group Partner Healthtech & CEO Theodo France at Theodo, likely entry point for tech hiring topics.",
+          "limits": "Unqualified account: no usable history, no dated buying signal.",
+          "angle": "Qualify the need first. Don't open with an offer.",
+          "social_proof": []
+        },
+        "draft": null
+      }
+    ]
+  },
+  {
+    "id": "acct_nabla",
+    "name": "Nabla",
+    "domain": "nabla.com",
+    "url": "https://nabla.com",
+    "size": "?",
+    "location": "France",
+    "stage": "?",
+    "linkedin_url": "https://linkedin.com/company/nablahq",
+    "signals": [
+      {
+        "type": "placement_history",
+        "detail": "1 placement(s) HireSweet between 2019-03-26 and 2019-03-26 (last one 2662 days ago), sales owner None",
+        "detected_at": "2019-03-26",
+        "source": "sheet Revenue (deals-history)"
+      },
+      {
+        "type": "job_update",
+        "detail": "Laurie Soffiati has held the position of Managing Director France since 2026-01-01",
+        "detected_at": "2026-01-01",
+        "source": "sillage"
+      }
+    ],
+    "verdict": {
+      "tier": "EXPLORE",
+      "why": "Old relationship: last placement in 2019-03, more than two years ago. Requalify before re-engaging."
+    },
+    "investors": [],
+    "connections": [
+      {
+        "entity": "Historique HireSweet x Nabla",
+        "kind": "client",
+        "relation": "1 placement(s) delivered, sales owner None",
+        "strength": "moyenne",
+        "detail": "First placement 2019-03-26, last 2019-03-26. Most involved Talent Partner: None. Source: Revenue sheet, unrounded figures."
+      }
+    ],
+    "people": [
+      {
+        "name": "Laurie Soffiati",
+        "role": "Managing Director France",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/laurie-soffiati-25b956254",
+        "highlighted": true,
+        "contact_status": "never",
+        "pitch": "Nabla, Laurie Soffiati, Managing Director France. We've already delivered 1 hire(s) there, the last one in 2019-03.",
+        "brief": {
+          "why": "Managing Director France at Nabla, likely entry point for tech hiring topics.",
+          "limits": "Unqualified account: no usable history, no dated buying signal.",
+          "angle": "Qualify the need first. Don't open with an offer.",
+          "social_proof": [
+            "1 placement(s) already delivered at Nabla between 2019-03 and 2019-03 (source: Revenue sheet)"
+          ]
+        },
+        "draft": null
+      }
+    ]
+  },
+  {
+    "id": "acct_wiremind",
+    "name": "Wiremind",
+    "domain": "wiremind.io",
+    "url": "https://wiremind.io",
+    "size": "?",
+    "location": "France",
+    "stage": "?",
+    "linkedin_url": "https://linkedin.com/company/wiremind",
+    "signals": [
+      {
+        "type": "placement_history",
+        "detail": "11 placement(s) HireSweet between 2018-05-08 and 2025-01-14 (last one 541 days ago), sales owner Victor",
+        "detected_at": "2025-01-14",
+        "source": "sheet Revenue (deals-history)"
+      },
+      {
+        "type": "job_update",
+        "detail": "Germán Piscitello has held the position of Head of Sales Passenger Solutions South Europe and LATAM since 2026-03-01",
+        "detected_at": "2026-03-01",
+        "source": "sillage"
+      },
+      {
+        "type": "watchlist_customer",
+        "detail": "Account present in the Sillage watchlist 'Active client interactions'",
+        "detected_at": "2026-07-09",
+        "source": "sillage"
+      }
+    ],
+    "verdict": {
+      "tier": "HUMAN",
+      "why": "Source conflict: Wiremind is in the Sillage 'active clients' watchlist but the last placement dates back to January 2025. A human arbitrates the status before any outreach."
+    },
+    "investors": [],
+    "connections": [
+      {
+        "entity": "Historique HireSweet x Wiremind",
+        "kind": "client",
+        "relation": "11 placement(s) delivered, sales owner Victor",
+        "strength": "moyenne",
+        "detail": "First placement 2018-05-08, last 2025-01-14. Most involved Talent Partner: Hugo. Source: Revenue sheet, unrounded figures."
+      },
+      {
+        "entity": "Watchlist Sillage 'clients actifs'",
+        "kind": "client",
+        "relation": "Account tracked as active client on the Sillage side",
+        "strength": "moyenne",
+        "detail": "Membership verified on 2026-07-09 via the Sillage watchlist API."
+      }
+    ],
+    "people": [
+      {
+        "name": "Colin Girault-Matz",
+        "role": "CEO and Co-founder",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/colin-girault-matz",
+        "highlighted": false,
+        "contact_status": "client",
+        "pitch": "Wiremind, Colin Girault-Matz, CEO and Co-founder. We've already delivered 11 hire(s) there, the last one in 2025-01.",
+        "brief": {
+          "why": "CEO and Co-founder at Wiremind.",
+          "limits": "Account blocked by the gate: a human must arbitrate before any contact.",
+          "angle": "No automated angle. The gate refuses the draft on this account.",
+          "social_proof": [
+            "11 placement(s) already delivered at Wiremind between 2018-05 and 2025-01 (source: Revenue sheet)",
+            "Relationship tracked internally by Victor on the sales side"
+          ]
+        },
+        "draft": null
+      },
+      {
+        "name": "Étienne Corbillé",
+        "role": "CTO Wiremind Cargo",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/corbille",
+        "highlighted": true,
+        "contact_status": "client",
+        "pitch": "Wiremind, Étienne Corbillé, CTO Wiremind Cargo. We've already delivered 11 hire(s) there, the last one in 2025-01.",
+        "brief": {
+          "why": "CTO Wiremind Cargo at Wiremind.",
+          "limits": "Account blocked by the gate: a human must arbitrate before any contact.",
+          "angle": "No automated angle. The gate refuses the draft on this account.",
+          "social_proof": [
+            "11 placement(s) already delivered at Wiremind between 2018-05 and 2025-01 (source: Revenue sheet)",
+            "Relationship tracked internally by Victor on the sales side"
+          ]
+        },
+        "draft": null
+      },
+      {
+        "name": "Germán Piscitello",
+        "role": "Head of Sales Passenger Solutions South Europe and LATAM",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/germanpiscitello",
+        "highlighted": false,
+        "contact_status": "client",
+        "pitch": "Wiremind, Germán Piscitello, Head of Sales Passenger Solutions South Europe and LATAM. We've already delivered 11 hire(s) there, the last one in 2025-01.",
+        "brief": {
+          "why": "Head of Sales Passenger Solutions South Europe and LATAM at Wiremind.",
+          "limits": "Account blocked by the gate: a human must arbitrate before any contact.",
+          "angle": "No automated angle. The gate refuses the draft on this account.",
+          "social_proof": [
+            "11 placement(s) already delivered at Wiremind between 2018-05 and 2025-01 (source: Revenue sheet)",
+            "Relationship tracked internally by Victor on the sales side"
+          ]
+        },
+        "draft": null
+      },
+      {
+        "name": "Richard Faget",
+        "role": "Head of Sales France",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/richardfaget",
+        "highlighted": false,
+        "contact_status": "client",
+        "pitch": "Wiremind, Richard Faget, Head of Sales France. We've already delivered 11 hire(s) there, the last one in 2025-01.",
+        "brief": {
+          "why": "Head of Sales France at Wiremind.",
+          "limits": "Account blocked by the gate: a human must arbitrate before any contact.",
+          "angle": "No automated angle. The gate refuses the draft on this account.",
+          "social_proof": [
+            "11 placement(s) already delivered at Wiremind between 2018-05 and 2025-01 (source: Revenue sheet)",
+            "Relationship tracked internally by Victor on the sales side"
+          ]
+        },
+        "draft": null
+      }
+    ]
+  },
+  {
+    "id": "acct_foodles",
+    "name": "Foodles",
+    "domain": "foodles.co",
+    "url": "https://foodles.co",
+    "size": "?",
+    "location": "France",
+    "stage": "?",
+    "linkedin_url": "https://linkedin.com/company/foodles-paris",
+    "signals": [
+      {
+        "type": "placement_history",
+        "detail": "3 placement(s) HireSweet between 2019-08-26 and 2025-01-22 (last one 533 days ago), sales owner Léo",
+        "detected_at": "2025-01-22",
+        "source": "sheet Revenue (deals-history)"
+      },
+      {
+        "type": "watchlist_customer",
+        "detail": "Account present in the Sillage watchlist 'Active client interactions'",
+        "detected_at": "2026-07-09",
+        "source": "sillage"
+      }
+    ],
+    "verdict": {
+      "tier": "HUMAN",
+      "why": "Source conflict: Foodles is in the Sillage 'active clients' watchlist but the last placement dates back to January 2025. A human arbitrates the status before any outreach."
+    },
+    "investors": [],
+    "connections": [
+      {
+        "entity": "Historique HireSweet x Foodles",
+        "kind": "client",
+        "relation": "3 placement(s) delivered, sales owner Léo",
+        "strength": "moyenne",
+        "detail": "First placement 2019-08-26, last 2025-01-22. Most involved Talent Partner: Alice. Source: Revenue sheet, unrounded figures."
+      },
+      {
+        "entity": "Watchlist Sillage 'clients actifs'",
+        "kind": "client",
+        "relation": "Account tracked as active client on the Sillage side",
+        "strength": "moyenne",
+        "detail": "Membership verified on 2026-07-09 via the Sillage watchlist API."
+      }
+    ],
+    "people": [
+      {
+        "name": "Lucas Tine-Beres",
+        "role": "Chief Technical Officer",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/lucastineberes",
+        "highlighted": true,
+        "contact_status": "client",
+        "pitch": "Foodles, Lucas Tine-Beres, Chief Technical Officer. We've already delivered 3 hire(s) there, the last one in 2025-01.",
+        "brief": {
+          "why": "Chief Technical Officer at Foodles.",
+          "limits": "Account blocked by the gate: a human must arbitrate before any contact.",
+          "angle": "No automated angle. The gate refuses the draft on this account.",
+          "social_proof": [
+            "3 placement(s) already delivered at Foodles between 2019-08 and 2025-01 (source: Revenue sheet)",
+            "Relationship tracked internally by Léo on the sales side"
+          ]
+        },
+        "draft": null
+      },
+      {
+        "name": "Marie-Cecile Lacroix",
+        "role": "Head of Sales",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/marie-cécile-lacroix-58443663",
+        "highlighted": false,
+        "contact_status": "client",
+        "pitch": "Foodles, Marie-Cecile Lacroix, Head of Sales. We've already delivered 3 hire(s) there, the last one in 2025-01.",
+        "brief": {
+          "why": "Head of Sales at Foodles.",
+          "limits": "Account blocked by the gate: a human must arbitrate before any contact.",
+          "angle": "No automated angle. The gate refuses the draft on this account.",
+          "social_proof": [
+            "3 placement(s) already delivered at Foodles between 2019-08 and 2025-01 (source: Revenue sheet)",
+            "Relationship tracked internally by Léo on the sales side"
+          ]
+        },
+        "draft": null
+      }
+    ]
+  },
+  {
+    "id": "acct_mistral",
+    "name": "Mistral",
+    "domain": "mistral.ai",
+    "url": "https://mistral.ai",
+    "size": "?",
+    "location": "France",
+    "stage": "?",
+    "linkedin_url": "https://linkedin.com/company/mistralai",
+    "signals": [
+      {
+        "type": "no_signal",
+        "detail": "No signal detected: no placement history, no recent Sillage activity",
+        "detected_at": "2026-07-09",
+        "source": "sillage"
+      }
+    ],
+    "verdict": {
+      "tier": "HUMAN",
+      "why": "Unverified executive data: the Sillage mapping surfaces a CEO who does not match Mistral's publicly known leader. No HireSweet placement history. A human verifies the identity before any contact."
+    },
+    "investors": [],
+    "connections": [],
+    "people": [
+      {
+        "name": "Amine Hagani",
+        "role": "CEO",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "http://www.linkedin.com/in/amine-hagani-b2a1b610a",
+        "highlighted": true,
+        "contact_status": "never",
+        "pitch": "Mistral, Amine Hagani, CEO. No shared history, net-new account.",
+        "brief": {
+          "why": "CEO at Mistral.",
+          "limits": "Account blocked by the gate: a human must arbitrate before any contact.",
+          "angle": "No automated angle. The gate refuses the draft on this account.",
+          "social_proof": []
+        },
+        "draft": null
+      }
+    ]
+  },
+  {
+    "id": "acct_mendo",
+    "name": "Mendo",
+    "domain": "mendo.cloud",
+    "url": "https://mendo.cloud",
+    "size": "?",
+    "location": "France",
+    "stage": "?",
+    "linkedin_url": "https://linkedin.com/company/mendo-ai",
+    "signals": [
+      {
+        "type": "placement_history",
+        "detail": "2 placement(s) HireSweet between 2026-03-20 and 2026-04-29 (last one 71 days ago), sales owner Valériane",
+        "detected_at": "2026-04-29",
+        "source": "sheet Revenue (deals-history)"
+      }
+    ],
+    "verdict": {
+      "tier": "HUMAN",
+      "why": "Active client: 2 placement(s), last one 71 days ago. The relationship is owned by Valériane, no automated outreach."
+    },
+    "investors": [],
+    "connections": [
+      {
+        "entity": "Historique HireSweet x Mendo",
+        "kind": "client",
+        "relation": "2 placement(s) delivered, sales owner Valériane",
+        "strength": "forte",
+        "detail": "First placement 2026-03-20, last 2026-04-29. Most involved Talent Partner: Caroline. Source: Revenue sheet, unrounded figures."
+      }
+    ],
+    "people": [
+      {
+        "name": "Clement Teytaut",
+        "role": "Head of Sales",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/clementteytaut",
+        "highlighted": true,
+        "contact_status": "client",
+        "pitch": "Mendo, Clement Teytaut, Head of Sales. We've already delivered 2 hire(s) there, the last one in 2026-04.",
+        "brief": {
+          "why": "Head of Sales at Mendo.",
+          "limits": "Account blocked by the gate: a human must arbitrate before any contact.",
+          "angle": "No automated angle. The gate refuses the draft on this account.",
+          "social_proof": [
+            "2 placement(s) already delivered at Mendo between 2026-03 and 2026-04 (source: Revenue sheet)",
+            "Relationship tracked internally by Valériane on the sales side"
+          ]
+        },
+        "draft": null
+      }
+    ]
+  },
+  {
+    "id": "acct_orus",
+    "name": "Orus",
+    "domain": "orus.eu",
+    "url": "https://orus.eu",
+    "size": "?",
+    "location": "France",
+    "stage": "?",
+    "linkedin_url": "https://linkedin.com/company/orus-insurance",
+    "signals": [
+      {
+        "type": "placement_history",
+        "detail": "2 placement(s) HireSweet between 2026-02-06 and 2026-06-08 (last one 31 days ago), sales owner Léo",
+        "detected_at": "2026-06-08",
+        "source": "sheet Revenue (deals-history)"
+      }
+    ],
+    "verdict": {
+      "tier": "HUMAN",
+      "why": "Active client: 2 placement(s), last one 31 days ago. The relationship is owned by Léo, no automated outreach."
+    },
+    "investors": [],
+    "connections": [
+      {
+        "entity": "Historique HireSweet x Orus",
+        "kind": "client",
+        "relation": "2 placement(s) delivered, sales owner Léo",
+        "strength": "forte",
+        "detail": "First placement 2026-02-06, last 2026-06-08. Most involved Talent Partner: Kévin. Source: Revenue sheet, unrounded figures."
+      }
+    ],
+    "people": [
+      {
+        "name": "Nicolas Durante",
+        "role": "Head of Sales",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/nicolasdurante",
+        "highlighted": true,
+        "contact_status": "client",
+        "pitch": "Orus, Nicolas Durante, Head of Sales. We've already delivered 2 hire(s) there, the last one in 2026-06.",
+        "brief": {
+          "why": "Head of Sales at Orus.",
+          "limits": "Account blocked by the gate: a human must arbitrate before any contact.",
+          "angle": "No automated angle. The gate refuses the draft on this account.",
+          "social_proof": [
+            "2 placement(s) already delivered at Orus between 2026-02 and 2026-06 (source: Revenue sheet)",
+            "Relationship tracked internally by Léo on the sales side"
+          ]
+        },
+        "draft": null
+      }
+    ]
+  },
+  {
+    "id": "acct_illuin",
+    "name": "ILLUIN Technology",
+    "domain": "illuin.tech",
+    "url": "https://illuin.tech",
+    "size": "?",
+    "location": "France",
+    "stage": "?",
+    "linkedin_url": "https://linkedin.com/company/illuin-technology",
+    "signals": [
+      {
+        "type": "placement_history",
+        "detail": "14 placement(s) HireSweet between 2021-07-01 and 2026-05-31 (last one 39 days ago), sales owner Cloé",
+        "detected_at": "2026-05-31",
+        "source": "sheet Revenue (deals-history)"
+      },
+      {
+        "type": "job_update",
+        "detail": "Guillaume Blanchard has held the position of Delivery Project Director since 2025-09-01",
+        "detected_at": "2025-09-01",
+        "source": "sillage"
+      }
+    ],
+    "verdict": {
+      "tier": "HUMAN",
+      "why": "Active client: 14 placement(s), last one 39 days ago. The relationship is owned by Cloé, no automated outreach."
+    },
+    "investors": [],
+    "connections": [
+      {
+        "entity": "Historique HireSweet x ILLUIN Technology",
+        "kind": "client",
+        "relation": "14 placement(s) delivered, sales owner Cloé",
+        "strength": "forte",
+        "detail": "First placement 2021-07-01, last 2026-05-31. Most involved Talent Partner: Alice. Source: Revenue sheet, unrounded figures."
+      }
+    ],
+    "people": [
+      {
+        "name": "Guillaume Blanchard",
+        "role": "Delivery Project Director",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/blanchardguillaume",
+        "highlighted": true,
+        "contact_status": "client",
+        "pitch": "ILLUIN Technology, Guillaume Blanchard, Delivery Project Director. We've already delivered 14 hire(s) there, the last one in 2026-05.",
+        "brief": {
+          "why": "Delivery Project Director at ILLUIN Technology.",
+          "limits": "Account blocked by the gate: a human must arbitrate before any contact.",
+          "angle": "No automated angle. The gate refuses the draft on this account.",
+          "social_proof": [
+            "14 placement(s) already delivered at ILLUIN Technology between 2021-07 and 2026-05 (source: Revenue sheet)",
+            "Relationship tracked internally by Cloé on the sales side"
+          ]
+        },
+        "draft": null
+      }
+    ]
+  },
+  {
+    "id": "acct_upway",
+    "name": "Upway",
+    "domain": "upway.fr",
+    "url": "https://upway.fr",
+    "size": "?",
+    "location": "France",
+    "stage": "?",
+    "linkedin_url": "https://linkedin.com/company/shopupway",
+    "signals": [
+      {
+        "type": "placement_history",
+        "detail": "7 placement(s) HireSweet between 2025-02-28 and 2026-06-08 (last one 31 days ago), sales owner Léo",
+        "detected_at": "2026-06-08",
+        "source": "sheet Revenue (deals-history)"
+      }
+    ],
+    "verdict": {
+      "tier": "HUMAN",
+      "why": "Active client: 7 placement(s), last one 31 days ago. The relationship is owned by Léo, no automated outreach."
+    },
+    "investors": [],
+    "connections": [
+      {
+        "entity": "Historique HireSweet x Upway",
+        "kind": "client",
+        "relation": "7 placement(s) delivered, sales owner Léo",
+        "strength": "forte",
+        "detail": "First placement 2025-02-28, last 2026-06-08. Most involved Talent Partner: Alice. Source: Revenue sheet, unrounded figures."
+      }
+    ],
+    "people": [
+      {
+        "name": "Nathan Wilson",
+        "role": "Chief Technology Officer",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/natewilson22",
+        "highlighted": true,
+        "contact_status": "client",
+        "pitch": "Upway, Nathan Wilson, Chief Technology Officer. We've already delivered 7 hire(s) there, the last one in 2026-06.",
+        "brief": {
+          "why": "Chief Technology Officer at Upway.",
+          "limits": "Account blocked by the gate: a human must arbitrate before any contact.",
+          "angle": "No automated angle. The gate refuses the draft on this account.",
+          "social_proof": [
+            "7 placement(s) already delivered at Upway between 2025-02 and 2026-06 (source: Revenue sheet)",
+            "Relationship tracked internally by Léo on the sales side"
+          ]
+        },
+        "draft": null
+      }
+    ]
+  },
+  {
+    "id": "acct_oplit",
+    "name": "Oplit",
+    "domain": "oplit.com",
+    "url": "https://oplit.com",
+    "size": "?",
+    "location": "France",
+    "stage": "?",
+    "linkedin_url": "https://linkedin.com/company/oplit",
+    "signals": [
+      {
+        "type": "placement_history",
+        "detail": "12 placement(s) HireSweet between 2023-11-24 and 2026-05-04 (last one 66 days ago), sales owner Paul",
+        "detected_at": "2026-05-04",
+        "source": "sheet Revenue (deals-history)"
+      }
+    ],
+    "verdict": {
+      "tier": "HUMAN",
+      "why": "Active client: 12 placement(s), last one 66 days ago. The relationship is owned by Paul, no automated outreach."
+    },
+    "investors": [],
+    "connections": [
+      {
+        "entity": "Historique HireSweet x Oplit",
+        "kind": "client",
+        "relation": "12 placement(s) delivered, sales owner Paul",
+        "strength": "forte",
+        "detail": "First placement 2023-11-24, last 2026-05-04. Most involved Talent Partner: Alice. Source: Revenue sheet, unrounded figures."
+      }
+    ],
+    "people": [
+      {
+        "name": "Nicolas Bruder",
+        "role": "Head of Sales",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/nicolas-bruder-44477091",
+        "highlighted": true,
+        "contact_status": "client",
+        "pitch": "Oplit, Nicolas Bruder, Head of Sales. We've already delivered 12 hire(s) there, the last one in 2026-05.",
+        "brief": {
+          "why": "Head of Sales at Oplit.",
+          "limits": "Account blocked by the gate: a human must arbitrate before any contact.",
+          "angle": "No automated angle. The gate refuses the draft on this account.",
+          "social_proof": [
+            "12 placement(s) already delivered at Oplit between 2023-11 and 2026-05 (source: Revenue sheet)",
+            "Relationship tracked internally by Paul on the sales side"
+          ]
+        },
+        "draft": null
+      }
+    ]
+  },
+  {
+    "id": "acct_fullenrich",
+    "name": "FullEnrich",
+    "domain": "fullenrich.com",
+    "url": "https://fullenrich.com",
+    "size": "?",
+    "location": "France",
+    "stage": "?",
+    "linkedin_url": "https://linkedin.com/company/fullenrich",
+    "signals": [
+      {
+        "type": "placement_history",
+        "detail": "3 placement(s) HireSweet between 2026-03-19 and 2026-05-05 (last one 65 days ago), sales owner Valériane",
+        "detected_at": "2026-05-05",
+        "source": "sheet Revenue (deals-history)"
+      }
+    ],
+    "verdict": {
+      "tier": "HUMAN",
+      "why": "FullEnrich is both a client (3 placements in 2026) and a hackathon sponsor. No automated outreach, the relationship is owned by a human."
+    },
+    "investors": [],
+    "connections": [
+      {
+        "entity": "Historique HireSweet x FullEnrich",
+        "kind": "client",
+        "relation": "3 placement(s) delivered, sales owner Valériane",
+        "strength": "forte",
+        "detail": "First placement 2026-03-19, last 2026-05-05. Most involved Talent Partner: Margaux. Source: Revenue sheet, unrounded figures."
+      }
+    ],
+    "people": [
+      {
+        "name": "Benjamin Douablin",
+        "role": "CEO & Cofounder",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/benjamin-douablin",
+        "highlighted": true,
+        "contact_status": "client",
+        "pitch": "FullEnrich, Benjamin Douablin, CEO & Cofounder. We've already delivered 3 hire(s) there, the last one in 2026-05.",
+        "brief": {
+          "why": "CEO & Cofounder at FullEnrich.",
+          "limits": "Account blocked by the gate: a human must arbitrate before any contact.",
+          "angle": "No automated angle. The gate refuses the draft on this account.",
+          "social_proof": [
+            "3 placement(s) already delivered at FullEnrich between 2026-03 and 2026-05 (source: Revenue sheet)",
+            "Relationship tracked internally by Valériane on the sales side"
+          ]
+        },
+        "draft": null
+      }
+    ]
+  },
+  {
+    "id": "acct_escape",
+    "name": "Escape",
+    "domain": "escape.tech",
+    "url": "https://escape.tech",
+    "size": "?",
+    "location": "France",
+    "stage": "?",
+    "linkedin_url": "https://linkedin.com/company/escapetech",
+    "signals": [
+      {
+        "type": "placement_history",
+        "detail": "2 placement(s) HireSweet between 2026-02-20 and 2026-06-08 (last one 31 days ago), sales owner Kubilay",
+        "detected_at": "2026-06-08",
+        "source": "sheet Revenue (deals-history)"
+      }
+    ],
+    "verdict": {
+      "tier": "HUMAN",
+      "why": "Active client: 2 placement(s), last one 31 days ago. The relationship is owned by Kubilay, no automated outreach."
+    },
+    "investors": [],
+    "connections": [
+      {
+        "entity": "Historique HireSweet x Escape",
+        "kind": "client",
+        "relation": "2 placement(s) delivered, sales owner Kubilay",
+        "strength": "forte",
+        "detail": "First placement 2026-02-20, last 2026-06-08. Most involved Talent Partner: Maud. Source: Revenue sheet, unrounded figures."
+      }
+    ],
+    "people": [
+      {
+        "name": "Mathieu Rousse",
+        "role": "Head of Engineering",
+        "email": null,
+        "phone": null,
+        "linkedin_url": "https://linkedin.com/in/mathieurousse",
+        "highlighted": true,
+        "contact_status": "client",
+        "pitch": "Escape, Mathieu Rousse, Head of Engineering. We've already delivered 2 hire(s) there, the last one in 2026-06.",
+        "brief": {
+          "why": "Head of Engineering at Escape.",
+          "limits": "Account blocked by the gate: a human must arbitrate before any contact.",
+          "angle": "No automated angle. The gate refuses the draft on this account.",
+          "social_proof": [
+            "2 placement(s) already delivered at Escape between 2026-02 and 2026-06 (source: Revenue sheet)",
+            "Relationship tracked internally by Kubilay on the sales side"
+          ]
+        },
+        "draft": null
+      }
+    ]
+  }
+]

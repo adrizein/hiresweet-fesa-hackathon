@@ -1,0 +1,117 @@
+/* ===========================================================================
+ * HireSweet brand theme for the Account Intelligence Tool
+ * ---------------------------------------------------------------------------
+ * Drop-in skin. Activate by adding, AFTER the inline <style> in index.html:
+ *     <link rel="stylesheet" href="theme-hiresweet.css">
+ * It only overrides the design tokens declared on :root plus a handful of
+ * spots where the base app hard-codes a color, so it never fights the layout.
+ *
+ * Palette source of truth: the HireSweet product design tokens, identical in
+ * two internal apps of this repo:
+ *   - Dev/hiresweet-knowledge-pack-v2/src/styles/tokens.css
+ *   - Dev/hiresweet-onboarding-chat/src/styles/{tokens.css,partners.css}
+ * These carry the live product "cobalt + pink" system (navy primary, sky-blue
+ * interactive accent, yellow highlight). The public marketing site
+ * (hiresweet.com) is a Webflow build with obfuscated CSS, so its exact hex and
+ * font could not be extracted; the product tokens are the reliable reference.
+ * ========================================================================= */
+
+:root {
+  /* ---- Surfaces & neutrals -------------------------------------------- */
+  --bg: #f8f9fc;          /* HireSweet --bg-light */
+  --surface: #ffffff;     /* HireSweet --white */
+
+  /* Text hierarchy = HireSweet cobalt ramp (product uses navy, not black) */
+  --ink: #1f2e77;         /* cobalt-100 / --text-primary */
+  --ink-soft: #4c5892;    /* cobalt-80  (readable secondary) */
+  --ink-faint: #7982ad;   /* cobalt-60  / --text-secondary (faint meta) */
+  --line: #e8eaf1;        /* cobalt-10 (subtle blue-tinted borders) */
+
+  /* ---- Primary accent = HireSweet cobalt navy ------------------------- */
+  /* The signature HireSweet primary button/link color is the cobalt navy. */
+  --accent: #1f2e77;       /* cobalt-100 : links, active tab, primary button */
+  --accent-deep: #141d54;  /* deeper navy for hover/pressed + chip text     */
+  --accent-soft: #e8eaf1;  /* cobalt-10 : chip / soft accent background     */
+
+  /* ---- Verdict tiers -------------------------------------------------- */
+  /* Kept green / amber / red and distinct, tuned to the HireSweet accents
+   * (--positive #28CA42, --yellow #FFBD2E, --negative #ff6059) but darkened
+   * enough to stay readable as text on white and on the *-soft chips. */
+  --go: #1e9e4a;          /* derived from HireSweet --positive, text-safe */
+  --go-soft: #e7f7ec;
+  --human: #de3a4c;       /* derived from HireSweet --negative, text-safe */
+  --human-soft: #fcedef;  /* HireSweet --pink-40, on-brand red wash */
+  --explore: #9a6b12;     /* deep amber derived from HireSweet --yellow */
+  --explore-soft: #fff3da;
+
+  /* ---- Highlight (target badge, highlighted person) ------------------- */
+  --hl: #ffbd2e;          /* HireSweet --yellow, the brand highlight */
+  --hl-soft: #fff4df;
+
+  /* ---- Shape & depth ------------------------------------------------- */
+  --radius: 16px;         /* HireSweet --radius-lg */
+  /* Shadows retinted to cobalt (rgba of #1F2E77) like the product tokens. */
+  --shadow: 0 1px 2px rgba(31, 46, 119, .06), 0 6px 20px rgba(31, 46, 119, .08);
+  --shadow-lift: 0 3px 6px rgba(31, 46, 119, .10), 0 14px 34px rgba(31, 46, 119, .16);
+}
+
+/* ---------------------------------------------------------------------------
+ * Targeted overrides where the base app hard-codes a non-token color.
+ * Single-class selectors only, to keep specificity minimal.
+ * ------------------------------------------------------------------------- */
+
+/* Body font = HireSweet product stack (system-ui first). No web font: the
+ * product ships system fonts; the marketing display font is not public. */
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* Ambient glow retinted from the old blue to the HireSweet sky/cobalt. */
+  background:
+    radial-gradient(1200px 400px at 70% -180px, rgba(112, 157, 255, .10), transparent 60%),
+    var(--bg);
+}
+
+/* Two-tone wordmark: "Intelligence" in HireSweet sky blue against navy ink. */
+.brand h1 span { color: #5c89eb; } /* HireSweet --sky-120 */
+
+/* Primary button lift shadow retinted to cobalt navy. */
+.btn.primary { box-shadow: 0 4px 12px rgba(31, 46, 119, .28); }
+
+/* Pitch box gradient: HireSweet cobalt-5 -> pink-40 brand wash. */
+.pitch-box {
+  background: linear-gradient(135deg, #f4f5f9, #fcedef); /* cobalt-5 -> pink-40 */
+  border-color: #e8eaf1;                                  /* cobalt-10 */
+}
+
+/* Target badge sits on yellow: use navy text for contrast, yellow-tinted glow. */
+.badge-target {
+  color: var(--ink);
+  box-shadow: 0 2px 6px rgba(255, 189, 46, .45); /* HireSweet --yellow */
+}
+
+/* "Investor" chip pulled from an off-brand purple into the HireSweet sky family. */
+.chip.inv {
+  background: #eaf0ff;
+  color: #3a56b0; /* deep sky/cobalt blend, readable on the light wash */
+}
+
+/* On-brand focus ring (sky blue) for the interactive inputs, accessibility. */
+.agent-input:focus,
+.agent-select:focus { border-color: #709dff; } /* HireSweet --sky-100 */
+
+/* ---------------------------------------------------------------------------
+ * brand logo
+ * HireSweet logo in the topbar. Markup (added by the layout owner in
+ * index.html, left of the title):
+ *   <img class="brand-logo" src="assets/logo-hiresweet.svg" alt="HireSweet">
+ * The topbar is 56px tall and .brand uses align-items: baseline, so the image
+ * is explicitly centered with align-self to avoid sitting on the text baseline.
+ * ------------------------------------------------------------------------- */
+.brand-logo {
+  height: 22px;
+  width: auto;
+  display: block;
+  align-self: center;
+}
+
+/* align sequence-page pitch card + hardcoded SVG palettes with the brand theme */
+.seq-pitch { background: linear-gradient(135deg, #f4f5f9, #fcedef); border-color: #e8eaf1; }
