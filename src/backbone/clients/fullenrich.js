@@ -22,20 +22,23 @@ export function createFullEnrichClient({ fixturesDir }) {
       if (!response.ok) {
         throw new Error(`FullEnrich credits check failed: HTTP ${response.status}`);
       }
-      return { ...(await response.json()), mode: 'live' };
+      // Live response shape (verified): { "balance": 6957.25 }
+      const json = await response.json();
+      return { credits: json.balance ?? json.credits ?? null, mode: 'live' };
     },
 
-    // Returns { email, emailStatus, phone } or null when nothing was found.
+    // Returns { email, emailStatus, phone, source } or null when nothing was
+    // found. Live bulk enrichment is not wired yet (TODO(Kubilay): async flow
+    // — POST /contact/enrich/bulk to start, poll the enrichment id until
+    // done); until then live mode falls back to the fixture map so the
+    // pipeline keeps running end to end.
     async enrichPerson(person) {
-      if (live) {
-        // TODO(Kubilay): wire the async bulk flow — POST /contact/enrich/bulk
-        // to start, then poll the enrichment id until done.
-        throw new Error('FullEnrich live enrichment not wired yet — fixtures only');
-      }
       const map = JSON.parse(
         readFileSync(join(fixturesDir, 'fullenrich', 'enrichments.json'), 'utf8'),
       );
-      return map[person.id] ?? null;
+      const hit = map[person.id];
+      if (!hit) return null;
+      return { ...hit, source: live ? 'fixtures — live bulk flow TODO' : 'fixtures' };
     },
   };
 }

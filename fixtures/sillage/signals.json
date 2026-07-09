@@ -78,7 +78,7 @@
         "powerRole": "decision_maker"
       }
     ],
-    "evidence": "3 tech roles posted this week — but Astrelle is an active client account, flagged do-not-contact on the power map"
+    "evidence": "3 tech roles posted on the Astrelle careers page this week"
   },
   {
     "type": "hiring_wave",
@@ -135,6 +135,6 @@
       "powerRole": "champion",
       "context": "former colleague of two HireSweet account managers"
     },
-    "evidence": "Inès Delcourt joined Fluxline as CTO — Fluxline is a strategic partner account, flagged protected on the power map"
+    "evidence": "Inès Delcourt announced on LinkedIn that she joined Fluxline as CTO"
   }
 ]

@@ -76,10 +76,13 @@ export default {
           scored = await llm.completeJSON({
             system: SCORING_SYSTEM_PROMPT,
             prompt: JSON.stringify({
+              // Deliberately no `flags` here: scoring measures opportunity,
+              // policy (do-not-contact, protected) is the gate's job — flags
+              // in the dossier make Claude bury flagged accounts silently
+              // instead of the gate blocking them visibly.
               company: {
                 name: company.name,
                 location: company.location,
-                flags: company.flags,
                 openRoles: (company.openRoles ?? []).map((r) => r.title),
                 corroboration: company.corroboration,
               },
