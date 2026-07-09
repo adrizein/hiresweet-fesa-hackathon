@@ -1,0 +1,148 @@
+[
+  {
+    "id": "acct_lumengrid",
+    "name": "Lumen Grid",
+    "domain": "lumengrid.io",
+    "url": "https://lumengrid.io",
+    "size": 45,
+    "location": "Paris",
+    "stage": "Series A",
+    "signals": [
+      { "type": "funding_round", "detail": "Series A (12M) announced this week", "detected_at": "2026-07-08", "source": "sillage" }
+    ],
+    "verdict": { "tier": "GO", "why": "Serie A recente + equipe tech en scale, contacter le CTO avec l'angle velocite de recrutement" },
+    "people": [
+      {
+        "name": "Marco Reyes", "role": "Co-founder & CTO", "email": "marco@lumengrid.io", "phone": "+33 6 12 34 56 78",
+        "linkedin_url": "https://www.linkedin.com/in/marco-reyes-demo/", "highlighted": true, "contact_status": "never",
+        "brief": {
+          "why": "Decideur technique, vient de lever, doit staffer l'equipe backend/data pour tenir la roadmap Serie A.",
+          "limits": "Tres sollicite post-levee. L'angle doit etre specifique (ses postes ouverts), jamais generique.",
+          "angle": "Serie A + roadmap agressive = fenetre de 3 mois ou un pipeline de profils preselectionnes change l'issue.",
+          "social_proof": ["Placement d'un lead backend dans une scale-up energie a un stade equivalent"]
+        }
+      },
+      {
+        "name": "Ana Kovac", "role": "CEO", "email": null, "phone": null,
+        "linkedin_url": "https://www.linkedin.com/in/ana-kovac-demo/", "highlighted": false, "contact_status": "never",
+        "brief": {
+          "why": "Sponsor de la decision mais pas in-zone sur le recrutement operationnel a ce stade.",
+          "limits": "Preferer le CTO comme point d'entree. Mentionnable, pas cible n1.",
+          "angle": "A garder en copie / relance si le CTO ne repond pas.",
+          "social_proof": []
+        }
+      }
+    ]
+  },
+  {
+    "id": "acct_northwind",
+    "name": "Northwind Robotics",
+    "domain": "northwind.io",
+    "url": "https://northwind.io",
+    "size": 70,
+    "location": "Lyon",
+    "stage": "Series B",
+    "signals": [
+      { "type": "champion_move", "detail": "Un contact qui nous connait vient de rejoindre l'equipe", "detected_at": "2026-07-05", "source": "sillage" },
+      { "type": "hiring_wave", "detail": "4 postes engineering ouverts ce mois-ci", "detected_at": "2026-07-01", "source": "sillage" }
+    ],
+    "verdict": { "tier": "GO", "why": "Champion connu dans la boite + hiring wave: 2 signaux qui convergent, entree chaude via le champion" },
+    "people": [
+      {
+        "name": "Priya Anand", "role": "VP Engineering", "email": "priya@northwind.io", "phone": null,
+        "linkedin_url": "https://www.linkedin.com/in/priya-anand-demo/", "highlighted": true, "contact_status": "never",
+        "brief": {
+          "why": "Hiring manager des 4 postes ouverts, decide du sourcing.",
+          "limits": "A deja des fournisseurs. L'angle = qualite/velocite vs son stack actuel, pas 'on existe'.",
+          "angle": "4 postes eng + un champion commun = intro chaude puis demonstration de profils cibles.",
+          "social_proof": ["Notre champion commun peut faire l'intro (voir couche Request intro)"]
+        }
+      },
+      {
+        "name": "Tom Weber", "role": "Head of Talent", "email": null, "phone": null,
+        "linkedin_url": "https://www.linkedin.com/in/tom-weber-demo/", "highlighted": true, "contact_status": "contacted",
+        "brief": {
+          "why": "Owner du process de recrutement, point d'entree naturel.",
+          "limits": "Deja contacte il y a 3 semaines par l'equipe (voir historique HubSpot): NE PAS re-cold, relancer sur le fil existant.",
+          "angle": "Reprendre le fil precedent avec le nouveau signal (hiring wave) comme raison de relance.",
+          "social_proof": []
+        }
+      }
+    ]
+  },
+  {
+    "id": "acct_baseline",
+    "name": "Baseline Health",
+    "domain": "baseline.health",
+    "url": "https://baseline.health",
+    "size": 22,
+    "location": "Paris",
+    "stage": "Seed",
+    "signals": [
+      { "type": "hiring_wave", "detail": "6 postes engineering ouverts en 30 jours", "detected_at": "2026-07-02", "source": "sillage" }
+    ],
+    "verdict": { "tier": "GO", "why": "Hiring wave forte pour une seed de 22 personnes, contacter le Head of Engineering" },
+    "people": [
+      {
+        "name": "Sara Kellerman", "role": "Head of Engineering", "email": "sara@baseline.health", "phone": "+33 6 98 76 54 32",
+        "linkedin_url": "https://www.linkedin.com/in/sara-kellerman-demo/", "highlighted": true, "contact_status": "never",
+        "brief": {
+          "why": "Porte les 6 recrutements, douleur immediate a ce stade.",
+          "limits": "Petite equipe, budget serre: l'angle 0 EUR si pas de recrutement + garantie 4 mois est fort ici.",
+          "angle": "6 postes pour 22 personnes = risque d'execution, le modele au succes de-risque son plan de hiring.",
+          "social_proof": ["Placement rapide (< 5 jours au premier profil) sur une seed digital health"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "acct_aperture",
+    "name": "Aperture Labs",
+    "domain": "aperturelabs.dev",
+    "url": "https://aperturelabs.dev",
+    "size": 6,
+    "location": "Remote FR",
+    "stage": "Pre-seed",
+    "signals": [
+      { "type": "founder_early", "detail": "Boite < 1 an, fondateurs ex-scale-up, pas encore de levee annoncee", "detected_at": "2026-07-06", "source": "sillage" }
+    ],
+    "verdict": { "tier": "EXPLORE", "why": "Founder early (notre edge) mais donnees pauvres: enrichir avant de decider qui contacter" },
+    "people": [
+      {
+        "name": "Julie Fontaine", "role": "Co-founder", "email": null, "phone": null,
+        "linkedin_url": null, "highlighted": true, "contact_status": "never",
+        "brief": {
+          "why": "Fondatrice, decide tout a ce stade. Quasi jamais contactee = fenetre.",
+          "limits": "Coordonnees manquantes: passer par FullEnrich avant tout draft.",
+          "angle": "Les deux premiers recrutements tech definissent la boite, on aide tot, on reste.",
+          "social_proof": []
+        }
+      }
+    ]
+  },
+  {
+    "id": "acct_corvex",
+    "name": "Corvex Systems",
+    "domain": "corvex.io",
+    "url": "https://corvex.io",
+    "size": 90,
+    "location": "Paris",
+    "stage": "Series B",
+    "signals": [
+      { "type": "competitor_engagement", "detail": "Le prospect a interagi avec du contenu concurrent cette semaine", "detected_at": "2026-07-09", "source": "sillage" }
+    ],
+    "verdict": { "tier": "HUMAN", "why": "Compte actif / relation en cours: NE PAS contacter a froid, router vers l'humain qui possede le compte" },
+    "people": [
+      {
+        "name": "Elias Nord", "role": "Co-founder", "email": null, "phone": null,
+        "linkedin_url": "https://www.linkedin.com/in/elias-nord-demo/", "highlighted": false, "contact_status": "client",
+        "brief": {
+          "why": "Interlocuteur d'un compte deja actif chez nous.",
+          "limits": "GUARD: relation en cours. L'agent ne drafte pas, il affiche 'router vers l'owner du compte'.",
+          "angle": "Aucun cold. Signal transmis a l'humain qui gere la relation.",
+          "social_proof": []
+        }
+      }
+    ]
+  }
+]
