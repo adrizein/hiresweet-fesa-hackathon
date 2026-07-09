@@ -1,0 +1,243 @@
+/* GTM Flow tab — Notion-like table + per-account journal.
+ * Reuses the design tokens declared on :root in index.html (and overridden
+ * by theme-hiresweet.css), plus a handful of global classes already defined
+ * there (.btn, .tier, .brief-panel, .section-label, .back, .strategy-link,
+ * @keyframes pulse) so this file only adds what's specific to GTM Flow.
+ */
+
+/* ---------- controls + stat tiles ---------- */
+
+.gtmflow-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.gtmflow-launch-btn { margin-top: 0; }
+.gtmflow-controls .btn { margin-top: 0; }
+
+.gtmflow-stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.gtmflow-stat {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 11px 18px;
+  min-width: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.gtmflow-stat .n { font-size: 22px; font-weight: 800; letter-spacing: -.02em; }
+.gtmflow-stat .l { font-size: 11.5px; font-weight: 650; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .05em; }
+.gtmflow-stat.queued .n { color: var(--ink-soft); }
+.gtmflow-stat.running .n { color: var(--accent); }
+.gtmflow-stat.review .n { color: var(--human); }
+.gtmflow-stat.done .n { color: var(--go); }
+.gtmflow-stat.blocked .n { color: var(--ink); }
+
+/* ---------- Notion-like table ---------- */
+
+.gtmflow-table-wrap {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.gtmflow-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+.gtmflow-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #fbfcfe;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding: 11px 14px;
+  white-space: nowrap;
+}
+.gtmflow-table tbody tr.gtmflow-row {
+  cursor: pointer;
+  border-bottom: 1px solid var(--line);
+  transition: background .1s ease;
+}
+.gtmflow-table tbody tr.gtmflow-row:last-child { border-bottom: none; }
+.gtmflow-table tbody tr.gtmflow-row:hover { background: var(--accent-soft); }
+.gtmflow-table tbody tr.gtmflow-row[data-status="review"] { background: color-mix(in srgb, var(--human-soft) 55%, transparent); }
+.gtmflow-table tbody tr.gtmflow-row[data-status="review"]:hover { background: var(--human-soft); }
+.gtmflow-table tbody tr.gtmflow-row[data-status="blocked"] { opacity: .62; }
+.gtmflow-table td {
+  padding: 11px 14px;
+  vertical-align: middle;
+}
+.gtmflow-empty {
+  text-align: center;
+  color: var(--ink-faint);
+  padding: 30px 0 !important;
+  font-style: italic;
+}
+
+.gtm-col-lead { min-width: 168px; }
+.gtm-lead-name { font-weight: 750; font-size: 14px; }
+.gtm-lead-domain { color: var(--ink-faint); font-size: 12px; margin-top: 1px; }
+.gtm-col-signal { max-width: 320px; }
+.gtm-col-signal .chip { max-width: 100%; white-space: normal; }
+.gtm-dash { color: var(--ink-faint); }
+.gtm-col-stage { min-width: 140px; }
+.gtm-col-last { color: var(--ink-soft); max-width: 260px; }
+
+.gtm-stepper { display: flex; gap: 4px; align-items: center; }
+.gtm-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--line);
+  flex-shrink: 0;
+}
+.gtm-dot.done { background: var(--go); }
+.gtm-dot.current { background: var(--accent); animation: pulse 1s infinite; }
+.gtm-dot.review { background: var(--human); animation: pulse 1s infinite; }
+.gtm-dot.blocked { background: var(--ink-faint); }
+.gtm-stage-label { font-size: 11.5px; color: var(--ink-soft); margin-top: 4px; white-space: nowrap; }
+
+.gtmflow-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 750;
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+.gtmflow-status.queued { background: #eef0f3; color: var(--ink-soft); }
+.gtmflow-status.running { background: var(--accent-soft); color: var(--accent-deep); }
+.gtmflow-status.review { background: var(--human-soft); color: var(--human); }
+.gtmflow-status.done { background: var(--go-soft); color: var(--go); }
+.gtmflow-status.blocked { background: #eef0f3; color: var(--ink-faint); }
+
+/* ---------- per-account journal ---------- */
+
+.gtmflow-journal-head { margin-bottom: 14px; }
+
+.gtmflow-journal-panel {
+  position: static;
+  max-height: none;
+  overflow: visible;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.gtmflow-journal-verdict {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.gtmflow-tl {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 4px;
+  margin: 4px 0 6px;
+}
+.gtmflow-tl-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+  position: relative;
+}
+.gtmflow-tl-step + .gtmflow-tl-step::before {
+  content: "";
+  position: absolute;
+  top: 15px;
+  right: 100%;
+  width: 100%;
+  height: 2px;
+  background: var(--line);
+  z-index: 0;
+}
+.gtmflow-tl-step.done + .gtmflow-tl-step::before,
+.gtmflow-tl-step.done::before { background: var(--go); }
+.gtmflow-tl-icon {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: #eef0f3;
+  border: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  position: relative;
+  z-index: 1;
+}
+.gtmflow-tl-step.done .gtmflow-tl-icon { background: var(--go-soft); border-color: #bfe6d6; }
+.gtmflow-tl-step.current .gtmflow-tl-icon { background: var(--accent-soft); border-color: #dbe6fb; outline: 2.5px solid var(--accent); }
+.gtmflow-tl-step.review .gtmflow-tl-icon { background: var(--human-soft); border-color: #f3c2ce; outline: 2.5px solid var(--human); }
+.gtmflow-tl-step.blocked .gtmflow-tl-icon { background: #eef0f3; opacity: .6; }
+.gtmflow-tl-label { font-size: 10.5px; font-weight: 700; color: var(--ink-soft); }
+
+.gtmflow-log {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: #fbfcfe;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  overflow: hidden;
+}
+.gtmflow-log-line {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  padding: 9px 13px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--line);
+}
+.gtmflow-log-line:last-child { border-bottom: none; }
+.gtmflow-log-icon { flex-shrink: 0; }
+.gtmflow-log-text { color: var(--ink); line-height: 1.45; }
+.gtmflow-log-empty {
+  padding: 14px 13px;
+  color: var(--ink-faint);
+  font-style: italic;
+  font-size: 13px;
+}
+
+.gtmflow-gate {
+  margin-top: 16px;
+  background: var(--human-soft);
+  border: 1px solid #f3c2ce;
+  border-radius: 11px;
+  padding: 14px 16px;
+}
+.gtmflow-gate.EXPLORE { background: var(--explore-soft); border-color: #ecd9ae; }
+.gtmflow-gate-title {
+  font-weight: 800;
+  font-size: 11.5px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: #8c1f37;
+  margin-bottom: 6px;
+}
+.gtmflow-gate.EXPLORE .gtmflow-gate-title { color: #7c5310; }
+.gtmflow-gate-why { font-size: 13.5px; color: var(--ink); margin-bottom: 12px; }
+
+@media (max-width: 900px) {
+  .gtmflow-table-wrap { overflow-x: auto; }
+  .gtmflow-table { min-width: 760px; }
+}

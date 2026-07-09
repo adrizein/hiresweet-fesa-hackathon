@@ -1,0 +1,134 @@
+/* Account Intelligence Tool, onglet "Find leads" (brique amont, découverte de
+ * signaux -> comptes candidats -> qualification -> entrée dans le flux).
+ * Toutes les classes sont préfixées fl- pour éviter toute collision avec le
+ * CSS de index.html. Réutilise les variables CSS globales (--surface,
+ * --line, --ink, --accent, --go, --human, --explore, --shadow, --radius, etc.).
+ */
+
+/* ---------- barre de recherche / scan ---------- */
+.fl-searchbar { display: flex; gap: 10px; margin-bottom: 14px; }
+.fl-input {
+  flex: 1;
+  border: 1.5px solid var(--line);
+  border-radius: 11px;
+  padding: 12px 16px;
+  font-size: 14.5px;
+  font-family: inherit;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  outline: none;
+  transition: border-color .12s ease;
+}
+.fl-input:focus { border-color: var(--accent); }
+
+/* ---------- chips de filtre (tier + type de signal) ---------- */
+.fl-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+.fl-chip {
+  font-size: 12.5px; font-weight: 650;
+  background: var(--surface); color: var(--ink-soft);
+  border: 1px solid var(--line); border-radius: 999px;
+  padding: 5px 13px; cursor: pointer;
+  transition: color .12s ease, border-color .12s ease, background .12s ease;
+}
+.fl-chip:hover { color: var(--accent); border-color: var(--accent); }
+.fl-chip.active { background: var(--accent-soft); color: var(--accent-deep); border-color: var(--accent); }
+.fl-chip-tier.GO.active { background: var(--go-soft); color: var(--go); border-color: var(--go); }
+.fl-chip-tier.EXPLORE.active { background: var(--explore-soft); color: var(--explore); border-color: var(--explore); }
+.fl-chip-tier.HUMAN.active { background: var(--human-soft); color: var(--human); border-color: var(--human); }
+
+/* ---------- état vide / placeholder ---------- */
+.fl-empty {
+  background: var(--surface);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  padding: 42px 24px;
+  text-align: center;
+  color: var(--ink-soft);
+}
+.fl-empty-icon { font-size: 30px; margin-bottom: 8px; }
+.fl-empty-title { font-weight: 750; font-size: 15.5px; color: var(--ink); margin-bottom: 4px; }
+.fl-empty-sub { font-size: 13.5px; max-width: 460px; margin: 0 auto; }
+.fl-empty-sub a { color: var(--accent); font-weight: 650; text-decoration: none; }
+.fl-empty-sub a:hover { text-decoration: underline; }
+
+/* ---------- toolbar (compteur + tout ajouter) ---------- */
+.fl-toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px; gap: 12px; flex-wrap: wrap;
+}
+.fl-toolbar-title { font-size: 13px; font-weight: 650; color: var(--ink-soft); }
+
+/* ---------- grille de cards candidates ---------- */
+.fl-grid { display: flex; flex-direction: column; gap: 14px; }
+
+.fl-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px 22px;
+  animation: flCardIn .28s ease;
+  transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease;
+}
+.fl-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lift); border-color: #d3dcea; }
+@keyframes flCardIn {
+  from { opacity: 0; transform: translateY(8px) scale(.99); }
+  to { opacity: 1; transform: none; }
+}
+
+.fl-card-row1 { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.fl-name { font-size: 17px; font-weight: 750; letter-spacing: -.01em; }
+
+/* ---------- barre de score visuelle ---------- */
+.fl-score {
+  position: relative;
+  height: 7px;
+  border-radius: 999px;
+  background: #eef0f3;
+  margin: 12px 0 4px;
+  max-width: 260px;
+  overflow: visible;
+}
+.fl-score-fill { height: 100%; border-radius: 999px; transition: width .3s ease; }
+.fl-score.go .fl-score-fill { background: var(--go); }
+.fl-score.explore .fl-score-fill { background: var(--explore); }
+.fl-score.human .fl-score-fill { background: var(--human); }
+.fl-score-num {
+  position: absolute; right: -34px; top: -6px;
+  font-size: 11.5px; font-weight: 800; color: var(--ink-faint);
+}
+
+.fl-card .why { margin-top: 10px; font-size: 14.5px; max-width: 860px; }
+.fl-card .chips { margin-top: 10px; }
+
+.fl-card-actions { display: flex; gap: 10px; margin-top: 14px; }
+
+/* boutons "small" réutilisent .btn de index.html, juste un gabarit compact */
+.btn.small { padding: 8px 14px; margin-top: 0; font-size: 13px; }
+
+/* ---------- toast de confirmation ---------- */
+.fl-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  max-width: 360px;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 11px;
+  padding: 13px 18px;
+  font-size: 13.5px;
+  box-shadow: var(--shadow-lift);
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
+  z-index: 50;
+}
+.fl-toast.show { opacity: 1; transform: none; pointer-events: auto; }
+.fl-toast a { color: #9dc0ff; font-weight: 700; text-decoration: none; }
+.fl-toast a:hover { text-decoration: underline; }
+
+@media (max-width: 640px) {
+  .fl-searchbar { flex-direction: column; }
+  .fl-card-row1 { align-items: flex-start; }
+}

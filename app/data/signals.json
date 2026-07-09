@@ -1,0 +1,344 @@
+[
+  {
+    "id": "sig_kelvyra",
+    "name": "Kelvyra",
+    "domain": "kelvyra.io",
+    "url": "#",
+    "size": "45",
+    "location": "Paris",
+    "stage": "Series A",
+    "score": 88,
+    "signals": [
+      {
+        "type": "funding_round",
+        "detail": "Series A raise of €14M announced on 2026-06-18",
+        "detected_at": "2026-06-18",
+        "source": "public"
+      },
+      {
+        "type": "hiring_wave",
+        "detail": "3 Engineering roles open on the careers site since 2026-07-01",
+        "detected_at": "2026-07-01",
+        "source": "LinkedIn"
+      }
+    ],
+    "suggested_verdict": {
+      "tier": "GO",
+      "why": "Fresh raise and simultaneous tech hiring: budget and need windows aligned."
+    },
+    "suggested_people": [
+      {
+        "name": "Camille Ferrand",
+        "role": "CTO",
+        "highlighted": true,
+        "contact_status": "never"
+      },
+      {
+        "name": "Julien Roquin",
+        "role": "Head of Talent",
+        "highlighted": false,
+        "contact_status": "never"
+      }
+    ]
+  },
+  {
+    "id": "sig_ondrelis",
+    "name": "Ondrelis",
+    "domain": "ondrelis.com",
+    "url": "#",
+    "size": "80",
+    "location": "Paris",
+    "stage": "Series B",
+    "score": 84,
+    "signals": [
+      {
+        "type": "new_cto",
+        "detail": "A new CTO joined on 2026-05-12, the role had been vacant for 4 months according to LinkedIn",
+        "detected_at": "2026-05-12",
+        "source": "LinkedIn"
+      },
+      {
+        "type": "hiring_wave",
+        "detail": "6 Engineering openings published since the new CTO's arrival",
+        "detected_at": "2026-06-25",
+        "source": "LinkedIn"
+      }
+    ],
+    "suggested_verdict": {
+      "tier": "GO",
+      "why": "New CTO followed by a wave of job openings within the month: classic team-structuring window."
+    },
+    "suggested_people": [
+      {
+        "name": "Marc Delaunay",
+        "role": "CTO",
+        "highlighted": true,
+        "contact_status": "never"
+      },
+      {
+        "name": "Nora Vasseur",
+        "role": "VP Engineering",
+        "highlighted": false,
+        "contact_status": "never"
+      }
+    ]
+  },
+  {
+    "id": "sig_faelora",
+    "name": "Faelora",
+    "domain": "faelora.health",
+    "url": "#",
+    "size": "22",
+    "location": "Lyon",
+    "stage": "Seed",
+    "score": 76,
+    "signals": [
+      {
+        "type": "new_talent_lead",
+        "detail": "A Head of Talent was hired on 2026-06-02, the first dedicated HR role on the team",
+        "detected_at": "2026-06-02",
+        "source": "LinkedIn"
+      }
+    ],
+    "suggested_verdict": {
+      "tier": "GO",
+      "why": "First Head of Talent hired: classic signal of hiring structuring ahead of scaling."
+    },
+    "suggested_people": [
+      {
+        "name": "Salomé Ithier",
+        "role": "Head of Talent",
+        "highlighted": true,
+        "contact_status": "never"
+      },
+      {
+        "name": "Thibault Mercadier",
+        "role": "CEO",
+        "highlighted": false,
+        "contact_status": "never"
+      }
+    ]
+  },
+  {
+    "id": "sig_brannolt",
+    "name": "Brannolt",
+    "domain": "brannolt.com",
+    "url": "#",
+    "size": "38",
+    "location": "Nantes",
+    "stage": "Series A",
+    "score": 79,
+    "signals": [
+      {
+        "type": "champion_move",
+        "detail": "A VP Engineering previously known to HireSweet joined Brannolt as CTO on 2026-06-20",
+        "detected_at": "2026-06-20",
+        "source": "LinkedIn"
+      }
+    ],
+    "suggested_verdict": {
+      "tier": "GO",
+      "why": "Already-known champion now in a technical decision-making role: direct, traceable entry point."
+    },
+    "suggested_people": [
+      {
+        "name": "Adrien Loiseau",
+        "role": "CTO",
+        "highlighted": true,
+        "contact_status": "never"
+      }
+    ]
+  },
+  {
+    "id": "sig_vesparonne",
+    "name": "Vesparonne",
+    "domain": "vesparonne.com",
+    "url": "#",
+    "size": "95",
+    "location": "Paris",
+    "stage": "Series B",
+    "score": 91,
+    "signals": [
+      {
+        "type": "headcount_growth",
+        "detail": "LinkedIn headcount up 28% over the last 6 months (68 -> 95 employees)",
+        "detected_at": "2026-07-05",
+        "source": "LinkedIn"
+      },
+      {
+        "type": "hiring_wave",
+        "detail": "9 Engineering and Data roles currently open",
+        "detected_at": "2026-07-05",
+        "source": "LinkedIn"
+      }
+    ],
+    "suggested_verdict": {
+      "tier": "GO",
+      "why": "Double-digit headcount growth and high volume of tech openings: confirmed scaling signal, not a one-off."
+    },
+    "suggested_people": [
+      {
+        "name": "Inès Cabrol",
+        "role": "VP Engineering",
+        "highlighted": true,
+        "contact_status": "never"
+      },
+      {
+        "name": "Yanis Berthelot",
+        "role": "Head of Talent",
+        "highlighted": false,
+        "contact_status": "never"
+      }
+    ]
+  },
+  {
+    "id": "sig_isendal",
+    "name": "Isendal",
+    "domain": "isendal.dev",
+    "url": "#",
+    "size": "12",
+    "location": "Paris",
+    "stage": "Seed",
+    "score": 48,
+    "signals": [
+      {
+        "type": "funding_round",
+        "detail": "Seed raise of €2M announced on 2026-04-10",
+        "detected_at": "2026-04-10",
+        "source": "public"
+      }
+    ],
+    "suggested_verdict": {
+      "tier": "EXPLORE",
+      "why": "Seed raise already 3 months old with no associated job openings since: hiring pain not confirmed."
+    },
+    "suggested_people": [
+      {
+        "name": "Paul Vergnaud",
+        "role": "CEO",
+        "highlighted": true,
+        "contact_status": "never"
+      }
+    ]
+  },
+  {
+    "id": "sig_cortevane",
+    "name": "Cortevane",
+    "domain": "cortevane.io",
+    "url": "#",
+    "size": "30",
+    "location": "Bordeaux",
+    "stage": "Series A",
+    "score": 42,
+    "signals": [
+      {
+        "type": "hiring_wave",
+        "detail": "1 Engineering role open since 2026-05-15, with no other associated movement",
+        "detected_at": "2026-05-15",
+        "source": "LinkedIn"
+      }
+    ],
+    "suggested_verdict": {
+      "tier": "EXPLORE",
+      "why": "Just one isolated open role: weak signal, hiring wave to be confirmed before engaging."
+    },
+    "suggested_people": [
+      {
+        "name": "Élodie Vannier",
+        "role": "CTO",
+        "highlighted": true,
+        "contact_status": "never"
+      }
+    ]
+  },
+  {
+    "id": "sig_alvenwick",
+    "name": "Alvenwick",
+    "domain": "alvenwick.com",
+    "url": "#",
+    "size": "140",
+    "location": "Paris",
+    "stage": "Series C",
+    "score": 55,
+    "signals": [
+      {
+        "type": "headcount_growth",
+        "detail": "LinkedIn headcount stable over 6 months (138 -> 140 employees) despite a Series C raise 4 months ago",
+        "detected_at": "2026-07-02",
+        "source": "LinkedIn"
+      }
+    ],
+    "suggested_verdict": {
+      "tier": "EXPLORE",
+      "why": "Recent raise but stable headcount: the budget exists, the hiring trigger isn't visible yet."
+    },
+    "suggested_people": [
+      {
+        "name": "Grégoire Astier",
+        "role": "COO",
+        "highlighted": true,
+        "contact_status": "never"
+      }
+    ]
+  },
+  {
+    "id": "sig_draumia",
+    "name": "Draumia",
+    "domain": "draumia.com",
+    "url": "#",
+    "size": "60",
+    "location": "Paris",
+    "stage": "Series B",
+    "score": 60,
+    "signals": [
+      {
+        "type": "champion_move",
+        "detail": "A contact previously known to HireSweet now holds a position at Draumia, identity surfaced by automatic mapping, not cross-checked",
+        "detected_at": "2026-06-28",
+        "source": "sillage"
+      }
+    ],
+    "suggested_verdict": {
+      "tier": "HUMAN",
+      "why": "Automatic mapping not cross-checked with a secondary source: contact identity to verify before any send."
+    },
+    "suggested_people": [
+      {
+        "name": "Camille Ostrowski",
+        "role": "VP Engineering",
+        "highlighted": true,
+        "contact_status": "never"
+      }
+    ]
+  },
+  {
+    "id": "sig_sonnepierre",
+    "name": "Sonnepierre",
+    "domain": "sonnepierre.com",
+    "url": "#",
+    "size": "26",
+    "location": "Paris",
+    "stage": "Series A",
+    "score": 52,
+    "signals": [
+      {
+        "type": "new_cto",
+        "detail": "A CTO was surfaced by automatic mapping, but the name does not match any verifiable public source",
+        "detected_at": "2026-07-03",
+        "source": "sillage"
+      }
+    ],
+    "suggested_verdict": {
+      "tier": "HUMAN",
+      "why": "Unverified executive data: a human must confirm the identity before any contact, same pattern as existing gates."
+    },
+    "suggested_people": [
+      {
+        "name": "Hugo Delassus",
+        "role": "CTO",
+        "highlighted": true,
+        "contact_status": "never"
+      }
+    ]
+  }
+]

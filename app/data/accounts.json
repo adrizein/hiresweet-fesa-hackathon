@@ -1,0 +1,191 @@
+[
+  {
+    "id": "acct_lumengrid",
+    "name": "Lumen Grid",
+    "domain": "lumengrid.io",
+    "url": "https://lumengrid.io",
+    "size": 45,
+    "location": "Paris",
+    "stage": "Series A",
+    "signals": [
+      { "type": "funding_round", "detail": "Series A ($12M) announced this week", "detected_at": "2026-07-08", "source": "Sillage" }
+    ],
+    "verdict": { "tier": "GO", "why": "Recent Series A plus a tech team scaling fast, reach out to the CTO with a hiring-velocity angle" },
+    "investors": [
+      { "name": "Meridian Peak Capital", "type": "VC", "round": "Series A", "is_client_portfolio": true, "note": "Portfolio fund we've already placed talent with twice before." },
+      { "name": "Vesper Ventures", "type": "VC", "round": "Seed", "is_client_portfolio": false, "note": "Led the pre-seed round, still on the board." }
+    ],
+    "connections": [
+      { "entity": "Meridian Peak Capital", "kind": "fund", "relation": "Lead investor, Series A", "strength": "forte", "detail": "Same fund backed two of our existing clients; the partner offered a warm intro." },
+      { "entity": "Kelvara Energy", "kind": "client", "relation": "Comparable placement", "strength": "moyenne", "detail": "We placed a senior backend engineer at a similarly staged energy scale-up backed by the same fund." },
+      { "entity": "Founders Circle Paris", "kind": "community", "relation": "Shared founder community", "strength": "faible", "detail": "CEO Ana Kovac is a member; no direct relationship yet." }
+    ],
+    "people": [
+      {
+        "name": "Marco Reyes", "role": "Co-founder & CTO", "email": "marco.reyes@lumengrid.example", "phone": "+33 6 00 00 00 01",
+        "linkedin_url": "https://linkedin.com/in/marco-reyes-example", "highlighted": true, "contact_status": "never",
+        "pitch": "Call Marco, the CTO, about staffing the backend/data roadmap his fresh $12M Series A just put on a clock.",
+        "brief": {
+          "why": "Technical decision-maker, just raised, needs to staff backend/data to hold the Series A roadmap.",
+          "limits": "Heavily solicited post-raise. The angle must be specific to his open roles, never generic.",
+          "angle": "Series A plus an aggressive roadmap means a 3-month window where a pre-qualified pipeline changes the outcome.",
+          "social_proof": ["Backend lead placement at Kelvara Energy, a similarly staged energy-sector scale-up"]
+        },
+        "draft": "Marco, a $12M Series A means your backend/data hiring plan just got a deadline. We placed a senior backend lead at Kelvara Energy, a scale-up at a similar stage, inside three weeks. If you're staffing against the new roadmap, worth 15 minutes to see if the same approach fits your open backend/data roles. No pressure if the timing's off, happy to just send specifics on the Kelvara search first."
+      },
+      {
+        "name": "Ana Kovac", "role": "CEO", "email": null, "phone": null,
+        "linkedin_url": "https://linkedin.com/in/ana-kovac-example", "highlighted": false, "contact_status": "never",
+        "pitch": "Keep Ana, the CEO, in copy as the deal sponsor while Marco stays the primary point of entry.",
+        "brief": {
+          "why": "Deal sponsor but not in-zone on day-to-day recruiting decisions at this stage.",
+          "limits": "Prefer the CTO as the entry point. Mentionable, not a first target.",
+          "angle": "Keep in copy, or follow up here if the CTO thread stalls.",
+          "social_proof": []
+        },
+        "draft": null
+      }
+    ]
+  },
+  {
+    "id": "acct_northwind",
+    "name": "Northwind Robotics",
+    "domain": "northwind.io",
+    "url": "https://northwind.io",
+    "size": 70,
+    "location": "Lyon",
+    "stage": "Series B",
+    "signals": [
+      { "type": "champion_move", "detail": "A contact who knows us just joined the team", "detected_at": "2026-07-05", "source": "Sillage" },
+      { "type": "hiring_wave", "detail": "4 engineering roles opened this month", "detected_at": "2026-07-01", "source": "Sillage" }
+    ],
+    "verdict": { "tier": "GO", "why": "A known champion inside the company plus a hiring wave, two converging signals, warm entry via the champion" },
+    "investors": [
+      { "name": "Solace Capital Partners", "type": "VC", "round": "Series B", "is_client_portfolio": false, "note": "Led the Series B, known for aggressive engineering-scaling bets." }
+    ],
+    "connections": [
+      { "entity": "Dana Fischer", "kind": "person", "relation": "Former collaborator, now Staff Engineer at Northwind", "strength": "forte", "detail": "Dana worked with our team on a prior search at her last company and joined Northwind this month." },
+      { "entity": "Solace Capital Partners", "kind": "fund", "relation": "Series B investor", "strength": "faible", "detail": "No direct relationship yet, noted for context only." },
+      { "entity": "Priya Anand", "kind": "person", "relation": "VP Engineering, hiring manager", "strength": "moyenne", "detail": "No prior contact, but she owns the 4 open reqs driving this GO." }
+    ],
+    "people": [
+      {
+        "name": "Priya Anand", "role": "VP Engineering", "email": "priya.anand@northwind.example", "phone": null,
+        "linkedin_url": "https://linkedin.com/in/priya-anand-example", "highlighted": true, "contact_status": "never",
+        "pitch": "Call Priya, the VP Engineering, about the 4 open engineering reqs and the shared contact who can vouch for us.",
+        "brief": {
+          "why": "Hiring manager for the 4 open roles, owns sourcing decisions.",
+          "limits": "Already has vendors in place. The angle is quality/velocity versus her current stack, not 'we exist.'",
+          "angle": "4 open engineering roles plus a shared contact means a warm intro, then a demonstration of targeted profiles.",
+          "social_proof": ["Shared contact can make the intro (see Request Intro layer)"]
+        },
+        "draft": "Priya, four open engineering reqs plus a teammate who's worked with us before, Dana Fischer, felt like a good reason to reach out directly instead of cold. We focus on precision over volume: qualified shortlists, not resume floods, with first profiles typically inside a week. Happy to have Dana walk you through what that looked like on her side, or just send two profiles against your toughest open req to show quality first."
+      },
+      {
+        "name": "Tom Weber", "role": "Head of Talent", "email": null, "phone": null,
+        "linkedin_url": "https://linkedin.com/in/tom-weber-example", "highlighted": true, "contact_status": "contacted",
+        "pitch": "Follow up with Tom, the Head of Talent, on the existing thread, using the new hiring wave as the reason to re-engage.",
+        "brief": {
+          "why": "Owns the recruiting process, the natural point of entry.",
+          "limits": "Already contacted 3 weeks ago by our team (see HubSpot history), do not re-cold, pick up the existing thread.",
+          "angle": "Reopen the prior thread with the new signal, the hiring wave, as the reason to follow up.",
+          "social_proof": []
+        },
+        "draft": "Tom, following up on our note from three weeks back. Since then, Northwind opened four new engineering reqs, so wanted to flag that our read on your hiring wave is live if useful now. No need to restart the conversation, just point me at whichever role is hardest to fill and I'll send two profiles direct."
+      }
+    ]
+  },
+  {
+    "id": "acct_baseline",
+    "name": "Baseline Health",
+    "domain": "baseline.health",
+    "url": "https://baseline.health",
+    "size": 22,
+    "location": "Paris",
+    "stage": "Seed",
+    "signals": [
+      { "type": "hiring_wave", "detail": "6 engineering roles opened in 30 days", "detected_at": "2026-07-02", "source": "Sillage" }
+    ],
+    "verdict": { "tier": "GO", "why": "Strong hiring wave for a 22-person seed, reach out to the Head of Engineering" },
+    "investors": [
+      { "name": "Anchorline Ventures", "type": "VC", "round": "Seed", "is_client_portfolio": true, "note": "Portfolio fund we already work with on two other seed accounts." }
+    ],
+    "connections": [
+      { "entity": "Anchorline Ventures", "kind": "fund", "relation": "Seed investor, existing HireSweet relationship", "strength": "forte", "detail": "We've placed candidates at two other Anchorline portfolio companies this year." },
+      { "entity": "Sara Kellerman", "kind": "person", "relation": "Head of Engineering, hiring owner", "strength": "moyenne", "detail": "No prior contact; she owns all 6 open reqs." },
+      { "entity": "Digital Health Founders Circle", "kind": "community", "relation": "Shared community", "strength": "faible", "detail": "Baseline Health is active in a community we monitor for signals, no direct relationship." }
+    ],
+    "people": [
+      {
+        "name": "Sara Kellerman", "role": "Head of Engineering", "email": "sara.kellerman@baseline.example", "phone": "+33 6 00 00 00 02",
+        "linkedin_url": "https://linkedin.com/in/sara-kellerman-example", "highlighted": true, "contact_status": "never",
+        "pitch": "Call Sara, Head of Engineering, about triaging the 6 open engineering roles opened in the last 30 days.",
+        "brief": {
+          "why": "Owns all 6 recruiting searches, immediate pain at this stage.",
+          "limits": "Small team, tight budget, keep the pitch practical and specific, not generic.",
+          "angle": "6 roles for a 22-person team is an execution risk, a focused, fast pipeline de-risks the hiring plan.",
+          "social_proof": ["First-profile placement inside 5 days for a similarly staged digital-health seed"]
+        },
+        "draft": "Sara, six open engineering roles in 30 days for a 22-person team is a real execution risk, not just a hiring backlog. We got first candidate profiles in front of a similarly staged digital-health seed inside five days last quarter. If you're triaging which of the six to fill first, happy to take one off your plate this week and show the quality bar before you commit to anything wider."
+      }
+    ]
+  },
+  {
+    "id": "acct_aperture",
+    "name": "Aperture Labs",
+    "domain": "aperturelabs.dev",
+    "url": "https://aperturelabs.dev",
+    "size": 6,
+    "location": "Remote FR",
+    "stage": "Pre-seed",
+    "signals": [
+      { "type": "no_signal", "detail": "Company under 1 year old, founders ex-scale-up, no funding round announced yet", "detected_at": "2026-07-06", "source": "Sillage" }
+    ],
+    "verdict": { "tier": "EXPLORE", "why": "Early-stage founder profile fits our sweet spot, but the pain point is unconfirmed and the data is thin, enrich before deciding who to contact" },
+    "investors": [],
+    "connections": [],
+    "people": [
+      {
+        "name": "Julie Fontaine", "role": "Co-founder", "email": null, "phone": null,
+        "linkedin_url": null, "highlighted": true, "contact_status": "never",
+        "pitch": "Enrich Julie's contact details first, then reach the co-founder with the early-hires angle before any outreach.",
+        "brief": {
+          "why": "Founder, decides everything at this stage. Almost never contacted, a real window.",
+          "limits": "Missing contact details, run through FullEnrich before any draft.",
+          "angle": "The first two tech hires define the company, we help early and stay.",
+          "social_proof": []
+        },
+        "draft": null
+      }
+    ]
+  },
+  {
+    "id": "acct_corvex",
+    "name": "Corvex Systems",
+    "domain": "corvex.io",
+    "url": "https://corvex.io",
+    "size": 90,
+    "location": "Paris",
+    "stage": "Series B",
+    "signals": [
+      { "type": "watchlist_customer", "detail": "The prospect engaged with competitor content this week", "detected_at": "2026-07-09", "source": "Sillage" }
+    ],
+    "verdict": { "tier": "HUMAN", "why": "Active account / relationship in progress, do not cold contact, route to the human who owns the account" },
+    "investors": [],
+    "connections": [],
+    "people": [
+      {
+        "name": "Elias Nord", "role": "Co-founder", "email": null, "phone": null,
+        "linkedin_url": "https://linkedin.com/in/elias-nord-example", "highlighted": true, "contact_status": "client",
+        "pitch": "Flag to the account owner: Corvex engaged with competitor content this week, route the signal, no cold outreach.",
+        "brief": {
+          "why": "Point of contact on an account already active with us.",
+          "limits": "GUARD: relationship in progress. The agent does not draft, it surfaces 'route to the account owner.'",
+          "angle": "No cold outreach. Signal handed off to the human who manages the relationship.",
+          "social_proof": []
+        },
+        "draft": null
+      }
+    ]
+  }
+]

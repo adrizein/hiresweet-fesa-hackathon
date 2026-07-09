@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 44" role="img" aria-label="HireSweet">
+  <!-- Official HireSweet mark: paths copied verbatim from
+       Dev/hiresweet-knowledge-pack-v2/public/favicon.svg (175x175),
+       scaled to 40px height. Navy #1F2E77 + pink #F9C8CA = brand tokens. -->
+  <g transform="translate(0 2) scale(0.2288)">
+    <polygon fill="#1F2E77" points="0 0 0 174.47 174.8 174.47 174.8 89.53 137.87 89.53 137.87 137.54 36.93 137.54 36.93 36.93 84.95 36.93 84.95 0"/>
+    <polygon fill="#F9C8CA" points="102.57 0 102.57 36.93 137.86 36.93 137.86 71.88 174.8 71.88 174.8 0"/>
+  </g>
+  <!-- Wordmark: reconstructed with the product system-font stack (no official
+       HireSweet wordmark SVG or brand typeface exists in this workspace). -->
+  <text x="50" y="31" fill="#1f2e77"
+        font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+        font-size="30" font-weight="700" letter-spacing="-0.5">hiresweet</text>
+</svg>

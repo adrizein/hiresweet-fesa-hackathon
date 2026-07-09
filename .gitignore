@@ -73,6 +73,11 @@ web_modules/
 # runtime data / PII (opportunities, signal queue, etc.) — never commit
 data/
 
+# Exception, narrowly scoped: the demo front ships its own fictional dataset
+# (no real company, no real person, no PII). Contract in app/data/CLAUDE.md.
+# The rule above still guards every other data/ directory, including runtime data.
+!app/data/
+
 # internal-only lead-analysis doc (names, deal amounts, dates) — never commit
 # only lead-analysis-reference.md (the anonymized/public-safe version) is tracked
 LEAD-ANALYSIS-REFERENCE.md
