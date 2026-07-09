@@ -1,0 +1,14 @@
+{
+  "name": "account-intel-server",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Backend for the Account Intelligence Tool (Agentic GTM Hackathon). Serves the accounts contract, accepts leads, enriches people, drafts outreach behind a fail-closed gate.",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}
