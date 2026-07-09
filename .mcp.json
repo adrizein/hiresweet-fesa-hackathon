@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "hubspot": {
+      "command": "sh",
+      "args": [
+        "-c",
+        "[ -f .env ] && . ./.env; t=\"${PRIVATE_APP_ACCESS_TOKEN:-$HUBSPOT_TOKEN}\"; [ -n \"$t\" ] || { echo 'HubSpot MCP: set HUBSPOT_TOKEN in .env at the repo root (see .env.example)' >&2; exit 1; }; PRIVATE_APP_ACCESS_TOKEN=\"$t\" exec npx -y @hubspot/mcp-server"
+      ]
+    }
+  }
+}
