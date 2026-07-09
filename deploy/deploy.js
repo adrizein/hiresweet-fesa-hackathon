@@ -203,7 +203,8 @@ async function main() {
   if (!APPLY) {
     log.plan(agent ? `update agent ${agent.id} (${agentParams.skills.length} skills)` : `create agent "${NAMES.agent}"`);
   } else if (agent) {
-    agent = await client.beta.agents.update(agent.id, agentParams);
+    // update requires the current version (optimistic concurrency).
+    agent = await client.beta.agents.update(agent.id, { ...agentParams, version: agent.version });
     log.updated(`agent ${agent.id} (v${agent.version}, ${agentParams.skills.length} skills)`);
   } else {
     agent = await client.beta.agents.create(agentParams);
