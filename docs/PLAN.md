@@ -70,11 +70,11 @@
 
 | Asset | Réutilisable pour | Attention |
 |-------|-------------------|-----------|
-| `MOTEUR-ANALYSE.md` (livré, poussé au repo) | Bloc A (recherche) + Bloc B (surbrillance, briefs, angles) | version 1.0, itérer si les résultats Sillage sont à côté |
-| Connecteur FullEnrich (référence `wake/`, pattern submit+poll validé, clé OK) | Bloc B enrichissement | l'API bulk est ASYNC, prévoir le poll |
-| Gate / kill-list copy (MOTEUR-ANALYSE §6) | Bloc C qualité drafts | c'est un différenciateur au pitch (l'agent qui refuse le slop) |
-| Skeleton PR #2 (serveur Express + contrats + tests) | Plomberie si utile | ⚠️ l'UI inbox NE correspond PLUS au produit (pivot vers vue compte/organigramme). Léo décide : merger pour la plomberie ou fermer et repartir de la structure du jour. Ne pas s'y accrocher. |
-| `demo-private/` (leads réels scorés) | Comptes de démo réalistes | ⛔ confidentiel, jamais dans le repo ; utiliser comme inspiration, pas comme data commit |
+| `criteria/lead-criteria.md` (livré) | Bloc A (recherche) + Bloc B (surbrillance, briefs, angles) | version 1.0, itérer si les résultats Sillage sont à côté |
+| Pattern connecteur FullEnrich (submit + poll, clé validée) | Bloc B enrichissement | l'API bulk est ASYNC, prévoir le poll |
+| Kill-list copy (`criteria/lead-criteria.md` §6) | Bloc C qualité drafts | c'est un différenciateur au pitch (l'agent qui refuse le slop) |
+| Skeleton PR #2 (serveur Express + contrats + tests) | Plomberie si utile | ⚠️ l'UI inbox ne correspond plus au produit (pivot vers vue compte/organigramme). Le capitaine décide : merger pour la plomberie ou fermer. |
+| Comptes de démo | Démo réaliste | Données fictives ou publiques uniquement dans ce repo (il sera public). Jamais de données clients réelles. |
 
 ## 7. Risques du jour (et parades)
 

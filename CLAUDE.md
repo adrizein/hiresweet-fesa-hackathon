@@ -113,7 +113,7 @@ Node + Express, a single-file vanilla HTML/CSS/JS inbox (no build step), `node:t
 
 - Code and comments in English.
 - **Secrets live in `.env`, never committed.** `.gitignore` covers `.env`, `data/`, `node_modules/`. `.env.example` is the template.
-- **Public-safe repo:** this repo may be made public at submission. No confidential data, no real client names, no candidate PII, no API keys, ever.
+- **PUBLIC repo (confirmed):** this repo WILL be public. No confidential data, no real client names, no candidate PII, no API keys, ever.
 - **Guardrails doctrine:** the agent must refuse to act on protected accounts or unverifiable claims. Draft-only. A human approves.
 - Keep the demo data realistic but fictional or consented.
 
