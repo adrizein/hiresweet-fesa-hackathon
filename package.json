@@ -12,6 +12,8 @@
     "inbox": "node src/cli.js inbox",
     "status": "node src/cli.js status",
     "reset": "node src/cli.js reset",
+    "platform:setup": "node src/platform/setup.js",
+    "platform:run": "node src/platform/run.js",
     "test": "node --test"
   },
   "dependencies": {
