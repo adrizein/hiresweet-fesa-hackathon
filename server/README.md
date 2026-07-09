@@ -37,6 +37,7 @@ Required to be accepted: `id`, `name`, `verdict.tier` (one of the 4 tiers), `ver
 | POST | `/api/leads` | Input point for Bloc A. Body = one account or an array. Valid entries are upserted, invalid ones reported. |
 | POST | `/api/enrich/:accountId` | FullEnrich. Body `{ "person": "Name" }` for one person, empty body = everyone missing an email. |
 | POST | `/api/draft` | Body `{ "account_id": "...", "person": "Name" }`. Runs the gate first, then drafts with Claude. |
+| POST | `/api/agents/sync` | Bridge with the agent backbone (`src/`). Body `{ "direction": "push" \| "pull" \| "both" }` (default both). Push feeds app accounts into the agent's power map (HUMAN tier becomes the `protected` flag, client contacts become `do_not_contact`), pull surfaces agent-found companies and scored leads as accounts in the app. |
 
 ### POST /api/leads (for Bloc A: push accounts, never open app.js)
 

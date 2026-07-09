@@ -12,6 +12,7 @@ import * as fullenrich from '../connectors/fullenrich.js';
 import * as claude from '../connectors/claude.js';
 import * as hubspot from '../connectors/hubspot.js';
 import * as sillage from '../connectors/sillage.js';
+import { pushAccountsToBackbone, pullBackboneToAccounts } from '../lib/backbone-sync.js';
 
 // Wrap async handlers so rejections reach the central error handler.
 const asyncH = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
@@ -140,6 +141,20 @@ export function apiRouter() {
       source: draft.source,
       draft: { subject: draft.subject, body: draft.body },
     });
+  }));
+
+  // Bridge with the agent backbone (src/). push = app accounts into the
+  // agent's power map (guards included), pull = agent findings into the app.
+  // Default is both, so one call keeps the two stores in sync for the demo.
+  router.post('/agents/sync', asyncH(async (req, res) => {
+    const direction = (req.body && req.body.direction) || 'both';
+    if (!['push', 'pull', 'both'].includes(direction)) {
+      return res.status(400).json({ error: 'direction must be push, pull or both' });
+    }
+    const result = {};
+    if (direction === 'push' || direction === 'both') result.push = await pushAccountsToBackbone();
+    if (direction === 'pull' || direction === 'both') result.pull = await pullBackboneToAccounts();
+    res.json(result);
   }));
 
   return router;
