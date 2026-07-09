@@ -1,0 +1,10 @@
+# Claude Managed Agents — environment (control plane).
+# Apply with the `ant` CLI (alternative to `npm run platform:setup`):
+#   ENV_ID=$(ant beta:environments create < platform/acquisition.environment.yaml --transform id -r)
+# Unrestricted egress so the hosted container can reach the Sillage / FullEnrich
+# MCP servers. Reused across agents.
+name: wake-acquisition-env
+config:
+  type: cloud
+  networking:
+    type: unrestricted

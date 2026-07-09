@@ -1,0 +1,12 @@
+[
+  {
+    "id": "rel-novapay",
+    "companyId": "co-novapay",
+    "targetPersonId": "p-karim-benali",
+    "strength": 0.9,
+    "connector": {
+      "name": "Alex M.",
+      "context": "placed two backend engineers at Novapay in 2024 and stayed close to Karim Benali"
+    }
+  }
+]
