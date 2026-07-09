@@ -1,0 +1,45 @@
+[
+  {
+    "id": "sig_demo_001",
+    "type": "champion_move",
+    "company": { "name": "Northwind Robotics", "domain": "northwind.io" },
+    "person": { "firstname": "Priya", "lastname": "Anand", "title": "VP Engineering", "linkedin_url": null },
+    "detail": "A known champion in your network is now connected to this account. Robotics scale-up, large recent round.",
+    "detected_at": "2026-07-09T09:00:00Z",
+    "source": "demo",
+    "raw": {}
+  },
+  {
+    "id": "sig_demo_002",
+    "type": "funding_round",
+    "company": { "name": "Lumen Grid", "domain": "lumengrid.io" },
+    "person": { "firstname": "Marco", "lastname": "Reyes", "title": "Co-founder & CTO", "linkedin_url": null },
+    "detail": "Series A announced this week. Energy data platform, tech team scaling.",
+    "detected_at": "2026-07-09T09:05:00Z",
+    "source": "demo",
+    "raw": {}
+  },
+  {
+    "id": "sig_demo_003",
+    "type": "hiring_wave",
+    "company": { "name": "Baseline Health", "domain": "baseline.health" },
+    "person": { "firstname": "Sara", "lastname": "Kellerman", "title": "Head of Engineering", "linkedin_url": null },
+    "detail": "6 engineering roles opened in the last 30 days. Digital health, post-seed.",
+    "detected_at": "2026-07-09T09:10:00Z",
+    "source": "demo",
+    "raw": {}
+  },
+  {
+    "id": "sig_demo_004",
+    "type": "competitor_engagement",
+    "company": { "name": "Corvex Systems", "domain": "corvex.io" },
+    "person": { "firstname": "Elias", "lastname": "Nord", "title": "Co-founder", "linkedin_url": null },
+    "detail": "Prospect engaged with competitor content on LinkedIn this week.",
+    "detected_at": "2026-07-09T09:15:00Z",
+    "source": "demo",
+    "raw": {
+      "expected": "blocked_by_guard",
+      "note": "Corvex is a protected account (see seeds/protected-accounts.json): the gate must refuse cold outreach and route to a human."
+    }
+  }
+]

@@ -1,0 +1,929 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wake — Opportunity Desk</title>
+<style>
+  /* ============================================================
+     WAKE — "Signal Desk"
+     Direction: a monitoring instrument, not a consumer inbox.
+     - Deep slate-ink field, warm paper cards floating on it.
+     - Mono utility face = machine metadata (what the AGENT emits).
+     - System sans = human-readable content (what a human reads).
+     - Hard functional color split: emerald=passed, coral=blocked.
+     ============================================================ */
+
+  :root {
+    /* Field + surfaces */
+    --ink:        #0e1418;   /* deep slate, not pure black */
+    --ink-2:      #131b21;
+    --rail:       #1e2a32;
+    --paper:      #f7f5f0;   /* warm paper card */
+    --paper-2:    #efece4;
+    --paper-line: #e2ddd1;
+
+    /* Text */
+    --text:       #171d21;
+    --text-soft:  #5b6670;
+    --text-mute:  #8a949c;
+    --on-ink:     #d9e0e5;
+    --on-ink-soft:#7f8d97;
+
+    /* Functional signal colors */
+    --pass:       #1f9d6b;   /* emerald */
+    --pass-bg:    #e7f4ee;
+    --pass-line:  #b9e0cd;
+    --block:      #d6402f;   /* coral-red */
+    --block-bg:   #fbeae7;
+    --block-line: #f0c3bb;
+
+    /* Signal type accents (one confident hue each) */
+    --champion:   #c8781e;   /* amber — a person moved */
+    --hiring:     #2f6ad6;   /* blue — a team is scaling */
+    --funding:    #6b3fa0;   /* violet — capital event (used sparingly, not gradient) */
+    --competitor: #b0344f;   /* rose — rival in the account */
+
+    --accent:     #f0b23a;   /* Wake mark accent (signal amber) */
+
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", "Menlo", "Consolas", monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", system-ui, sans-serif;
+
+    --shadow: 0 1px 0 rgba(255,255,255,.4) inset, 0 18px 40px -22px rgba(0,0,0,.55);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { margin: 0; }
+  body {
+    background:
+      radial-gradient(1200px 500px at 50% -8%, #17222a 0%, transparent 70%),
+      var(--ink);
+    color: var(--on-ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    min-height: 100vh;
+  }
+
+  .wrap { max-width: 840px; margin: 0 auto; padding: 0 20px 96px; }
+
+  /* ---------- Header ---------- */
+  header.desk {
+    position: sticky; top: 0; z-index: 40;
+    background: linear-gradient(180deg, rgba(14,20,24,.98) 70%, rgba(14,20,24,.86) 100%);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--rail);
+  }
+  .desk-inner { max-width: 840px; margin: 0 auto; padding: 18px 20px 16px; }
+
+  .brandline { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  .wake {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: -0.5px;
+    color: #fff;
+    display: inline-flex; align-items: center; gap: 9px;
+  }
+  .wake .pip {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 rgba(240,178,58,.7);
+    animation: pulse 2.4s infinite;
+  }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(240,178,58,.55); }
+    70%  { box-shadow: 0 0 0 9px rgba(240,178,58,0); }
+    100% { box-shadow: 0 0 0 0 rgba(240,178,58,0); }
+  }
+  .badge-hs {
+    font-family: var(--mono);
+    font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(240,178,58,.4);
+    border-radius: 3px; padding: 3px 7px;
+    align-self: center;
+  }
+  .tagline {
+    font-family: var(--sans);
+    font-size: 14px; color: var(--on-ink-soft);
+    margin: 9px 0 0; line-height: 1.4;
+  }
+
+  /* metrics rail */
+  .metrics {
+    display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap;
+  }
+  .metric {
+    font-family: var(--mono);
+    background: var(--ink-2);
+    border: 1px solid var(--rail);
+    border-radius: 6px;
+    padding: 9px 13px;
+    min-width: 0;
+  }
+  .metric .k {
+    font-size: 9.5px; letter-spacing: .13em; text-transform: uppercase;
+    color: var(--on-ink-soft); display: block; margin-bottom: 3px;
+  }
+  .metric .v { font-size: 19px; font-weight: 700; color: #fff; line-height: 1; }
+  .metric.chrono { border-color: rgba(240,178,58,.35); }
+  .metric.chrono .v { color: var(--accent); }
+  .metric.chrono .sub {
+    font-size: 10px; color: var(--on-ink-soft); margin-left: 6px; font-weight: 400;
+  }
+  .metric.gate .v.hold { color: var(--block); }
+
+  /* ---------- Feed ---------- */
+  .feedhead {
+    display: flex; align-items: center; gap: 10px;
+    margin: 30px 2px 14px;
+    font-family: var(--mono);
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--on-ink-soft);
+  }
+  .feedhead .line { flex: 1; height: 1px; background: var(--rail); }
+
+  /* ---------- Card ---------- */
+  .card {
+    position: relative;
+    background: var(--paper);
+    color: var(--text);
+    border-radius: 12px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1px solid var(--paper-line);
+    animation: rise .35s cubic-bezier(.2,.7,.3,1) both;
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .card.is-approved { opacity: .62; }
+  .card.is-rejected { opacity: .5; }
+  .card.is-blocked  { border-color: var(--block-line); }
+
+  /* left rail encodes state */
+  .card::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+    background: var(--sig, var(--rail));
+  }
+  .card.is-blocked::before { background: var(--block); width: 5px; }
+  .card.is-approved::before { background: var(--pass); }
+
+  .card-pad { padding: 18px 20px 20px 22px; }
+
+  /* signal header row */
+  .sig-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .sig-tag {
+    font-family: var(--mono);
+    font-size: 10.5px; letter-spacing: .09em; text-transform: uppercase;
+    font-weight: 600;
+    padding: 4px 9px; border-radius: 4px;
+    color: #fff; background: var(--sig, #333);
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .sig-tag .dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,.85); }
+  .sig-detail {
+    font-size: 13px; color: var(--text-soft); flex: 1; min-width: 140px;
+  }
+  .sig-when {
+    font-family: var(--mono); font-size: 11px; color: var(--text-mute); white-space: nowrap;
+  }
+
+  /* company + contact */
+  .co { margin-top: 15px; display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; flex-wrap: wrap; }
+  .co-name { font-size: 21px; font-weight: 700; letter-spacing: -0.3px; line-height: 1.1; }
+  .co-domain { font-family: var(--mono); font-size: 12px; color: var(--text-mute); margin-top: 3px; }
+
+  .contact {
+    text-align: right; min-width: 220px; flex: 1;
+  }
+  .contact .who { font-size: 14px; font-weight: 600; }
+  .contact .role { font-size: 12.5px; color: var(--text-soft); margin-top: 1px; }
+  .contact .rows { margin-top: 7px; display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+  .contact .em {
+    font-family: var(--mono); font-size: 12px; color: var(--text);
+    display: inline-flex; align-items: center; gap: 7px;
+  }
+  .verified {
+    font-family: var(--mono);
+    font-size: 9px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--pass); background: var(--pass-bg);
+    border: 1px solid var(--pass-line);
+    padding: 2px 6px; border-radius: 3px; white-space: nowrap;
+  }
+  .verified::before { content: "✓ "; }
+  .contact .ph { font-family: var(--mono); font-size: 12px; color: var(--text-mute); }
+
+  /* proof */
+  .proof {
+    margin-top: 16px;
+    background: var(--paper-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 7px 7px 0;
+    padding: 12px 15px;
+  }
+  .proof .q { font-size: 14px; line-height: 1.5; color: #2b3238; }
+  .proof .q::before { content: "\201C"; color: var(--accent); font-weight: 700; }
+  .proof .q::after  { content: "\201D"; color: var(--accent); font-weight: 700; }
+  .proof .src {
+    font-family: var(--mono); font-size: 10.5px; color: var(--text-mute);
+    margin-top: 7px; letter-spacing: .02em;
+  }
+  .proof .src::before { content: "↳ source: "; color: var(--text-soft); }
+
+  /* route — the path the agent CHOSE before writing.
+     Warm gold/amber family (distinct from the emerald gate). Cold = neutral. */
+  .route {
+    margin-top: 16px;
+    border-radius: 9px;
+    padding: 12px 15px;
+    border: 1px solid;
+  }
+  /* warm gold tokens (local to route; kept out of the emerald pass family) */
+  .route.warm {
+    background: #fbf3e0;
+    border-color: #ecd39b;
+  }
+  .route.cold {
+    background: var(--paper-2);
+    border-color: var(--paper-line);
+  }
+  .route-top { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+  .route-icon {
+    font-family: var(--mono); font-weight: 700; font-size: 12px;
+    width: 20px; height: 20px; border-radius: 5px; display: grid; place-items: center;
+    color: #fff; flex: none;
+  }
+  .route.warm .route-icon { background: var(--champion); }
+  .route.cold .route-icon { background: #9aa2a8; }
+  .route-label {
+    font-family: var(--mono); font-size: 12px; font-weight: 700;
+    letter-spacing: .05em; text-transform: uppercase;
+  }
+  .route.warm .route-label { color: #a1611a; }
+  .route.cold .route-label { color: var(--text-soft); }
+  .route-body { margin-top: 8px; }
+  .route-via {
+    font-family: var(--sans); font-size: 13.5px; color: var(--text);
+    display: flex; align-items: baseline; gap: 7px; flex-wrap: wrap;
+  }
+  .route-via .k {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    color: #a1611a; flex: none;
+  }
+  .route-via .name { font-weight: 700; }
+  .route-evidence {
+    font-size: 13px; line-height: 1.5; color: #4a4231; margin-top: 6px;
+  }
+  .route.cold .route-evidence { color: var(--text-soft); }
+
+  /* sequence accordion */
+  .seq { margin-top: 16px; border-top: 1px solid var(--paper-line); }
+  .seq-head {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .13em; text-transform: uppercase;
+    color: var(--text-mute); padding: 12px 0 6px;
+  }
+  .step { border-bottom: 1px solid var(--paper-line); }
+  .step:last-child { border-bottom: none; }
+  .step-btn {
+    width: 100%; text-align: left; background: none; border: none; cursor: pointer;
+    padding: 11px 2px; display: flex; align-items: center; gap: 12px;
+    font-family: var(--sans); color: var(--text);
+  }
+  .step-btn:hover .step-subj { color: #000; }
+  .step-n {
+    font-family: var(--mono); font-size: 11px; font-weight: 700;
+    color: var(--text-mute);
+    border: 1px solid var(--paper-line); border-radius: 4px;
+    width: 30px; height: 24px; display: grid; place-items: center; flex: none;
+  }
+  .step-subj { font-size: 13.5px; font-weight: 600; flex: 1; transition: color .12s; }
+  .step-day { font-family: var(--mono); font-size: 10.5px; color: var(--text-mute); }
+  .chev { color: var(--text-mute); font-size: 11px; transition: transform .18s; }
+  .step.open .chev { transform: rotate(90deg); }
+  .step-body {
+    display: none;
+    white-space: pre-wrap;
+    font-size: 13px; line-height: 1.62; color: #3a4249;
+    padding: 2px 4px 15px 44px;
+  }
+  .step.open .step-body { display: block; }
+
+  /* gate */
+  .gate {
+    margin-top: 18px; border-radius: 9px; padding: 13px 15px;
+    border: 1px solid;
+  }
+  .gate.ok    { background: var(--pass-bg);  border-color: var(--pass-line); }
+  .gate.hold  { background: var(--block-bg); border-color: var(--block-line); }
+  .gate-top { display: flex; align-items: center; gap: 9px; }
+  .gate-icon {
+    font-family: var(--mono); font-weight: 700; font-size: 12px;
+    width: 20px; height: 20px; border-radius: 5px; display: grid; place-items: center; color: #fff; flex: none;
+  }
+  .gate.ok .gate-icon   { background: var(--pass); }
+  .gate.hold .gate-icon { background: var(--block); }
+  .gate-label {
+    font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+  }
+  .gate.ok .gate-label   { color: var(--pass); }
+  .gate.hold .gate-label { color: var(--block); }
+  .gate-stamp {
+    margin-left: auto;
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .13em; text-transform: uppercase;
+    color: var(--block); border: 1.5px solid var(--block); border-radius: 4px;
+    padding: 3px 8px; transform: rotate(-2deg);
+  }
+  .gate ul { margin: 9px 0 0; padding: 0; list-style: none; }
+  .gate li {
+    font-family: var(--mono); font-size: 11.5px; line-height: 1.5;
+    padding-left: 18px; position: relative; color: #414a50;
+  }
+  .gate.ok li::before   { content: "✓"; position: absolute; left: 2px; color: var(--pass); font-weight: 700; }
+  .gate.hold li::before { content: "✕"; position: absolute; left: 2px; color: var(--block); font-weight: 700; }
+
+  /* actions */
+  .actions { margin-top: 16px; display: flex; gap: 10px; align-items: center; }
+  .btn {
+    font-family: var(--sans); font-size: 13.5px; font-weight: 600;
+    border-radius: 8px; padding: 10px 20px; cursor: pointer; border: 1px solid transparent;
+    transition: transform .08s, background .15s, box-shadow .15s;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-approve { background: var(--pass); color: #fff; box-shadow: 0 6px 16px -8px rgba(31,157,107,.8); }
+  .btn-approve:hover { background: #178a5c; }
+  .btn-reject { background: transparent; color: var(--text-soft); border-color: var(--paper-line); }
+  .btn-reject:hover { border-color: #c9c2b3; color: var(--text); }
+  .btn:focus-visible { outline: 2px solid var(--champion); outline-offset: 2px; }
+  .step-btn:focus-visible { outline: 2px solid var(--hiring); outline-offset: -2px; border-radius: 4px; }
+
+  .resolved {
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: .04em;
+    display: inline-flex; align-items: center; gap: 8px; padding: 8px 0;
+  }
+  .resolved.approved { color: var(--pass); }
+  .resolved.rejected { color: var(--text-mute); }
+  .resolved .mk {
+    width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center;
+    font-size: 11px; color: #fff;
+  }
+  .resolved.approved .mk { background: var(--pass); }
+  .resolved.rejected .mk { background: #b0a89a; }
+  .hold-note {
+    font-family: var(--mono); font-size: 11px; color: var(--block);
+    padding: 4px 0; letter-spacing: .02em;
+  }
+
+  /* empty / offline states */
+  .empty {
+    text-align: center; color: var(--on-ink-soft);
+    font-family: var(--mono); font-size: 13px; padding: 60px 0;
+  }
+  .offline {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--accent); opacity: .8;
+  }
+
+  @media (max-width: 560px) {
+    .contact { text-align: left; }
+    .contact .rows { align-items: flex-start; }
+    .co { flex-direction: column; }
+    .wake { font-size: 22px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<header class="desk">
+  <div class="desk-inner">
+    <div class="brandline">
+      <span class="wake"><span class="pip"></span>Wake</span>
+      <span class="badge-hs">HireSweet</span>
+    </div>
+    <p class="tagline">Every buying signal becomes a ready-to-send opportunity.</p>
+
+    <div class="metrics">
+      <div class="metric">
+        <span class="k">Open opportunities</span>
+        <span class="v" id="m-open">—</span>
+      </div>
+      <div class="metric gate">
+        <span class="k">Held by gate</span>
+        <span class="v hold" id="m-held">—</span>
+      </div>
+      <div class="metric">
+        <span class="k">Warm paths</span>
+        <span class="v" id="m-warm">—</span>
+      </div>
+      <div class="metric chrono">
+        <span class="k">Latest signal → opportunity</span>
+        <span class="v" id="m-chrono">—<span class="sub" id="m-chrono-sub"></span></span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="feedhead">
+    <span id="feed-status">Live feed</span>
+    <span class="line"></span>
+    <span class="offline" id="feed-offline" hidden>demo data</span>
+  </div>
+  <div id="feed"><div class="empty">Waiting for signals…</div></div>
+</main>
+
+<script>
+"use strict";
+
+// ---------- config ----------
+var API_BASE = "";           // same-origin API when served; falls back to mock in file://
+var POLL_MS  = 5000;
+
+// ---------- mock data (used when the API is unreachable, e.g. opened as a file) ----------
+var MOCK = [
+  {
+    id: "opp_8842",
+    signal: {
+      type: "champion_move",
+      detail: "VP Engineering left Payload and just joined as CTO — 6 weeks in, no ATS yet",
+      detected_at: iso(-42)   // seconds ago relative to created_at below
+    },
+    company: { name: "Northwind Robotics", domain: "northwind-robotics.com" },
+    contact: {
+      firstname: "Camille", lastname: "Rousseau", title: "Chief Technology Officer",
+      email: "camille.rousseau@northwind-robotics.com", email_status: "verified",
+      phone: "+33 6 41 82 07 33"
+    },
+    triage: { verdict: "T1", reasons: ["Champion move into a technical-buyer seat", "Series B robotics, hiring ramp likely"] },
+    route: {
+      route: "warm_intro",
+      via: "Oussama Ghanmi (Motier Ventures)",
+      evidence: "Motier led Northwind's Series B and Oussama sits on the board",
+      reasons: ["Investor-backed intro beats a cold email into a fresh CTO's inbox", "Oussama has replied to us on two prior intros"]
+    },
+    proof: {
+      narrative: "We placed 3 backend engineers at Vireo in under 3 weeks after their CTO transition — same founding-team-quality bar you'll want early.",
+      source: "deals-history · Vireo (2025-Q3, 3 placements, 19 days avg)"
+    },
+    sequence: [
+      { step: 1, subject: "Intro to Camille at Northwind?",
+        body: "Hi Oussama,\n\nMotier led Northwind's Series B, so you'd have the credibility here that a cold email wouldn't.\n\nCamille just stepped in as CTO — the first technical hires after a founder-led team are exactly where we help. Pre-qualified engineers, first profiles in under 5 days, 0€ if they don't hire.\n\nWould you be open to a quick intro? Happy to send a two-line forwardable blurb." },
+      { step: 2, subject: "The 3-week version",
+        body: "Quick proof point: after Vireo's CTO transition last year we placed 3 backend engineers in 19 days, all still there.\n\nHappy to show you the exact profiles we'd line up for Northwind — no commitment, 0€ if you don't hire." },
+      { step: 3, subject: "Closing the loop",
+        body: "I'll stop here so I'm not noise in your inbox, Camille.\n\nIf hiring engineers becomes a Q3 priority, reply \"go\" and I'll have a shortlist to you the same week." }
+    ],
+    gate: { ok: true, reasons: [
+      "C1: proof point is a real, traceable placement (Vireo)",
+      "C4: no unverifiable volume claims",
+      "guard: not an active client — cold outreach permitted",
+      "lang: FR-market prospect, EN allowed for CTO persona"
+    ]},
+    status: "pending",
+    created_at: iso(0)
+  },
+
+  {
+    id: "opp_8839",
+    signal: {
+      type: "funding_round",
+      detail: "Closed a 22M€ Series A — announced this morning, scaling engineering + GTM",
+      detected_at: iso(-58)
+    },
+    company: { name: "Lumen Grid", domain: "lumengrid.io" },
+    contact: {
+      firstname: "Théo", lastname: "Bianchi", title: "VP Talent",
+      email: "theo.bianchi@lumengrid.io", email_status: "verified",
+      phone: "+33 7 55 12 88 40"
+    },
+    triage: { verdict: "T1", reasons: ["Fresh capital = imminent hiring wave", "VP Talent is the exact economic buyer"] },
+    route: {
+      route: "warm_direct",
+      via: null,
+      evidence: "an engineer we placed at Aeront in 2024 reports to Théo today",
+      reasons: ["Shared placement gives a real, non-generic opening line", "No connector needed — Théo can vouch internally"]
+    },
+    proof: {
+      narrative: "Post-raise, most teams over-hire recruiters before over-hiring engineers. We placed 5 engineers at Aeront in the 8 weeks after their Series A without them growing the TA team.",
+      source: "deals-history · Aeront (2024-Q4, 5 placements)"
+    },
+    sequence: [
+      { step: 1, subject: "22M€ — congrats, now the hard part",
+        body: "Hi Théo,\n\nSaw the Series A this morning — congratulations. The stretch right after a raise is where hiring plans meet reality fastest.\n\nWe help teams add senior engineers without expanding the TA function: pre-qualified profiles, first ones in under a week, 15% on success and 0€ otherwise.\n\nOpen to a short call?" },
+      { step: 2, subject: "How Aeront did it",
+        body: "After Aeront raised their A, we placed 5 engineers over 8 weeks — their TA team stayed the same size.\n\nI can map what that looks like for Lumen Grid's next two quarters. 15 minutes?" },
+      { step: 3, subject: "Last one from me",
+        body: "Not trying to crowd your inbox during a busy week, Théo.\n\nIf senior engineering hiring is on the Q3 board, reply and I'll send a first shortlist within days." }
+    ],
+    gate: { ok: true, reasons: [
+      "C1: proof point traceable (Aeront)",
+      "C4: '5 placements' matches ledger, no inflation",
+      "guard: not an active client — cold outreach permitted"
+    ]},
+    status: "pending",
+    created_at: iso(-2)
+  },
+
+  {
+    id: "opp_8836",
+    signal: {
+      type: "competitor_engagement",
+      detail: "Posted 4 senior backend roles on their careers page in 10 days — currently a HireSweet client",
+      detected_at: iso(-37)
+    },
+    company: { name: "Corvex Systems", domain: "corvex.systems" },
+    contact: {
+      firstname: "Amélie", lastname: "Fontaine", title: "Head of Engineering",
+      email: "amelie.fontaine@corvex.systems", email_status: "verified",
+      phone: "+33 6 09 74 51 22"
+    },
+    triage: { verdict: "T2", reasons: ["Strong hiring signal", "BUT account is a live client — routing conflict"] },
+    route: {
+      route: "cold",
+      via: null,
+      evidence: null,
+      reasons: ["No warm connector found in the graph", "Moot anyway — account is a live client, outreach is blocked"]
+    },
+    proof: {
+      narrative: "Existing relationship with the Corvex account — social proof would be internal and must not be used for cold outreach.",
+      source: "context-clients · Corvex (active, owner: Sales)"
+    },
+    sequence: [
+      { step: 1, subject: "[HELD — not sent]",
+        body: "Draft was generated but never queued. The gate blocked delivery before any email could leave the system. See the hold reasons below." }
+    ],
+    gate: { ok: false, reasons: [
+      "guard: active client — cold outreach forbidden, route to the existing account owner instead",
+      "C4: unverifiable volume claim (\"fastest-growing team in the sector\") removed but signal still routes to conflict",
+      "policy: no net-new sequence to an account already in an open deal"
+    ]},
+    status: "blocked",
+    created_at: iso(-1)
+  },
+
+  {
+    id: "opp_8831",
+    signal: {
+      type: "hiring_wave",
+      detail: "Opened 7 engineering roles this quarter, 3 senior — no in-house recruiter listed",
+      detected_at: iso(-49)
+    },
+    company: { name: "Baseline Health", domain: "baselinehealth.co" },
+    contact: {
+      firstname: "Marc", lastname: "Delcourt", title: "Co-founder & CEO",
+      email: "marc@baselinehealth.co", email_status: "verified",
+      phone: "+33 6 62 30 19 77"
+    },
+    triage: { verdict: "T1", reasons: ["Founder-led hiring, no recruiter = high pain", "Healthtech, senior scarcity"] },
+    route: {
+      route: "cold",
+      via: null,
+      evidence: null,
+      reasons: ["No shared placement or connector in the graph yet", "Founder is directly reachable — direct cold outreach is the best angle"]
+    },
+    proof: {
+      narrative: "Founder-led hiring at Meso looked identical — we became their pipeline for two quarters and placed 4 engineers, time-to-hire ~3 weeks.",
+      source: "deals-history · Meso (2025-Q1, 4 placements, 21 days avg)"
+    },
+    sequence: [
+      { step: 1, subject: "7 roles, no recruiter — I can help, Marc",
+        body: "Hi Marc,\n\nNoticed Baseline has 7 engineering roles open and no recruiter in the loop — as a founder that's usually your evenings disappearing.\n\nWe run your senior pipeline for you: pre-qualified engineers, first profiles in under 5 days, 15% on success, 0€ if no hire.\n\n15 minutes this week?" },
+      { step: 2, subject: "How Meso handled the same moment",
+        body: "Another founder-led team, Meso, was in your exact spot last year. We placed 4 engineers over two quarters, ~3 weeks each.\n\nI can show you the first profiles we'd line up for Baseline. Worth a look?" },
+      { step: 3, subject: "I'll leave it here",
+        body: "Won't keep pinging you, Marc.\n\nIf senior hiring is slowing you down this quarter, reply \"go\" and a shortlist lands within days." }
+    ],
+    gate: { ok: true, reasons: [
+      "C1: proof point traceable (Meso)",
+      "C4: metrics match ledger",
+      "guard: not an active client — cold outreach permitted"
+    ]},
+    status: "approved",
+    created_at: iso(-3)
+  }
+];
+
+// build a timestamp helper: offsetSec relative to "now"
+function iso(offsetSec) {
+  return new Date(Date.now() + offsetSec * 1000).toISOString();
+}
+
+// ---------- state ----------
+var state = { items: [], usingMock: false };
+var openSteps = {};   // remembers which accordion steps are open across re-renders
+
+// ---------- labels ----------
+var SIGNAL_META = {
+  champion_move:          { label: "Champion move",         color: "var(--champion)" },
+  hiring_wave:            { label: "Hiring wave",           color: "var(--hiring)" },
+  funding_round:          { label: "Funding round",         color: "var(--funding)" },
+  competitor_engagement:  { label: "Competitor engagement", color: "var(--competitor)" }
+};
+
+// ---------- fetch ----------
+function load() {
+  fetchOpps()
+    .then(function (data) {
+      state.items = normalize(data);
+      state.usingMock = false;
+      render();
+    })
+    .catch(function () {
+      // fallback: keep the page beautiful even served from file://
+      if (!state.items.length || state.usingMock) {
+        state.items = normalize(MOCK);
+        state.usingMock = true;
+        render();
+      }
+    });
+}
+
+function fetchOpps() {
+  return fetch(API_BASE + "/api/opportunities", { headers: { "Accept": "application/json" } })
+    .then(function (r) {
+      if (!r.ok) throw new Error("bad status " + r.status);
+      return r.json();
+    })
+    .then(function (j) {
+      // accept either [] or { opportunities: [] }
+      var arr = Array.isArray(j) ? j : (j && j.opportunities) || [];
+      if (!arr.length) throw new Error("empty");
+      return arr;
+    });
+}
+
+function normalize(arr) {
+  return (arr || []).map(function (o) {
+    o.signal   = o.signal   || {};
+    o.company  = o.company  || {};
+    o.contact  = o.contact  || {};
+    o.triage   = o.triage   || { verdict: "", reasons: [] };
+    o.route    = o.route    || null;   // absent on legacy data — card renders without a route block
+    o.proof    = o.proof    || {};
+    o.sequence = o.sequence || [];
+    o.gate     = o.gate     || { ok: true, reasons: [] };
+    o.status   = o.status   || (o.gate && o.gate.ok === false ? "blocked" : "pending");
+    return o;
+  });
+}
+
+// ---------- latency chrono ----------
+function latency(o) {
+  var a = Date.parse(o.signal && o.signal.detected_at);
+  var b = Date.parse(o.created_at);
+  if (isNaN(a) || isNaN(b) || b < a) return null;
+  return Math.round((b - a) / 1000);   // seconds
+}
+function fmtDuration(sec) {
+  if (sec == null) return "—";
+  if (sec < 90) return sec + "s";
+  var m = Math.floor(sec / 60), s = sec % 60;
+  if (m < 60) return m + "m " + (s ? s + "s" : "").trim();
+  var h = Math.floor(m / 60); m = m % 60;
+  return h + "h " + m + "m";
+}
+
+// ---------- render ----------
+function render() {
+  var feed = document.getElementById("feed");
+
+  var open = state.items.filter(function (o) { return o.status === "pending"; }).length;
+  var held = state.items.filter(function (o) { return o.status === "blocked"; }).length;
+  var warm = state.items.filter(function (o) {
+    return o.route && o.route.route && o.route.route !== "cold";
+  }).length;
+
+  document.getElementById("m-open").textContent = open;
+  document.getElementById("m-held").textContent = held;
+  document.getElementById("m-warm").textContent = warm;
+
+  // latest arrived opportunity = max created_at
+  var latest = state.items.slice().sort(function (a, b) {
+    return Date.parse(b.created_at) - Date.parse(a.created_at);
+  })[0];
+  var chronoEl = document.getElementById("m-chrono");
+  var subEl = document.getElementById("m-chrono-sub");
+  if (latest) {
+    var lat = latency(latest);
+    chronoEl.firstChild.nodeValue = fmtDuration(lat);
+    subEl.textContent = latest.company && latest.company.name ? latest.company.name : "";
+  }
+
+  // feed status
+  document.getElementById("feed-status").textContent =
+    state.usingMock ? "Feed" : "Live feed";
+  document.getElementById("feed-offline").hidden = !state.usingMock;
+
+  if (!state.items.length) {
+    feed.innerHTML = '<div class="empty">No open opportunities. The desk is clear.</div>';
+    return;
+  }
+
+  // newest first
+  var ordered = state.items.slice().sort(function (a, b) {
+    return Date.parse(b.created_at) - Date.parse(a.created_at);
+  });
+
+  feed.innerHTML = "";
+  ordered.forEach(function (o) { feed.appendChild(cardEl(o)); });
+}
+
+function el(tag, cls, txt) {
+  var n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (txt != null) n.textContent = txt;
+  return n;
+}
+
+function cardEl(o) {
+  var meta = SIGNAL_META[o.signal.type] || { label: o.signal.type || "signal", color: "var(--rail)" };
+  var blocked = o.status === "blocked";
+  var approved = o.status === "approved";
+  var rejected = o.status === "rejected";
+
+  var card = el("div", "card"
+    + (blocked ? " is-blocked" : "")
+    + (approved ? " is-approved" : "")
+    + (rejected ? " is-rejected" : ""));
+  card.style.setProperty("--sig", meta.color);
+
+  var pad = el("div", "card-pad");
+
+  // --- signal row ---
+  var sr = el("div", "sig-row");
+  var tag = el("span", "sig-tag");
+  tag.style.background = meta.color;
+  tag.appendChild(el("span", "dot"));
+  tag.appendChild(document.createTextNode(meta.label));
+  sr.appendChild(tag);
+  sr.appendChild(el("span", "sig-detail", o.signal.detail || ""));
+  var lat = latency(o);
+  sr.appendChild(el("span", "sig-when", lat != null ? "captured → drafted in " + fmtDuration(lat) : ""));
+  pad.appendChild(sr);
+
+  // --- company + contact ---
+  var co = el("div", "co");
+  var coL = el("div", "co-left");
+  coL.appendChild(el("div", "co-name", o.company.name || "Unknown company"));
+  coL.appendChild(el("div", "co-domain", o.company.domain || ""));
+  co.appendChild(coL);
+
+  var c = o.contact;
+  var ct = el("div", "contact");
+  ct.appendChild(el("div", "who", ((c.firstname || "") + " " + (c.lastname || "")).trim()));
+  ct.appendChild(el("div", "role", c.title || ""));
+  var rows = el("div", "rows");
+  var emLine = el("div", "em");
+  emLine.appendChild(document.createTextNode(c.email || ""));
+  if ((c.email_status || "").toLowerCase() === "verified") {
+    emLine.appendChild(el("span", "verified", "verified by FullEnrich"));
+  }
+  rows.appendChild(emLine);
+  if (c.phone) rows.appendChild(el("div", "ph", c.phone));
+  ct.appendChild(rows);
+  co.appendChild(ct);
+  pad.appendChild(co);
+
+  // --- proof ---
+  if (o.proof && (o.proof.narrative || o.proof.source)) {
+    var pr = el("div", "proof");
+    if (o.proof.narrative) pr.appendChild(el("div", "q", o.proof.narrative));
+    if (o.proof.source) pr.appendChild(el("div", "src", o.proof.source));
+    pad.appendChild(pr);
+  }
+
+  // --- route (the path the agent CHOSE before writing) ---
+  var routeKind = o.route && o.route.route;   // may be undefined on legacy data
+  if (routeKind) {
+    var isWarm = routeKind !== "cold";
+    var rt = el("div", "route " + (isWarm ? "warm" : "cold"));
+
+    var rTop = el("div", "route-top");
+    rTop.appendChild(el("div", "route-icon", isWarm ? "◆" : "·"));
+    var rLabel =
+      routeKind === "warm_intro"  ? "Warm path: intro request" :
+      routeKind === "warm_direct" ? "Warm path: shared history" :
+                                    "Cold outreach, best angle";
+    rTop.appendChild(el("div", "route-label", rLabel));
+    rt.appendChild(rTop);
+
+    var rBody = el("div", "route-body");
+    if (routeKind === "warm_intro" && o.route.via) {
+      var via = el("div", "route-via");
+      via.appendChild(el("span", "k", "via"));
+      via.appendChild(el("span", "name", o.route.via));
+      rBody.appendChild(via);
+    }
+    if (o.route.evidence) rBody.appendChild(el("div", "route-evidence", o.route.evidence));
+    rt.appendChild(rBody);
+    pad.appendChild(rt);
+  }
+
+  // --- sequence accordion ---
+  if (o.sequence && o.sequence.length) {
+    var seq = el("div", "seq");
+    seq.appendChild(el("div", "seq-head",
+      routeKind === "warm_intro" ? "Intro request draft" : "3-mail sequence"));
+    o.sequence.forEach(function (s, i) {
+      var stepKey = o.id + ":" + (s.step != null ? s.step : i);
+      var isOpen = !!openSteps[stepKey];
+      var step = el("div", "step" + (isOpen ? " open" : ""));
+
+      var btn = el("button", "step-btn");
+      btn.type = "button";
+      btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      btn.appendChild(el("span", "step-n", String(s.step != null ? s.step : i + 1)));
+      btn.appendChild(el("span", "step-subj", s.subject || "(no subject)"));
+      btn.appendChild(el("span", "step-day", stepDay(s.step != null ? s.step : i + 1)));
+      btn.appendChild(el("span", "chev", "▶"));
+
+      var body = el("div", "step-body", s.body || "");
+
+      btn.addEventListener("click", function () {
+        var nowOpen = !step.classList.contains("open");
+        step.classList.toggle("open", nowOpen);
+        btn.setAttribute("aria-expanded", nowOpen ? "true" : "false");
+        openSteps[stepKey] = nowOpen;
+      });
+
+      step.appendChild(btn);
+      step.appendChild(body);
+      seq.appendChild(step);
+    });
+    pad.appendChild(seq);
+  }
+
+  // --- gate ---
+  var gate = el("div", "gate " + (o.gate.ok ? "ok" : "hold"));
+  var gt = el("div", "gate-top");
+  gt.appendChild(el("div", "gate-icon", o.gate.ok ? "✓" : "!"));
+  gt.appendChild(el("div", "gate-label", o.gate.ok ? "QA gate passed" : "QA gate blocked delivery"));
+  if (!o.gate.ok) gt.appendChild(el("div", "gate-stamp", "Agent held this"));
+  gate.appendChild(gt);
+  if (o.gate.reasons && o.gate.reasons.length) {
+    var ul = el("ul");
+    o.gate.reasons.forEach(function (r) { ul.appendChild(el("li", null, r)); });
+    gate.appendChild(ul);
+  }
+  pad.appendChild(gate);
+
+  // --- actions / resolution ---
+  if (approved) {
+    var ra = el("div", "resolved approved");
+    var mk = el("span", "mk", "✓"); ra.appendChild(mk);
+    ra.appendChild(document.createTextNode("Approved — sequence queued to send"));
+    pad.appendChild(ra);
+  } else if (rejected) {
+    var rr = el("div", "resolved rejected");
+    var mk2 = el("span", "mk", "✕"); rr.appendChild(mk2);
+    rr.appendChild(document.createTextNode("Rejected — opportunity discarded"));
+    pad.appendChild(rr);
+  } else if (blocked) {
+    pad.appendChild(el("div", "hold-note", "Approval disabled. The agent will not send this — route to the account owner."));
+    var acts0 = el("div", "actions");
+    var rej0 = el("button", "btn btn-reject", "Dismiss");
+    rej0.type = "button";
+    rej0.addEventListener("click", function () { act(o, "reject"); });
+    acts0.appendChild(rej0);
+    pad.appendChild(acts0);
+  } else {
+    var acts = el("div", "actions");
+    var ap = el("button", "btn btn-approve", "Approve & send");
+    ap.type = "button";
+    ap.addEventListener("click", function () { act(o, "approve"); });
+    var rj = el("button", "btn btn-reject", "Reject");
+    rj.type = "button";
+    rj.addEventListener("click", function () { act(o, "reject"); });
+    acts.appendChild(ap);
+    acts.appendChild(rj);
+    pad.appendChild(acts);
+  }
+
+  card.appendChild(pad);
+  return card;
+}
+
+// day cadence label for the sequence steps (structural: order carries meaning)
+function stepDay(n) {
+  if (n <= 1) return "day 0";
+  if (n === 2) return "day 3";
+  if (n === 3) return "day 7";
+  return "day " + ((n - 1) * 3);
+}
+
+// ---------- actions ----------
+function act(o, kind) {
+  // optimistic update so the live demo feels instant
+  o.status = kind === "approve" ? "approved" : "rejected";
+  render();
+
+  var url = API_BASE + "/api/opportunities/" + encodeURIComponent(o.id) + "/" + kind;
+  fetch(url, { method: "POST", headers: { "Content-Type": "application/json" } })
+    .catch(function () { /* offline demo: optimistic state already applied */ });
+}
+
+// ---------- boot ----------
+load();
+setInterval(load, POLL_MS);
+</script>

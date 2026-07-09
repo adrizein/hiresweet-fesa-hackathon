@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://wake.local/schemas/signal.schema.json",
+  "title": "Signal",
+  "description": "Canonical envelope produced by lib/normalize-signal.js for any inbound buying-signal payload (e.g. from Sillage). This is the fixed contract between the webhook ingest layer and the pipeline.",
+  "type": "object",
+  "required": ["id", "type", "company", "person", "detail", "detected_at", "source", "raw"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique signal id, format sig_<timestamp>_<random>.",
+      "pattern": "^sig_"
+    },
+    "type": {
+      "type": "string",
+      "description": "Inferred signal category. 'other' when no keyword match is found.",
+      "enum": [
+        "champion_move",
+        "job_change",
+        "hiring_wave",
+        "funding_round",
+        "competitor_engagement",
+        "other"
+      ]
+    },
+    "company": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": ["string", "null"] },
+        "domain": { "type": ["string", "null"] }
+      },
+      "required": ["name", "domain"]
+    },
+    "person": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "firstname": { "type": ["string", "null"] },
+        "lastname": { "type": ["string", "null"] },
+        "title": { "type": ["string", "null"] },
+        "linkedin_url": { "type": ["string", "null"] }
+      },
+      "required": ["firstname", "lastname", "title", "linkedin_url"]
+    },
+    "detail": {
+      "type": "string",
+      "description": "Free-text description of the signal, as close to the source wording as possible."
+    },
+    "detected_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of when the signal was detected upstream (falls back to ingest time if unknown)."
+    },
+    "source": {
+      "type": "string",
+      "description": "Origin of the signal. 'sillage' for the hackathon integration; kept generic so other feeds can plug in."
+    },
+    "raw": {
+      "type": "object",
+      "description": "Original, unmodified payload as received, kept for audit/debug.",
+      "additionalProperties": true
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "wake",
+  "version": "0.1.0",
+  "description": "Event-driven AI SDR agent: buying signal in, qualified opportunity draft out.",
+  "private": true,
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "demo": "node scripts/send-demo.mjs",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "optionalDependencies": {
+    "dotenv": "^16.4.5"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

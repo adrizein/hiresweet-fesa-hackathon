@@ -1,0 +1,143 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://wake.local/schemas/opportunity.schema.json",
+  "title": "Opportunity",
+  "description": "Output of the pipeline's publish step, persisted in data/opportunities.json and surfaced to the human inbox for approve/reject. This is the fixed contract between the pipeline and the UI/CRM writer.",
+  "type": "object",
+  "required": [
+    "id",
+    "signal",
+    "company",
+    "contact",
+    "triage",
+    "route",
+    "proof",
+    "sequence",
+    "gate",
+    "status",
+    "created_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique opportunity id, format opp_<timestamp>_<random>."
+    },
+    "signal": {
+      "type": "object",
+      "description": "Summary of the source Signal (see signal.schema.json) that triggered this opportunity. Embedded so the inbox can render the signal badge and the signal-to-opportunity latency without a second lookup.",
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string" },
+        "detail": { "type": ["string", "null"] },
+        "detected_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "type", "detected_at"]
+    },
+    "company": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": ["string", "null"] },
+        "domain": { "type": ["string", "null"] }
+      },
+      "required": ["name", "domain"]
+    },
+    "contact": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "firstname": { "type": ["string", "null"] },
+        "lastname": { "type": ["string", "null"] },
+        "title": { "type": ["string", "null"] },
+        "linkedin_url": { "type": ["string", "null"] },
+        "email": { "type": ["string", "null"] },
+        "phone": { "type": ["string", "null"] }
+      },
+      "required": ["firstname", "lastname", "title", "linkedin_url"],
+      "description": "email/phone are optional, filled in by the enrichment step when available."
+    },
+    "triage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "verdict": {
+          "type": "string",
+          "enum": ["T1", "T2", "T3"],
+          "description": "T1: protected/complex account, route to a human, never cold-sequence. T2: agent may sequence. T3: below ICP bar or needs enrichment."
+        },
+        "reasons": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["verdict", "reasons"]
+    },
+    "route": {
+      "type": "object",
+      "description": "The warmest-path decision, computed BEFORE any copy is written. warm_intro: draft an intro request to the connector instead of contacting the target. warm_direct: real shared history with the target, use it. cold: last resort.",
+      "additionalProperties": false,
+      "properties": {
+        "route": { "type": "string", "enum": ["warm_intro", "warm_direct", "cold"] },
+        "via": { "type": ["string", "null"], "description": "The connector (person/fund) for warm_intro, or null." },
+        "evidence": { "type": ["string", "null"], "description": "Traceable relationship evidence (placement, past deal contact, common investor, past thread)." },
+        "reasons": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["route", "via", "evidence", "reasons"]
+    },
+    "proof": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "narrative": {
+          "type": "string",
+          "description": "Short, specific social-proof narrative to ground the outreach (e.g. a relevant past result). Empty string if none found."
+        },
+        "source": {
+          "type": "string",
+          "description": "Where the proof narrative came from (engine name, dataset id, or 'none')."
+        }
+      },
+      "required": ["narrative", "source"]
+    },
+    "sequence": {
+      "type": "array",
+      "description": "Drafted outreach sequence, typically 3 steps.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "step": { "type": "integer", "minimum": 1 },
+          "subject": { "type": "string" },
+          "body": { "type": "string" }
+        },
+        "required": ["step", "subject", "body"]
+      }
+    },
+    "gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ok": {
+          "type": "boolean",
+          "description": "true = passed QA gate and is eligible to publish as a live opportunity. false = blocked."
+        },
+        "reasons": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["ok", "reasons"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "approved", "rejected", "blocked"],
+      "description": "Human-in-the-loop status. 'blocked' is set automatically when gate.ok is false; blocked items are shown in the inbox as agent refusals (no approve action available)."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
