@@ -1,6 +1,8 @@
 # Wake, Agentic GTM Hackathon (working title)
 
 > Read this file at the start of every Claude Code session on this repo.
+> `src/*` and `platform/` each have their own `CLAUDE.md` with component-level detail —
+> read the one for the directory you're touching before changing its code.
 
 ## What this project is
 
@@ -29,85 +31,107 @@ One-day build for the **Agentic GTM Hackathon** (Anthropic x FullEnrich x Sillag
 - **Criterion 1** is where "genuinely useful to a real GTM team" wins. Keep it grounded in a real revenue use case.
 - **Criterion 4** is won by making the invisible visible: a real signal firing, a record appearing, a guardrail visibly refusing a bad action, a non-engineer operating it.
 
-## Tools in the architecture
+## What's actually built
 
-Two sides, one brain. Data tools feed the agent; activation tools are how it acts. **Sillage and FullEnrich do not send. Gamma and Gradium do not decide. Claude is the orchestrator in the middle.**
+Two run modes, same guardrails, same store:
 
-```
-        DATA IN                          BRAIN                        ACTIVATION OUT
-  Sillage   (signal + power map) --\                          /--> Gmail / HubSpot  (text draft)
-                                     >--> Claude (Anthropic) --+--> Gamma            (visual asset)
-  FullEnrich (verified contact) ---/     triage, route,       \--> Gradium          (voice note)
-                                         gate, orchestrate
-```
+1. **Local backbone** — `npm start` (`src/cli.js`). Three deterministic tiers
+   (`src/signals/` → `src/processing/` → `src/actions/`) run in-process; Claude
+   is called per-strategy for scoring/drafting (`src/backbone/llm.js`), with a
+   heuristic fallback whenever `ANTHROPIC_API_KEY` is absent. Full detail: **README.md**.
+2. **Claude Managed Agents** — `npm run platform:setup` then `npm run platform:run`
+   (`src/platform/`). Same tier-3 decision (route / enrich / craft), but hosted:
+   Anthropic runs the agent loop, the agent calls Sillage + FullEnrich itself as
+   MCP servers, and proposes activations through host-side custom tools whose
+   handlers run in *our* process. Full detail: **docs/CLAUDE-PLATFORM.md**.
 
-**Tiering (so we do not build a twelve-headed monster):**
-- **Core loop (must-have):** Sillage -> Claude -> FullEnrich -> Gmail/HubSpot. This alone satisfies the "use all three sponsors" rule (Sillage + FullEnrich + Anthropic) and the acquisition track.
-- **Activation high-notes (optional modules, win the side challenges):** Gamma (best-use-of-Gamma) and Gradium (best-use-of-Gradium). Add them once the core loop runs. They turn "the agent drafts an email" into "the agent produces a multi-modal, personalized activation", which is the memorable part of the demo.
-
-### Data in
-
-- **Sillage** (`SILLAGE_API_KEY`): the signal source. Champion moves, hiring waves, competitor engagement, funding rounds, job changes, plus a power map of stakeholders (decision maker / champion / do-not-contact) over up to ~20 tracked accounts per workspace. MCP and V2 API. Base URL / endpoints / signal schema come from the 9:00 onboarding.
-  - **Plugs into:** `triage` (is this signal worth acting on?) and `route` (the power map tells us who the real stakeholders and do-not-contacts are).
-  - **Deep use:** filter signals by power-map role, corroborate several signal types on one account before acting.
-- **FullEnrich** (`FULLENRICH_API_KEY`, or MCP via OAuth): verified emails + phones + people/company data. REST v2 base `https://app.fullenrich.com/api/v2`, auth `Authorization: Bearer <key>`. Bulk enrichment is async (POST to start, GET to poll). Check `/account/credits` before large batches.
-  - **Plugs into:** `enrich` (the target, and the connector when routing a warm intro).
-  - **Deep use:** company lookup -> people search cascade; reverse-email to disambiguate; budget credits before a batch.
-
-### Brain
-
-- **Claude (Anthropic)** (`ANTHROPIC_API_KEY`): the orchestrator. All the depth lives here: the routing decision, the guardrails, the copy drafting, the composition of every tool. This is what makes it an agent and not a Zapier chain.
-  - **Plugs into:** `triage`, `route`, `craft`, `gate`.
-
-### Activation out
-
-- **Gmail / HubSpot** (`HUBSPOT_TOKEN`): the text channel. Claude drafts an email into Gmail and/or creates a HubSpot task. **Never auto-send. A human approves.**
-  - **Plugs into:** `publish`.
-- **Gamma** (`GAMMA_API_KEY`): generates polished visual assets (presentations, documents, one-pagers, micro-sites). Auth header `X-API-KEY` (not Bearer), account Pro/Ultra/Teams/Business. Async: `POST /v1.0/generations` (params: `inputText`, `format`, `numCards`, `textMode`, `exportAs`) returns a `generationId`; poll `GET /v1.0/generations/{id}` every ~5s until completed; response gives `gammaUrl` + `exportUrl` (pdf) + credits used/remaining. `GET /themes` lists themes. Base URL per developers.gamma.app.
-  - **Plugs into:** the activation layer (a new `asset` step, or inside `craft`). When the route calls for value-first outreach, the agent generates a **personalized one-pager or deck for the target** (for a hiring signal: "here is how we would staff your team", branded) and the email links to it. Also use it to auto-generate our own pitch deck.
-  - **Deep use / why it wins:** the deck is generated FROM the enriched signal (company + role + why-now), so no two prospects get the same asset. That is a genuine "best use of Gamma", not a static template.
-- **Gradium** (`GRADIUM_API_KEY`): voice AI, ultra low latency (text-to-speech, speech-to-text, voice cloning). The "phone" leg of multi-channel outreach (Track 1 explicitly lists email, LinkedIn, phone).
-  - **Plugs into:** the activation layer (a new `voice` output inside `craft`). Renders a **personalized voice note / voicemail** from the drafted copy (optionally in a cloned voice), or reads the 30-second call brief aloud to the rep before they dial.
-  - **Guardrail:** consent-gated, never place an automated call without consent. Default = a voice note the human chooses to send, or a briefing for the rep. This keeps it on the right side of the Code of Conduct while still winning "best use of Gradium".
-
-## The pipeline (working direction, arbitrated by the captain)
+Don't duplicate the architecture write-up here — read those two docs (and the
+`CLAUDE.md` in the directory you're editing) before changing pipeline code.
 
 ```
-signal
-  -> triage        is it worth acting on? guards (protected account -> route to a human)
-  -> route         warmest path: warm_intro (ask a connector) > warm_direct (shared history) > cold
-  -> enrich        FullEnrich on the target, and on the connector when routing an intro
-  -> proof/value   a specific, honest reason to reach out (or something of value to send)
-  -> craft         multi-modal activation: email + LinkedIn + a 30s call brief,
-                   optional Gamma asset (personalized one-pager/deck) + Gradium voice note
-  -> gate          fail-closed QA: if it does not explicitly pass, it is blocked, never sent
-  -> inbox         a human approves or rejects in one click
-  -> CRM           draft only, plus a follow-up task
+tiers 1-2 (local, deterministic)         tier 3: EITHER local planners (src/actions)
+signals ─▶ processing ─▶ store ─roster─▶          OR a hosted Claude agent (src/platform)
+                                          │
+                                          ▼
+                     fail-closed gate (src/backbone/gate.js, host-side, always)
+                                          │
+                                          ▼
+                          inbox (human approves or rejects — nothing auto-sends)
 ```
 
-The "route" step (choosing a warm path before writing any copy) and the "gate" step (refusing to send bad outreach) are the two things that make this an agent, not a mail merge. Protect them.
+Sponsor tools, as actually wired today:
 
-## Deep-usage ideas (to score criteria 2 and 3)
+- **Sillage** (`SILLAGE_API_KEY`) — fixtures by default; live V2 REST once
+  keyed (`src/backbone/clients/sillage.js`). Feeds `src/signals/*`. On the
+  platform path it is *also* handed to the hosted agent directly as an MCP
+  server (`SILLAGE_MCP_URL`).
+- **FullEnrich** (`FULLENRICH_API_KEY`) — live credits check is wired
+  (`/account/credits`); person enrichment still reads the fixture map pending
+  the async bulk flow (`POST /contact/enrich/bulk` + poll — TODO, tagged in
+  `src/backbone/clients/fullenrich.js`). Feeds `src/processing/20-enrich-contacts.js`,
+  budget-aware. On the platform path the hosted agent calls FullEnrich MCP
+  itself and writes verified contacts back via the `record_enrichment` host tool.
+- **Claude** (`ANTHROPIC_API_KEY`) — scores leads and drafts copy locally, or
+  runs the entire tier-3 decision as a hosted Managed Agent. Model defaults to
+  `claude-opus-4-8` (override with `CLAUDE_MODEL`).
+- **HubSpot** (`HUBSPOT_TOKEN`) — not wired into the backbone yet (see the
+  `adrizein/hubspot-mcp` branch for in-progress work).
+- **Gamma / Gradium** — **not implemented.** Still just placeholder env vars in
+  `.env.example`. Would be new `src/actions/*` planners (Gamma → an `asset`
+  step; Gradium → a `voice` step) if picked up — see README's "Adding a
+  strategy" section for the contract.
 
-- Filter every Sillage signal through the power map: act only when a real stakeholder (champion / decision maker) is involved.
-- Corroborate: run several Sillage signal types on the same account and score convergence before acting.
-- Chain Sillage -> FullEnrich the moment a person is identified (this is the clearest way to score both tools together).
-- Use the do-not-contact list from the power map as a hard blocking filter.
-- Budget: check FullEnrich credits before sizing a batch (an economically-aware agent).
+## Deep-usage, already implemented (criteria 2 & 3)
+
+- Multi-signal corroboration per account before anything spends credits or
+  drafts copy (`src/processing/10-corroborate.js`).
+- Power-map role routing: champion > decision_maker > anyone, do-not-contact
+  people/companies filtered out before a contact is even picked
+  (`src/backbone/selectors.js` → `pickPrimaryContact`).
+- Do-not-contact / protected-account hard blocks enforced at the gate, not in
+  a strategy — no planner and no hosted-agent tool call can bypass them
+  (`src/backbone/gate.js`).
+- Sillage → FullEnrich chaining the moment a contact is identified
+  (`src/processing/20-enrich-contacts.js`, or `record_enrichment` on the
+  platform path).
+- Credit-aware enrichment: checks `FullEnrich.getCredits()` and respects a
+  per-run budget (`config.enrichBudget`) before spending.
+- The HireSweet-specific edge: anonymized marketplace candidates matched to
+  each company's open roles as the value-first hook in outreach
+  (`src/processing/40-match-candidates.js`).
+
+## Two workstreams in this repo — know which one you're in
+
+This file and the `src/` tree describe the **Wake backbone**: a CLI pipeline
+(signal → processing → gated action → inbox), runnable locally or on Claude
+Managed Agents. There is a **second, parallel effort** in this same repo — the
+"Account Intelligence Tool" (an org-chart UI: account list → org chart →
+person brief → one-click draft) — specified in `docs/SPECS.md`, `docs/PLAN.md`,
+`docs/FRONT-BRIEF.md` and `criteria/lead-criteria.md`, built on other branches
+(`front`, `backend-server`, `lead`). Those docs note in their own text that the
+CLI/inbox product "no longer matches" their direction (pivot toward the
+org-chart view). The two efforts share fixtures/conventions but are not the
+same product — if you're picking up this repo cold, confirm with the captain
+(Léo) which one is being demoed before assuming this backbone is it.
 
 ## Team and ownership
 
 Scope is arbitrated by the captain to avoid a twelve-headed monster. Each person owns a module; the captain decides what ships.
 
 - **Léo** captain / head of product: arbitrates scope, owns coherence of the whole.
-- **Adrien** user and pragmatic anchor: carries the real revenue use case, owns the engine that runs.
+- **Adrien** user and pragmatic anchor: carries the real revenue use case, owns the engine that runs — this backbone (`src/`, `platform/`) is his module.
 - **Mathieu** vision, the activation / warm-path "high notes", jury and sponsor relations, co-pitch.
 - **Kubilay** data pipeline: FullEnrich (chaining, credit budgeting), demo accounts.
 - **Valériane** copy quality and presentation: demo script, deck, the LinkedIn side challenge.
 
-## Suggested stack (not mandatory, captain decides)
+## Stack (as built)
 
-Node + Express, a single-file vanilla HTML/CSS/JS inbox (no build step), `node:test`. Simple enough that everyone can run it, fast enough to ship in a day. Swap freely if the captain prefers pure MCP orchestration with no custom server.
+Node (ESM, `>=20`) + `@anthropic-ai/sdk`, zero other runtime dependencies,
+`node:test` for tests. No web server and no UI on this branch — the backbone
+is CLI-only (`src/cli.js`, and `src/platform/run.js` for the hosted variant),
+state and inbox printed straight to the terminal / `data/*.json`. (The org-chart
+UI mentioned above is a separate, unrelated front end — see the workstream
+note.)
 
 ## Conventions
 
@@ -117,15 +141,16 @@ Node + Express, a single-file vanilla HTML/CSS/JS inbox (no build step), `node:t
 - **Guardrails doctrine:** the agent must refuse to act on protected accounts or unverifiable claims. Draft-only. A human approves.
 - Keep the demo data realistic but fictional or consented.
 
-## Definition of done (by 17:30)
+## Definition of done (by 17:30) — status on this backbone
 
-- A real signal enters and the chain runs end to end into the inbox.
-- Real tool calls from all three: Sillage + FullEnrich + Claude, visible in the flow.
-- A non-engineer can operate the demo.
-- A guardrail visibly blocks a bad action (the memorable moment of the pitch).
+- ✅ A real signal enters and the chain runs end to end into the inbox (`npm start` on fixtures, or live via `SILLAGE_API_KEY`).
+- ✅ Real tool calls from all three: Sillage (live V2 REST), FullEnrich (live credits check), Claude (scoring + drafting) — see README's "Live Sillage wiring".
+- ✅ A non-engineer can operate the demo: `npm start` / `npm run inbox` print a plain-language inbox; on the platform path there's also a `platform.claude.com` session link to watch live.
+- ✅ A guardrail visibly blocks a bad action: the fixtures always produce a `do-not-contact` block (Astrelle) and a `protected-account` block (Fluxline) — see README's gate table.
+- ⚠️ FullEnrich *person* enrichment is still fixture-backed live (bulk async flow not wired — see "What's actually built" above); the credits check is the live sponsor call today.
 
 ## Working with Claude Code here
 
 - Multiple people in parallel: one short-lived branch per module, the captain merges.
-- Start every session by reading this file. Ask the captain before expanding scope.
-- Test-first where it matters (the gate, the routing logic). Keep state in files, not in chat.
+- Start every session by reading this file, then the `CLAUDE.md` in whichever directory you're about to touch. Ask the captain before expanding scope.
+- Test-first where it matters (the gate, the routing logic — see `test/`). Keep state in files, not in chat.
