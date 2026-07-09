@@ -60,10 +60,12 @@ Sponsor tools, as wired:
 
 - **Sillage** (`SILLAGE_API_KEY`) — attached to the hosted agent as a remote MCP
   server (`SILLAGE_MCP_URL`, default `https://api.getsillage.com/api/mcp/v2`).
-  The agent calls it directly (read-only) to find and qualify signals.
-- **FullEnrich** (`FULLENRICH_API_KEY`) — remote MCP server (`FULLENRICH_MCP_URL`).
-  The agent enriches a chosen contact itself, credit-budgeted per the
-  `enrichment` skill.
+  The agent calls it directly (read-only) to find and qualify signals. The MCP
+  endpoint needs **OAuth** (the API key is not accepted as a bearer) — authorized
+  once via `npm run mcp-auth`, stored as an auto-refreshing vault credential.
+- **FullEnrich** (`FULLENRICH_API_KEY`) — remote MCP server (`FULLENRICH_MCP_URL`),
+  same OAuth-via-`mcp-auth` wiring as Sillage. The agent enriches a chosen contact
+  itself, credit-budgeted per the `enrichment` skill.
 - **Claude** (`ANTHROPIC_API_KEY`) — *is* the agent. Model `claude-opus-4-8`
   (override `CLAUDE_MODEL`). Used at deploy time to create/update resources.
 - **HubSpot** (`HUBSPOT_TOKEN`) — the CRM source of truth for "is this account
@@ -128,7 +130,9 @@ with two memory stores and a cron deployment. No server, no UI, no runtime
 process on our side.
 
 Everyday commands: `npm run deploy:dry` (preview), `npm run deploy` (apply),
+`npm run mcp-auth` (one-time: browser-authorize Sillage + FullEnrich MCP),
 `npm run run-once` (fire a run now), `npm run inbox` (review proposals/blocks).
+Verified end to end on 2026-07-09 — see `docs/CLAUDE-PLATFORM.md`.
 
 ## Conventions
 

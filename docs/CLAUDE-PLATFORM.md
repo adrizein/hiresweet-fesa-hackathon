@@ -14,12 +14,12 @@ process attached.
      creates/updates ↓
   ┌──────────────────────────────────────────────────────────────┐
   │ Environment   cloud sandbox, unrestricted egress              │
-  │ Vault         Sillage + FullEnrich MCP bearer creds;          │
-  │               HUBSPOT_TOKEN as an env-var credential          │
+  │ Vault         Sillage + FullEnrich MCP OAuth creds            │
+  │               (deploy/mcp-auth.js); HUBSPOT_TOKEN env-var cred │
   │ Skills        platform/skills/*/SKILL.md  (versioned)         │
   │ Memory        wake-state (dedup) · wake-review (the outbox)   │
   │ Agent         system prompt + agent toolset + Sillage &       │
-  │               FullEnrich MCP + all skills   (NO custom tools) │
+  │               FullEnrich MCP (auto-allow) + skills (NO custom) │
   │ Deployment    cron schedule + kickoff + vault + memory stores │
   └──────────────────────────────────────────────────────────────┘
      cron fires ↓ (autonomous — nothing attached, no listener)
@@ -44,14 +44,19 @@ web) + MCP + skills + memory. That's what makes "no production JS" possible.
 |---|---|
 | Doctrine (agent system prompt) | `platform/system-prompt.md` |
 | Strategies (signals, enrichment, craft, guard, gate) | `platform/skills/*/SKILL.md` |
-| The deploy toolkit | `deploy/{config,deploy,run-once,inbox}.js` |
+| The deploy toolkit | `deploy/{config,deploy,mcp-auth,run-once,inbox}.js` |
 | Resolved resource ids (gitignored) | `deploy/.deploy-state.json` |
 
 ## Sponsor tools
 
 - **Sillage + FullEnrich** attach as remote MCP servers (`SILLAGE_MCP_URL`,
-  `FULLENRICH_MCP_URL`). The agent calls them itself (read-only). Their API keys
-  are wired into the vault as `static_bearer` MCP credentials, injected at egress.
+  `FULLENRICH_MCP_URL`). The agent calls them itself (read-only). **Both require
+  OAuth** — their REST API keys are *not* accepted as bearer tokens. So they're
+  wired into the vault as auto-refreshing `mcp_oauth` credentials minted by
+  `deploy/mcp-auth.js` (a one-time browser authorize per server; Anthropic then
+  refreshes the token for every run). The MCP toolsets are set to `always_allow`
+  so tool calls run without a human approving each one — the default `always_ask`
+  would hang an autonomous cron session forever.
 - **HubSpot** has no remote MCP (only a local stdio package), so it is **not** an
   MCP server. The agent reads HubSpot's REST API directly with `curl`/`jq`
   (read-only) guided by the `hubspot-crm` skill. `HUBSPOT_TOKEN` is a vault
@@ -82,18 +87,36 @@ cp .env.example .env       # fill the four keys
 npm install
 npm run deploy:dry         # preview what will be created/updated
 npm run deploy             # apply (idempotent; safe to re-run)
+npm run mcp-auth           # ONE-TIME: authorize Sillage + FullEnrich MCP in the browser
 npm run run-once           # fire a run now; prints a platform.claude.com session link
 npm run inbox              # review the agent's proposals + blocks
 ```
+
+`npm run mcp-auth` opens a browser tab per server (Sillage, then FullEnrich);
+click "Authorize" and it stores an auto-refreshing OAuth credential in the vault.
+You only run it on first setup, or if a grant is later revoked (watch for the
+`vault_credential.refresh_failed` webhook).
 
 The deploy is idempotent — resources are reused by name. Editing a `SKILL.md` or
 `platform/system-prompt.md` and re-running `npm run deploy` versions the change;
 the next scheduled run picks it up (skills are pinned to `latest`).
 
-## Notes / gotchas
+## Notes / gotchas (several learned the hard way — keep them)
 
 - Model is `claude-opus-4-8` (override `CLAUDE_MODEL`).
 - Schedule defaults to weekday 07:00 Europe/Paris (`WAKE_CRON` / `WAKE_TZ`).
+- **MCP servers need OAuth, not the REST keys.** Sillage/FullEnrich reject their
+  own API keys as bearer tokens (401); wiring them as `static_bearer` silently
+  drops the server from the session. Use `deploy/mcp-auth.js` → `mcp_oauth`
+  credentials. `deploy.js` reports which MCP creds are missing/wrong.
+- **MCP toolsets must be `always_allow`.** They default to `always_ask`, which
+  pauses the session on every tool call for a human approval that never comes in
+  an autonomous run — the session just hangs `idle` at `requires_action`.
+  `deploy.js` sets `default_config.permission_policy = always_allow` on both.
+- **`agents.update` requires the current `version`** (optimistic concurrency);
+  `deploy.js` passes it, so re-deploys don't 400 once the agent exists.
+- Vaults are keyed differently from other resources: the create field is
+  `display_name`, not `name` (deploy's `findByName` handles both).
 - `deploy/.deploy-state.json` (gitignored) holds the resolved resource ids +
   per-skill content hashes. Delete it only if you want deploy to re-discover /
   recreate resources by name.
@@ -103,3 +126,14 @@ the next scheduled run picks it up (skills are pinned to `latest`).
 - A known soft spot: with no host store, `gate-qa`'s "evidence cited" check trusts
   that the cited Sillage signal ids are real (the agent is told to cite only ids
   it actually retrieved). Bounded by the human-approval step.
+
+## Verified end to end (2026-07-09)
+
+A live `run-once` completed the full loop autonomously: pulled real signals
+across all 7 Sillage agents, triaged to one high-conviction lead (a Head-of-Sales
+promotion at a Paris B2B SaaS), ran the live HubSpot guard, and **blocked** it —
+the account was already a rep-owned `opportunity` in HubSpot — writing an
+explained `BLOCKED` note instead of drafting. All three sponsors exercised live
+in one session (Sillage MCP signals + company/lead lookups, FullEnrich MCP
+`get_credits`, HubSpot via curl), plus memory dedup. The guardrail refused to
+manufacture outreach where there was no honest trigger, which is the point.
