@@ -22,11 +22,12 @@ const RESET = '\u001b[0m';
 function buildContext() {
   loadEnv(ROOT);
   const fixturesDir = join(ROOT, 'fixtures');
+  const dataDir = join(ROOT, 'data');
   return {
-    store: createStore(join(ROOT, 'data')),
+    store: createStore(dataDir),
     llm: createLlm(),
     clients: {
-      sillage: createSillageClient({ fixturesDir }),
+      sillage: createSillageClient({ fixturesDir, dataDir }),
       fullenrich: createFullEnrichClient({ fixturesDir }),
     },
     config: { fixturesDir, enrichBudget: 5 },

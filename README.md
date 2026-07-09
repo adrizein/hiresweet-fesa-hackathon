@@ -40,10 +40,19 @@ fictional). With keys in `.env` (see `.env.example`):
 | Variable | Effect |
 |---|---|
 | `ANTHROPIC_API_KEY` | Claude scores leads and drafts outreach (model: `CLAUDE_MODEL`, default `claude-opus-4-8`) |
-| `SILLAGE_API_KEY` + `SILLAGE_API_BASE` | Sillage client switches to live mode (endpoint TODO in `src/backbone/clients/sillage.js`) |
-| `FULLENRICH_API_KEY` | FullEnrich credits check goes live (bulk enrichment TODO in `src/backbone/clients/fullenrich.js`) |
+| `SILLAGE_API_KEY` | Sillage goes live: real workspace detections + company/lead enrichment (base defaults to `https://api.getsillage.com/api/v2`) |
+| `SILLAGE_SIGNALS_PATH` | The detections LIST route once the onboarding doc gives it; until then the live strategy reads `data/sillage/detections.json` (MCP export) |
+| `FULLENRICH_API_KEY` | FullEnrich credits check goes live (`/account/credits` → `{balance}`); bulk enrichment TODO(Kubilay) in `src/backbone/clients/fullenrich.js` |
 
 State lives in `data/*.json` (gitignored) — open the files mid-demo to watch records appear.
+
+**Live Sillage wiring** — confirmed V2 endpoints (probed with the workspace key): `GET /companies/{id}`,
+`GET /leads/{id}`, `GET /agents`, `GET /watchlists`, `GET /persona` under `https://api.getsillage.com/api/v2`.
+The `sillage:job-posting-keywords` strategy ingests real `jobPostingKeywordDetection` items (workspace agent
+"Postes SALES ouverts"), groups them per account, dedupes postings, resolves company enrichment live, and
+emits corroborable signals. To refresh the local detections dump before the list route is known, export via
+the Sillage MCP (`list_signals`) into `data/sillage/detections.json` as
+`{ exportedAt, detections: [...], companies: { "<id>": {...} } }`.
 
 ### The three tiers
 

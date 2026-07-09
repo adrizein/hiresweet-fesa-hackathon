@@ -34,13 +34,14 @@ export default {
       }
       const contact = pickPrimaryContact(store, company.id);
       if (!contact || contact.emailStatus === 'verified') continue;
-      const enrichment = await clients.fullenrich.enrichPerson(contact);
+      const result = await clients.fullenrich.enrichPerson(contact);
       spent += 1;
-      if (enrichment) {
+      if (result) {
+        const { source, ...enrichment } = result;
         store.upsert('people', {
           id: contact.id,
           ...enrichment,
-          enrichedBy: `fullenrich (${credits.mode})`,
+          enrichedBy: `fullenrich (${source ?? credits.mode})`,
         });
         enriched += 1;
       }
