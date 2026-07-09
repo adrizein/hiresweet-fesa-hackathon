@@ -191,8 +191,10 @@ async function main() {
     mcp_servers: mcpServers,
     tools: [
       { type: 'agent_toolset_20260401' },
-      { type: 'mcp_toolset', mcp_server_name: 'sillage' },
-      { type: 'mcp_toolset', mcp_server_name: 'fullenrich' },
+      // MCP toolsets default to `always_ask` (a human approves each call). This
+      // runs autonomously on a cron with no one to approve, so auto-allow them.
+      { type: 'mcp_toolset', mcp_server_name: 'sillage', default_config: { permission_policy: { type: 'always_allow' } } },
+      { type: 'mcp_toolset', mcp_server_name: 'fullenrich', default_config: { permission_policy: { type: 'always_allow' } } },
     ],
     skills: skills
       .map((s) => state.skills[s.name]?.id)
