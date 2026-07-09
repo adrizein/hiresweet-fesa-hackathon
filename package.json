@@ -10,6 +10,7 @@
   "scripts": {
     "deploy": "node deploy/deploy.js",
     "deploy:dry": "node deploy/deploy.js --dry-run",
+    "mcp-auth": "node deploy/mcp-auth.js",
     "run-once": "node deploy/run-once.js",
     "inbox": "node deploy/inbox.js"
   },

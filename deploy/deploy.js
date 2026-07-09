@@ -64,11 +64,13 @@ async function main() {
     log.created(`environment ${environment.id}`);
   }
 
-  // 2. Vault + credentials. Sillage/FullEnrich MCP as static_bearer (best effort;
-  //    if a server needs OAuth the agent just surfaces an MCP error, non-fatal).
-  //    HubSpot as an environment_variable credential: $HUBSPOT_TOKEN is injected
-  //    into the agent's outbound request to api.hubapi.com at egress — the agent
-  //    shell never sees the raw token, and the token never touches this repo.
+  // 2. Vault + credentials. Sillage/FullEnrich MCP require OAuth (their REST API
+  //    keys are NOT accepted as bearer tokens), so their credentials are minted
+  //    separately by `node deploy/mcp-auth.js` (a one-time browser authorize) and
+  //    stored as auto-refreshing mcp_oauth credentials. Here we only manage the
+  //    HubSpot environment_variable credential: $HUBSPOT_TOKEN is injected into the
+  //    agent's outbound request to api.hubapi.com at egress — the agent shell never
+  //    sees the raw token, and the token never touches this repo.
   log.head('Vault + credentials');
   let vault = await findByName((o) => client.beta.vaults.list(o), NAMES.vault);
   if (vault) log.reused(`vault ${vault.id}`);
@@ -80,23 +82,18 @@ async function main() {
 
   if (vault) {
     const existing = (await client.beta.vaults.credentials.list(vault.id))?.data ?? [];
-    const haveUrl = new Set(existing.map((x) => x.auth?.mcp_server_url).filter(Boolean));
+    const byUrl = new Map(existing.filter((x) => x.auth?.mcp_server_url).map((x) => [x.auth.mcp_server_url, x.auth.type]));
     const haveSecret = new Set(existing.map((x) => x.auth?.secret_name).filter(Boolean));
 
-    const bearers = [
-      { url: SILLAGE_MCP_URL(), token: process.env.SILLAGE_API_KEY, label: 'sillage' },
-      { url: FULLENRICH_MCP_URL(), token: process.env.FULLENRICH_API_KEY, label: 'fullenrich' },
-    ].filter((x) => x.token);
-    for (const b of bearers) {
-      if (haveUrl.has(b.url)) log.reused(`credential ${b.label} (mcp bearer)`);
-      else if (!APPLY) log.plan(`create ${b.label} static_bearer credential`);
-      else {
-        await client.beta.vaults.credentials.create(vault.id, {
-          display_name: `${b.label} MCP`,
-          auth: { type: 'static_bearer', mcp_server_url: b.url, token: b.token },
-        });
-        log.created(`credential ${b.label} (mcp bearer)`);
-      }
+    // MCP OAuth credentials are minted by deploy/mcp-auth.js, not here. Report status.
+    for (const [label, url] of [
+      ['sillage', SILLAGE_MCP_URL()],
+      ['fullenrich', FULLENRICH_MCP_URL()],
+    ]) {
+      const type = byUrl.get(url);
+      if (type === 'mcp_oauth') log.reused(`credential ${label} (mcp oauth)`);
+      else if (type) log.info(`${label} credential is "${type}" — run \`node deploy/mcp-auth.js ${label}\` (OAuth required)`);
+      else log.info(`no ${label} MCP credential yet — run \`node deploy/mcp-auth.js ${label}\` to authorize`);
     }
 
     if (process.env.HUBSPOT_TOKEN) {
