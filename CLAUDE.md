@@ -1,6 +1,4 @@
-# Wake, Agentic GTM Hackathon (working title)
-
-> Read this file at the start of every Claude Code session on this repo.
+# Wake
 
 ## What this project is
 
