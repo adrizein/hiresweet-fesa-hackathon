@@ -135,7 +135,7 @@ function handleCommand(text) {
       startAutopilot(acc.id, false);
       return;
     }
-    agentSay('Specify the account: "launch Lumen Grid".');
+    agentSay('Specify the account: "launch Tomorro".');
     renderAgentView({ view: 'agent' });
     return;
   }
@@ -494,7 +494,7 @@ function strategySectionHtml() {
 }
 
 function renderAgentView() {
-  const suggestions = ['add Helios Freight, Vantor Health', 'sequence Lumen Grid', 'launch Lumen Grid', 'open Northwind Robotics'];
+  const suggestions = ['add Mirakl, Doctrine', 'sequence Tomorro', 'launch Tomorro', 'open Mirakl'];
 
   $app.innerHTML = `
     <div class="page-head">
@@ -505,7 +505,7 @@ function renderAgentView() {
     </div>
 
     <div class="agent-cmdbar">
-      <input type="text" id="agent-input" class="agent-input" placeholder="Talk to the agent: &quot;add Helios Freight&quot;, &quot;sequence Lumen Grid&quot;, &quot;launch Lumen Grid&quot;…" autocomplete="off">
+      <input type="text" id="agent-input" class="agent-input" placeholder="Talk to the agent: &quot;add Mirakl&quot;, &quot;sequence Tomorro&quot;, &quot;launch Tomorro&quot;…" autocomplete="off">
       <button class="btn primary agent-send" id="agent-send">Send</button>
     </div>
     <div class="agent-suggestions">

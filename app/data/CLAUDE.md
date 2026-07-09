@@ -47,6 +47,14 @@ Copied from the outreach copy kill-list, summarized for this dataset:
 - Never name an ex-candidate to their employer.
 - Never name a competitor of the prospect in a draft.
 
-## Public-safe rule
+## ⚠️ This dataset is NOT public-safe right now
 
-Every company name, person name, and fund name in this file must be fictional and checked against real companies and real people before it is committed. No real PII, no API keys, ever, in this file or any file in `data/`.
+`accounts.json` currently carries the real internal demo dataset: real company names, 35 real person names and their real LinkedIn URLs, and the commercial status of real accounts (dormant client, open deal). This was a deliberate call so the live demo shows real signal.
+
+**This repository must not be made public while `accounts.json` is in this state.** Before flipping visibility, replace it with a fictional dataset. `fixtures/accounts.example.json` at the repo root is the public-safe starting point, and `data/signals.json` in this folder is already fully fictional.
+
+No API keys, ever, in any file in `data/`. That rule has no exception.
+
+## Content rule for a public-safe dataset
+
+When the dataset is swapped back: every company name, person name, and fund name must be fictional and checked against real companies and real people before it is committed. No real PII.
