@@ -63,6 +63,10 @@ export default {
       const company = store.get('companies', lead.companyId);
       const contact = lead.contactId ? store.get('people', lead.contactId) : null;
       if (!company || !contact) continue;
+      // Existing clients get the dedicated Gradium voice-note channel
+      // (src/actions/40-gradium-voice-note.js) — a cold-style "help on your
+      // hiring push" email is the wrong tone for someone we already work with.
+      if ((company.flags ?? []).includes('existing_client')) continue;
 
       const signalSummaries = lead.signalIds
         .map((id) => store.get('signals', id)?.summary)

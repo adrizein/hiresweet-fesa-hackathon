@@ -40,5 +40,38 @@ export function createFullEnrichClient({ fixturesDir }) {
       if (!hit) return null;
       return { ...hit, source: live ? 'fixtures — live bulk flow TODO' : 'fixtures' };
     },
+
+    // Real employer behind a LinkedIn URL — used by companyVerification.js to
+    // check that two people in an interaction work at different companies,
+    // instead of trusting their LinkedIn headline text (see src/signals/
+    // 50-post-engagement.js for why: a headline naming no company at all
+    // turned out, once checked here, to belong to an employee of the exact
+    // company she appeared to be engaging with from the outside).
+    // Returns a domain string, or null when unresolved (fail-closed: the
+    // caller must treat null as "cannot verify", never as "assume distinct").
+    // Live path is unconfirmed this session (MCP-only access) — TODO(Kubilay):
+    // confirm the real REST path before trusting `live` mode in production.
+    async resolvePersonCompanyDomain(linkedinUrl) {
+      if (live) {
+        try {
+          const response = await fetch(`${BASE_URL}/people/search`, {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ person_linkedin_urls: [{ value: linkedinUrl, exact_match: true }], limit: 1 }),
+          });
+          if (response.ok) {
+            const json = await response.json();
+            const domain = json?.people?.[0]?.employment?.current?.company?.domain;
+            if (domain) return domain;
+          }
+        } catch {
+          // fall through to fixtures below
+        }
+      }
+      const map = JSON.parse(
+        readFileSync(join(fixturesDir, 'fullenrich', 'companyByPerson.json'), 'utf8'),
+      );
+      return map[linkedinUrl] ?? null;
+    },
   };
 }

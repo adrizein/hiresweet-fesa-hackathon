@@ -61,6 +61,34 @@ export const checks = [
     },
   },
   {
+    name: 'existing-client-required',
+    appliesTo: (action) => action.channel === 'slack',
+    run(action, { store }) {
+      const company = action.companyId ? store.get('companies', action.companyId) : null;
+      if (!company?.flags?.includes('existing_client')) {
+        return {
+          passed: false,
+          reason: `${company?.name ?? action.companyId} is not a confirmed existing client — the voice-note channel is expansion-only, never cold outreach`,
+        };
+      }
+      return { passed: true };
+    },
+  },
+  {
+    name: 'verified-phone',
+    appliesTo: (action) => action.channel === 'slack',
+    run(action, { store }) {
+      const person = action.targetPersonId ? store.get('people', action.targetPersonId) : null;
+      if (!person) {
+        return { passed: false, reason: 'voice-note action has no target person' };
+      }
+      if (!person.phone) {
+        return { passed: false, reason: `${person.name} has no verified phone number on file — a human needs it to forward the voice note on WhatsApp` };
+      }
+      return { passed: true };
+    },
+  },
+  {
     name: 'no-placeholders',
     appliesTo: (action) =>
       Boolean(action.payload?.subject || action.payload?.body || action.payload?.message),

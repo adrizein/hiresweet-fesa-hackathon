@@ -98,6 +98,31 @@
     "evidence": "1 engineering role reposted after 60 days — weak, stale signal"
   },
   {
+    "type": "hiring_wave",
+    "observedAt": "2026-07-08",
+    "confidence": 0.6,
+    "company": {
+      "slug": "kelmora",
+      "name": "Kelmora",
+      "domain": "kelmora.example",
+      "location": "Paris",
+      "flags": ["existing_client"]
+    },
+    "roles": [
+      { "title": "Backend Engineer", "tags": ["backend", "node"] },
+      { "title": "Senior Account Executive", "tags": ["ae", "sales"] }
+    ],
+    "contacts": [
+      {
+        "slug": "sofia-marchetti",
+        "name": "Sofia Marchetti",
+        "role": "Head of Engineering",
+        "powerRole": "champion"
+      }
+    ],
+    "evidence": "2 roles reposted after a product relaunch — existing client, good moment to check in"
+  },
+  {
     "type": "champion_move",
     "observedAt": "2026-07-08",
     "confidence": 0.95,

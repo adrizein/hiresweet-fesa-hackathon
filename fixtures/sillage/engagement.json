@@ -1,0 +1,26 @@
+[
+  {
+    "observedAt": "2026-07-06",
+    "post": {
+      "author": { "name": "Mika Santoro", "linkedinUrl": "https://linkedin.com/in/mika-santoro-demo", "headline": "Growth @ Kerbio" },
+      "company": { "slug": "kerbio", "name": "Kerbio", "domain": "kerbio.example", "location": "Lyon", "flags": [] }
+    },
+    "interaction": {
+      "type": "comment",
+      "author": { "name": "Theo Vidal", "linkedinUrl": "https://linkedin.com/in/theo-vidal-demo", "headline": "Building things, always curious" },
+      "excerpt": "So proud of this team!!"
+    }
+  },
+  {
+    "observedAt": "2026-07-08",
+    "post": {
+      "author": { "name": "Lucie Morel", "linkedinUrl": "https://linkedin.com/in/lucie-morel-demo", "headline": "Head of Talent Acquisition @ Novapay" },
+      "company": { "slug": "novapay", "name": "Novapay", "domain": "novapay.example", "location": "Paris", "flags": [] }
+    },
+    "interaction": {
+      "type": "comment",
+      "author": { "name": "Amine Belkacem", "linkedinUrl": "https://linkedin.com/in/amine-belkacem-demo", "headline": "VP Sales" },
+      "excerpt": "We had the exact same hiring wave last quarter — happy to compare notes."
+    }
+  }
+]

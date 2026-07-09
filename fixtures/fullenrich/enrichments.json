@@ -13,5 +13,10 @@
     "email": "ines.delcourt@fluxline.example",
     "emailStatus": "catch_all",
     "phone": null
+  },
+  "p-sofia-marchetti": {
+    "email": "sofia.marchetti@kelmora.example",
+    "emailStatus": "verified",
+    "phone": "+33 6 12 34 56 03"
   }
 }

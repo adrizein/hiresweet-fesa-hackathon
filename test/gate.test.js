@@ -28,6 +28,23 @@ function seededCtx() {
     flags: [],
   });
   store.upsert('signals', { id: 'sig-1', companyId: 'co-clean', type: 'hiring_wave' });
+  store.upsert('companies', { id: 'co-client', name: 'Clientco', flags: ['existing_client'] });
+  store.upsert('people', {
+    id: 'p-client-contact',
+    companyId: 'co-client',
+    kind: 'contact',
+    name: 'Sam Client',
+    phone: '+33 6 00 00 00 00',
+    flags: [],
+  });
+  store.upsert('people', {
+    id: 'p-no-phone',
+    companyId: 'co-client',
+    kind: 'contact',
+    name: 'No Phone',
+    flags: [],
+  });
+  store.upsert('signals', { id: 'sig-2', companyId: 'co-client', type: 'hiring_wave' });
   return { store };
 }
 
@@ -113,6 +130,61 @@ test('candidate references with PII are blocked', async () => {
   );
   assert.equal(gate.passed, false);
   assert.equal(gate.results.find((r) => r.name === 'candidate-anonymity').passed, false);
+});
+
+test('a slack voice note to an existing client with a verified phone passes', async () => {
+  const gate = await runGate(
+    cleanAction({
+      kind: 'voice_note',
+      channel: 'slack',
+      companyId: 'co-client',
+      targetPersonId: 'p-client-contact',
+      payload: { message: 'A clean, specific script.' },
+    }),
+    seededCtx(),
+  );
+  assert.equal(gate.passed, true);
+});
+
+test('a slack voice note to a non-client company is blocked', async () => {
+  const gate = await runGate(
+    cleanAction({
+      kind: 'voice_note',
+      channel: 'slack',
+      companyId: 'co-clean',
+      targetPersonId: 'p-ok',
+      payload: { message: 'A clean, specific script.' },
+    }),
+    seededCtx(),
+  );
+  assert.equal(gate.passed, false);
+  const check = gate.results.find((r) => r.name === 'existing-client-required');
+  assert.equal(check.passed, false);
+  assert.match(check.reason, /not a confirmed existing client/);
+});
+
+test('a slack voice note without a verified phone is blocked', async () => {
+  const gate = await runGate(
+    cleanAction({
+      kind: 'voice_note',
+      channel: 'slack',
+      companyId: 'co-client',
+      targetPersonId: 'p-no-phone',
+      evidenceSignalIds: ['sig-2'],
+      payload: { message: 'A clean, specific script.' },
+    }),
+    seededCtx(),
+  );
+  assert.equal(gate.passed, false);
+  const check = gate.results.find((r) => r.name === 'verified-phone');
+  assert.equal(check.passed, false);
+  assert.match(check.reason, /no verified phone number/);
+});
+
+test('existing-client-required and verified-phone do not apply to non-slack channels', async () => {
+  const gate = await runGate(cleanAction(), seededCtx());
+  assert.equal(gate.results.some((r) => r.name === 'existing-client-required'), false);
+  assert.equal(gate.results.some((r) => r.name === 'verified-phone'), false);
 });
 
 test('fail closed: a crashing check blocks the action', async () => {

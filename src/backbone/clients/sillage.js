@@ -114,5 +114,23 @@ export function createSillageClient({ fixturesDir, dataDir }) {
         return null;
       }
     },
+
+    // Raw LinkedIn post engagement (likes/comments) on tracked accounts' own
+    // posts. This route was exercised through the Sillage MCP this session
+    // (`get_contents`, filtered to comment/reaction items) and is the one
+    // mechanism that surfaced genuinely new external companies — but its raw
+    // REST path is unconfirmed (MCP abstracts the transport). Live mode is
+    // attempted opportunistically; the fixture/dump fallback keeps the
+    // strategy demoable either way.
+    async fetchEngagement({ log = () => {} } = {}) {
+      if (live) {
+        try {
+          return (await apiGet('contents?content_type=engagement&page_size=100')).data ?? [];
+        } catch (error) {
+          log(`sillage: engagement route not reachable (${error.message}) — falling back to fixtures`);
+        }
+      }
+      return JSON.parse(readFileSync(join(fixturesDir, 'sillage', 'engagement.json'), 'utf8'));
+    },
   };
 }

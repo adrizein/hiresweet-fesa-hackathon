@@ -1,0 +1,42 @@
+[
+  {
+    "type": "job_change",
+    "observedAt": "2026-07-07",
+    "confidence": 0.85,
+    "company": {
+      "slug": "brindao",
+      "name": "Brindao",
+      "domain": "brindao.example",
+      "location": "Paris",
+      "flags": []
+    },
+    "person": {
+      "slug": "salome-fournier",
+      "name": "Salomé Fournier",
+      "role": "CTO",
+      "powerRole": "decision_maker",
+      "context": "Started as CTO 3 weeks ago — first technical leadership hire since seed"
+    },
+    "evidence": "Mantiks job-change alert: Salomé Fournier -> CTO @ Brindao, 3 weeks ago"
+  },
+  {
+    "type": "job_posting",
+    "observedAt": "2026-07-08",
+    "confidence": 0.7,
+    "company": {
+      "slug": "kelvane",
+      "name": "Kelvane",
+      "domain": "kelvane.example",
+      "location": "Lyon",
+      "flags": []
+    },
+    "roles": [
+      { "title": "Founding Engineer", "tags": ["backend", "fullstack"] },
+      { "title": "Product Engineer", "tags": ["fullstack", "react"] }
+    ],
+    "contacts": [
+      { "slug": "marc-oyelaran", "name": "Marc Oyelaran", "role": "CEO", "powerRole": "decision_maker" }
+    ],
+    "evidence": "Mantiks job-board scan: 2 engineering roles posted on Kelvane's careers page this week"
+  }
+]

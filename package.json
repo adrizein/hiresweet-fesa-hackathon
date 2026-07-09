@@ -12,6 +12,7 @@
     "inbox": "node src/cli.js inbox",
     "status": "node src/cli.js status",
     "reset": "node src/cli.js reset",
+    "hiring-targets": "node src/cli.js hiring-targets",
     "platform:setup": "node src/platform/setup.js",
     "platform:run": "node src/platform/run.js",
     "test": "node --test"

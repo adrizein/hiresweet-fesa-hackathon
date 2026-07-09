@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadEnv } from './backbone/env.js';
@@ -8,6 +9,10 @@ import { runPipeline } from './backbone/pipeline.js';
 import { createLlm } from './backbone/llm.js';
 import { createSillageClient } from './backbone/clients/sillage.js';
 import { createFullEnrichClient } from './backbone/clients/fullenrich.js';
+import { createMantiksClient } from './backbone/clients/mantiks.js';
+import { createGradiumClient } from './backbone/clients/gradium.js';
+import { createWhatsAppClient } from './backbone/clients/whatsapp.js'; // parked, see README — not wired into send
+import { createSlackClient } from './backbone/clients/slack.js';
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const STAGES = ['signals', 'processing', 'actions'];
@@ -29,6 +34,10 @@ function buildContext() {
     clients: {
       sillage: createSillageClient({ fixturesDir, dataDir }),
       fullenrich: createFullEnrichClient({ fixturesDir }),
+      mantiks: createMantiksClient({ fixturesDir }),
+      gradium: createGradiumClient(),
+      whatsapp: createWhatsAppClient(),
+      slack: createSlackClient(),
     },
     config: { fixturesDir, enrichBudget: 5 },
     log: (message) => console.log(`${DIM}  · ${message}${RESET}`),
@@ -46,7 +55,8 @@ async function commandRun(stageArg) {
   console.log(`${BOLD}Wake backbone${RESET} — running ${stages.join(' → ')}`);
   console.log(
     `${DIM}  · brain: ${ctx.llm.enabled ? `Claude (${ctx.llm.model})` : 'heuristics (no ANTHROPIC_API_KEY)'}` +
-      ` | sillage: ${ctx.clients.sillage.mode} | fullenrich: ${ctx.clients.fullenrich.mode}${RESET}`,
+      ` | sillage: ${ctx.clients.sillage.mode} | fullenrich: ${ctx.clients.fullenrich.mode} | mantiks: ${ctx.clients.mantiks.mode}` +
+      ` | gradium: ${ctx.clients.gradium.mode} | slack: ${ctx.clients.slack.mode}${RESET}`,
   );
 
   const [signals, processors, planners] = await Promise.all([
@@ -144,13 +154,114 @@ function commandReset() {
   console.log('data/ cleared — next run starts from a blank store.');
 }
 
+// New workflow: targeted accounts that are hiring, sourced purely from
+// Sillage job-posting-keyword detections (sillage:job-posting-keywords in
+// src/signals/30-job-posting-keywords.js) — companies carrying a
+// `sillageCompanyId` are real live detections, not fixtures from the other
+// strategies. Run `npm start -- --stage signals` first (or a full run) so the
+// store is populated, then this exports the clean JSON.
+function commandHiringTargets() {
+  const ctx = buildContext();
+  const companies = ctx.store
+    .all('companies')
+    .filter((c) => c.sillageCompanyId != null)
+    .map((c) => ({
+      name: c.name,
+      domain: c.domain,
+      location: c.location,
+      sillageCompanyId: c.sillageCompanyId,
+      openRoles: (c.openRoles ?? []).map((r) => ({ title: r.title, tags: r.tags ?? [], url: r.url ?? null })),
+      roleCount: (c.openRoles ?? []).length,
+      source: 'sillage:job-posting-keywords',
+    }))
+    .sort((a, b) => b.roleCount - a.roleCount);
+
+  const outPath = join(ctx.store.dir, 'hiring-targets.json');
+  writeFileSync(outPath, JSON.stringify(companies, null, 2));
+
+  console.log(`${BOLD}Hiring targets${RESET} — ${companies.length} compan${companies.length === 1 ? 'y' : 'ies'} with open roles (Sillage job postings)`);
+  for (const c of companies) {
+    console.log(`  ${GREEN}${c.name}${RESET} (${c.domain}, ${c.location ?? 'location unknown'}) — ${c.roleCount} open role(s)`);
+  }
+  console.log(`${DIM}\nWritten to ${outPath}${RESET}`);
+}
+
+// A human decision, recorded explicitly — never inferred, never automatic.
+// Only a 'proposed' action can be approved (a blocked one must be fixed
+// upstream, not force-approved).
+function commandApprove(id) {
+  if (!id) {
+    console.error('usage: node src/cli.js approve <action-id>');
+    process.exit(1);
+  }
+  const ctx = buildContext();
+  const action = ctx.store.get('actions', id);
+  if (!action) {
+    console.error(`no action with id "${id}"`);
+    process.exit(1);
+  }
+  if (action.status !== 'proposed') {
+    console.error(`action "${id}" is "${action.status}", not "proposed" — nothing to approve`);
+    process.exit(1);
+  }
+  ctx.store.upsert('actions', { id, status: 'approved', approvedAt: new Date().toISOString() });
+  console.log(`${GREEN}✓ approved${RESET} ${action.kind} → ${id} (run "send ${id}" to actually dispatch it)`);
+}
+
+// The one command that can cause a real side effect (a WhatsApp message
+// landing on a real phone). Requires an explicit prior "approve" — this
+// command will not approve on your behalf.
+async function commandSend(id) {
+  if (!id) {
+    console.error('usage: node src/cli.js send <action-id>');
+    process.exit(1);
+  }
+  const ctx = buildContext();
+  const action = ctx.store.get('actions', id);
+  if (!action) {
+    console.error(`no action with id "${id}"`);
+    process.exit(1);
+  }
+  if (action.status !== 'approved') {
+    console.error(`action "${id}" is "${action.status}", not "approved" — run "approve ${id}" first`);
+    process.exit(1);
+  }
+  if (action.channel !== 'slack') {
+    console.error(`send is only wired for the slack channel right now (got "${action.channel}")`);
+    process.exit(1);
+  }
+  const company = ctx.store.get('companies', action.companyId);
+  const person = ctx.store.get('people', action.targetPersonId);
+  const result = await ctx.clients.slack.postVoiceNote({
+    company: company?.name ?? action.companyId,
+    contact: { name: person?.name, phone: person?.phone },
+    message: action.payload?.message,
+    audioUrl: action.payload?.audioUrl,
+    durationSeconds: action.payload?.durationSeconds,
+  });
+  if (result.posted) {
+    ctx.store.upsert('actions', {
+      id,
+      status: 'done',
+      sentAt: new Date().toISOString(),
+      slackTs: result.ts,
+    });
+    console.log(`${GREEN}✓ posted${RESET} to Slack — forward to ${person?.name} (${person?.phone ?? 'no phone on file'}) on WhatsApp yourself`);
+  } else {
+    console.log(`${RED}✗ not posted${RESET} (${ctx.clients.slack.mode} mode): ${result.reason}`);
+  }
+}
+
 function usage() {
   console.log(`Usage: node src/cli.js <command>
 
 Commands:
   run [--stage signals|processing|actions]  run the pipeline (default: all three tiers)
   inbox                                     show proposed / blocked / decided actions
+  approve <action-id>                       record a human decision: proposed -> approved (never automatic)
+  send <action-id>                          post an approved voice note to Slack for real (requires approve first; a human forwards it to WhatsApp)
   status                                    store counts and last run
+  hiring-targets                            export targeted accounts hiring (Sillage job postings) to data/hiring-targets.json
   reset                                     clear data/ (fixtures are untouched)
 `);
 }
@@ -166,11 +277,20 @@ switch (command) {
   case 'inbox':
     printInbox(buildContext().store);
     break;
+  case 'approve':
+    commandApprove(rest[0]);
+    break;
+  case 'send':
+    await commandSend(rest[0]);
+    break;
   case 'status':
     commandStatus();
     break;
   case 'reset':
     commandReset();
+    break;
+  case 'hiring-targets':
+    commandHiringTargets();
     break;
   default:
     usage();
