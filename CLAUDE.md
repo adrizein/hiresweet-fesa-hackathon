@@ -29,20 +29,46 @@ One-day build for the **Agentic GTM Hackathon** (Anthropic x FullEnrich x Sillag
 - **Criterion 1** is where "genuinely useful to a real GTM team" wins. Keep it grounded in a real revenue use case.
 - **Criterion 4** is won by making the invisible visible: a real signal firing, a record appearing, a guardrail visibly refusing a bad action, a non-engineer operating it.
 
-## The three building blocks and how they wire together
+## Tools in the architecture
 
-Sillage does not send. FullEnrich does not send. **Claude is the orchestrator.**
+Two sides, one brain. Data tools feed the agent; activation tools are how it acts. **Sillage and FullEnrich do not send. Gamma and Gradium do not decide. Claude is the orchestrator in the middle.**
 
 ```
-Sillage (signal)  ->  Claude (triage, route, decide, draft, gate)  ->  Gmail draft / HubSpot task
-        \                        |
-         \----> FullEnrich (enrich the connector AND the target) ----/
+        DATA IN                          BRAIN                        ACTIVATION OUT
+  Sillage   (signal + power map) --\                          /--> Gmail / HubSpot  (text draft)
+                                     >--> Claude (Anthropic) --+--> Gamma            (visual asset)
+  FullEnrich (verified contact) ---/     triage, route,       \--> Gradium          (voice note)
+                                         gate, orchestrate
 ```
 
-- **Sillage** (`SILLAGE_API_KEY` in `.env`): signal source (champion moves, hiring waves, competitor engagement, funding rounds, job changes) + a power map of stakeholders (decision maker / champion / do-not-contact) + up to ~20 tracked accounts per workspace. Available as MCP and V2 API. The base URL, endpoints and signal schema come from the on-site onboarding: fill them in here once you have them.
-- **FullEnrich** (`FULLENRICH_API_KEY` in `.env`, or MCP via OAuth): verified emails + phones + people/company data. REST v2 base `https://app.fullenrich.com/api/v2`, auth `Authorization: Bearer <key>`. Bulk enrichment is async (POST to start, GET to poll). Check `/account/credits` before large batches.
-- **Claude (Anthropic)**: the brain. All the depth lives here: the routing decision, the guardrails, the drafting, the orchestration of the two data tools.
-- **Send / CRM**: Claude drafts into Gmail or creates HubSpot tasks. **Never auto-send.** A human approves.
+**Tiering (so we do not build a twelve-headed monster):**
+- **Core loop (must-have):** Sillage -> Claude -> FullEnrich -> Gmail/HubSpot. This alone satisfies the "use all three sponsors" rule (Sillage + FullEnrich + Anthropic) and the acquisition track.
+- **Activation high-notes (optional modules, win the side challenges):** Gamma (best-use-of-Gamma) and Gradium (best-use-of-Gradium). Add them once the core loop runs. They turn "the agent drafts an email" into "the agent produces a multi-modal, personalized activation", which is the memorable part of the demo.
+
+### Data in
+
+- **Sillage** (`SILLAGE_API_KEY`): the signal source. Champion moves, hiring waves, competitor engagement, funding rounds, job changes, plus a power map of stakeholders (decision maker / champion / do-not-contact) over up to ~20 tracked accounts per workspace. MCP and V2 API. Base URL / endpoints / signal schema come from the 9:00 onboarding.
+  - **Plugs into:** `triage` (is this signal worth acting on?) and `route` (the power map tells us who the real stakeholders and do-not-contacts are).
+  - **Deep use:** filter signals by power-map role, corroborate several signal types on one account before acting.
+- **FullEnrich** (`FULLENRICH_API_KEY`, or MCP via OAuth): verified emails + phones + people/company data. REST v2 base `https://app.fullenrich.com/api/v2`, auth `Authorization: Bearer <key>`. Bulk enrichment is async (POST to start, GET to poll). Check `/account/credits` before large batches.
+  - **Plugs into:** `enrich` (the target, and the connector when routing a warm intro).
+  - **Deep use:** company lookup -> people search cascade; reverse-email to disambiguate; budget credits before a batch.
+
+### Brain
+
+- **Claude (Anthropic)** (`ANTHROPIC_API_KEY`): the orchestrator. All the depth lives here: the routing decision, the guardrails, the copy drafting, the composition of every tool. This is what makes it an agent and not a Zapier chain.
+  - **Plugs into:** `triage`, `route`, `craft`, `gate`.
+
+### Activation out
+
+- **Gmail / HubSpot** (`HUBSPOT_TOKEN`): the text channel. Claude drafts an email into Gmail and/or creates a HubSpot task. **Never auto-send. A human approves.**
+  - **Plugs into:** `publish`.
+- **Gamma** (`GAMMA_API_KEY`): generates polished visual assets (presentations, documents, one-pagers, micro-sites). Auth header `X-API-KEY` (not Bearer), account Pro/Ultra/Teams/Business. Async: `POST /v1.0/generations` (params: `inputText`, `format`, `numCards`, `textMode`, `exportAs`) returns a `generationId`; poll `GET /v1.0/generations/{id}` every ~5s until completed; response gives `gammaUrl` + `exportUrl` (pdf) + credits used/remaining. `GET /themes` lists themes. Base URL per developers.gamma.app.
+  - **Plugs into:** the activation layer (a new `asset` step, or inside `craft`). When the route calls for value-first outreach, the agent generates a **personalized one-pager or deck for the target** (for a hiring signal: "here is how we would staff your team", branded) and the email links to it. Also use it to auto-generate our own pitch deck.
+  - **Deep use / why it wins:** the deck is generated FROM the enriched signal (company + role + why-now), so no two prospects get the same asset. That is a genuine "best use of Gamma", not a static template.
+- **Gradium** (`GRADIUM_API_KEY`): voice AI, ultra low latency (text-to-speech, speech-to-text, voice cloning). The "phone" leg of multi-channel outreach (Track 1 explicitly lists email, LinkedIn, phone).
+  - **Plugs into:** the activation layer (a new `voice` output inside `craft`). Renders a **personalized voice note / voicemail** from the drafted copy (optionally in a cloned voice), or reads the 30-second call brief aloud to the rep before they dial.
+  - **Guardrail:** consent-gated, never place an automated call without consent. Default = a voice note the human chooses to send, or a briefing for the rep. This keeps it on the right side of the Code of Conduct while still winning "best use of Gradium".
 
 ## The pipeline (working direction, arbitrated by the captain)
 
@@ -52,7 +78,8 @@ signal
   -> route         warmest path: warm_intro (ask a connector) > warm_direct (shared history) > cold
   -> enrich        FullEnrich on the target, and on the connector when routing an intro
   -> proof/value   a specific, honest reason to reach out (or something of value to send)
-  -> craft         a short, multi-channel outreach (email + LinkedIn + a 30s call brief)
+  -> craft         multi-modal activation: email + LinkedIn + a 30s call brief,
+                   optional Gamma asset (personalized one-pager/deck) + Gradium voice note
   -> gate          fail-closed QA: if it does not explicitly pass, it is blocked, never sent
   -> inbox         a human approves or rejects in one click
   -> CRM           draft only, plus a follow-up task
