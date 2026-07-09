@@ -1,0 +1,140 @@
+[
+  {
+    "type": "hiring_wave",
+    "observedAt": "2026-07-06",
+    "confidence": 0.9,
+    "company": {
+      "slug": "novapay",
+      "name": "Novapay",
+      "domain": "novapay.example",
+      "location": "Paris",
+      "flags": []
+    },
+    "roles": [
+      { "title": "Senior Backend Engineer", "tags": ["backend", "node", "go"] },
+      { "title": "Backend Engineer", "tags": ["backend", "node"] },
+      { "title": "Fullstack Engineer", "tags": ["fullstack", "react", "node"] },
+      { "title": "Data Engineer", "tags": ["data", "python"] },
+      { "title": "Account Executive", "tags": ["ae", "sales"] },
+      { "title": "Senior Account Executive", "tags": ["ae", "sales"] }
+    ],
+    "contacts": [
+      {
+        "slug": "lucie-morel",
+        "name": "Lucie Morel",
+        "role": "Head of Talent Acquisition",
+        "powerRole": "decision_maker"
+      }
+    ],
+    "evidence": "6 engineering and sales roles posted on the Novapay careers page within 10 days"
+  },
+  {
+    "type": "hiring_wave",
+    "observedAt": "2026-07-07",
+    "confidence": 0.8,
+    "company": {
+      "slug": "datalouve",
+      "name": "Datalouve",
+      "domain": "datalouve.example",
+      "location": "Paris",
+      "flags": []
+    },
+    "roles": [
+      { "title": "Data Engineer", "tags": ["data", "python"] },
+      { "title": "Machine Learning Engineer", "tags": ["data", "ml", "python"] },
+      { "title": "Account Executive", "tags": ["ae", "sales"] }
+    ],
+    "contacts": [
+      {
+        "slug": "chloe-vasseur",
+        "name": "Chloé Vasseur",
+        "role": "Head of Talent",
+        "powerRole": "decision_maker"
+      }
+    ],
+    "evidence": "3 roles opened the week after their Series A announcement"
+  },
+  {
+    "type": "hiring_wave",
+    "observedAt": "2026-07-05",
+    "confidence": 0.85,
+    "company": {
+      "slug": "astrelle",
+      "name": "Astrelle",
+      "domain": "astrelle.example",
+      "location": "Paris",
+      "flags": ["do_not_contact"]
+    },
+    "roles": [
+      { "title": "Fullstack Engineer", "tags": ["fullstack", "react", "node"] },
+      { "title": "DevOps Engineer", "tags": ["devops", "aws"] },
+      { "title": "Backend Engineer", "tags": ["backend", "python"] }
+    ],
+    "contacts": [
+      {
+        "slug": "romain-lefevre",
+        "name": "Romain Lefèvre",
+        "role": "CTO",
+        "powerRole": "decision_maker"
+      }
+    ],
+    "evidence": "3 tech roles posted this week — but Astrelle is an active client account, flagged do-not-contact on the power map"
+  },
+  {
+    "type": "hiring_wave",
+    "observedAt": "2026-07-01",
+    "confidence": 0.4,
+    "company": {
+      "slug": "kerbio",
+      "name": "Kerbio",
+      "domain": "kerbio.example",
+      "location": "Lyon",
+      "flags": []
+    },
+    "roles": [
+      { "title": "Software Engineer", "tags": ["backend", "python"] }
+    ],
+    "contacts": [],
+    "evidence": "1 engineering role reposted after 60 days — weak, stale signal"
+  },
+  {
+    "type": "champion_move",
+    "observedAt": "2026-07-08",
+    "confidence": 0.95,
+    "company": {
+      "slug": "novapay",
+      "name": "Novapay",
+      "domain": "novapay.example",
+      "location": "Paris",
+      "flags": []
+    },
+    "person": {
+      "slug": "karim-benali",
+      "name": "Karim Benali",
+      "role": "VP Engineering",
+      "powerRole": "champion",
+      "context": "hired through HireSweet twice in past roles, strong relationship"
+    },
+    "evidence": "Karim Benali announced he joined Novapay as VP Engineering this week"
+  },
+  {
+    "type": "champion_move",
+    "observedAt": "2026-07-04",
+    "confidence": 0.9,
+    "company": {
+      "slug": "fluxline",
+      "name": "Fluxline",
+      "domain": "fluxline.example",
+      "location": "Paris",
+      "flags": ["protected"]
+    },
+    "person": {
+      "slug": "ines-delcourt",
+      "name": "Inès Delcourt",
+      "role": "CTO",
+      "powerRole": "champion",
+      "context": "former colleague of two HireSweet account managers"
+    },
+    "evidence": "Inès Delcourt joined Fluxline as CTO — Fluxline is a strategic partner account, flagged protected on the power map"
+  }
+]

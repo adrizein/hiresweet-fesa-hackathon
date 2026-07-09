@@ -1,0 +1,66 @@
+[
+  {
+    "id": "cand-7f3a",
+    "handle": "CAND-7F3A",
+    "headline": "Senior Backend Engineer — 7 yrs, Node & Go, ex-scaleup",
+    "tags": ["backend", "node", "go"],
+    "years": 7,
+    "location": "Paris"
+  },
+  {
+    "id": "cand-2b9c",
+    "handle": "CAND-2B9C",
+    "headline": "Fullstack Engineer — 5 yrs, React & Node",
+    "tags": ["fullstack", "react", "node"],
+    "years": 5,
+    "location": "Paris"
+  },
+  {
+    "id": "cand-9d4e",
+    "handle": "CAND-9D4E",
+    "headline": "Data Engineer — 6 yrs, Python & Spark",
+    "tags": ["data", "python"],
+    "years": 6,
+    "location": "Paris"
+  },
+  {
+    "id": "cand-5a1f",
+    "handle": "CAND-5A1F",
+    "headline": "ML Engineer — 4 yrs, Python, production ML systems",
+    "tags": ["data", "ml", "python"],
+    "years": 4,
+    "location": "Paris"
+  },
+  {
+    "id": "cand-8c3d",
+    "handle": "CAND-8C3D",
+    "headline": "DevOps Engineer — 6 yrs, AWS & Kubernetes",
+    "tags": ["devops", "aws"],
+    "years": 6,
+    "location": "Paris"
+  },
+  {
+    "id": "cand-4e7b",
+    "handle": "CAND-4E7B",
+    "headline": "Senior Account Executive — 8 yrs, SaaS sales, FR & EU markets",
+    "tags": ["ae", "sales"],
+    "years": 8,
+    "location": "Paris"
+  },
+  {
+    "id": "cand-1f6a",
+    "handle": "CAND-1F6A",
+    "headline": "Account Executive — 3 yrs, fintech SaaS",
+    "tags": ["ae", "sales"],
+    "years": 3,
+    "location": "Paris"
+  },
+  {
+    "id": "cand-6b2e",
+    "handle": "CAND-6B2E",
+    "headline": "Backend Engineer — 4 yrs, Python & Django",
+    "tags": ["backend", "python"],
+    "years": 4,
+    "location": "Lyon"
+  }
+]
