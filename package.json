@@ -1,21 +1,17 @@
 {
-  "name": "wake-backbone",
-  "version": "0.1.0",
+  "name": "wake-acquisition-agent",
+  "version": "0.2.0",
   "private": true,
-  "description": "Wake — agentic GTM backbone: signal mapping → processing → gated actions",
+  "description": "Wake — agentic GTM acquisition agent on Claude Managed Agents (skills + memory + cron). Deploy-only JS; the agent runs on Anthropic's infrastructure.",
   "type": "module",
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "start": "node src/cli.js run",
-    "inbox": "node src/cli.js inbox",
-    "status": "node src/cli.js status",
-    "reset": "node src/cli.js reset",
-    "hiring-targets": "node src/cli.js hiring-targets",
-    "platform:setup": "node src/platform/setup.js",
-    "platform:run": "node src/platform/run.js",
-    "test": "node --test"
+    "deploy": "node deploy/deploy.js",
+    "deploy:dry": "node deploy/deploy.js --dry-run",
+    "run-once": "node deploy/run-once.js",
+    "inbox": "node deploy/inbox.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.110.0"

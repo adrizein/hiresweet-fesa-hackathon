@@ -73,6 +73,9 @@ web_modules/
 # runtime data / PII (opportunities, signal queue, etc.) — never commit
 data/
 
+# deploy toolkit state: resolved resource ids + skill hashes — machine-local
+deploy/.deploy-state.json
+
 # internal-only lead-analysis doc (names, deal amounts, dates) — never commit
 # only lead-analysis-reference.md (the anonymized/public-safe version) is tracked
 LEAD-ANALYSIS-REFERENCE.md

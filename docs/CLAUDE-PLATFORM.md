@@ -1,83 +1,105 @@
-# Backbone on Claude Platform (Managed Agents)
+# Wake on Claude Managed Agents
 
-The deterministic backbone (`src/backbone`, `src/signals`, `src/processing`,
-`src/actions`) still runs as before via `npm start`. This document covers the
-variant that runs the **judgment + activation** tier on **Claude Managed
-Agents** — Anthropic's hosted-agent product on `platform.claude.com`.
+Wake runs entirely on **Claude Managed Agents** (Anthropic's hosted-agent product
+on platform.claude.com). There is **no production server and no runtime JS** —
+the only code in this repo is a local deploy toolkit (`deploy/`). Everything the
+agent does is driven by prompt text (a system prompt + Skills) executing on
+Anthropic's infrastructure, started by a cron deployment, with no external
+process attached.
 
-## What changes
-
-Before, our code drove everything and Claude only wrote text. Now Claude is the
-actual orchestrator: we hand it a persisted **Agent** and Anthropic runs the
-agent loop. The Agent calls **Sillage** and **FullEnrich** itself (as MCP
-servers) and proposes activations through **host-side custom tools** whose
-handlers run in *our* process — so the guardrails can't be bypassed.
+## Architecture
 
 ```
-  tiers 1-2 (local, deterministic)        tier 3 (Claude Managed Agents, hosted)
-  signals ─▶ processing ─▶ store  ──roster──▶  Agent loop (Anthropic-run)
-                                                 ├─ Sillage MCP   (corroborate)
-                                                 ├─ FullEnrich MCP (enrich)
-                                                 ├─ record_enrichment  ─┐ host tools:
-                                                 └─ propose_action ─────┤ OUR process,
-                                                                        ▼ OUR store + gate
-                                             fail-closed gate ─▶ inbox (human approves)
+  deploy/deploy.js  (local, dev machine, idempotent)
+     creates/updates ↓
+  ┌──────────────────────────────────────────────────────────────┐
+  │ Environment   cloud sandbox, unrestricted egress              │
+  │ Vault         Sillage + FullEnrich MCP bearer creds;          │
+  │               HUBSPOT_TOKEN as an env-var credential          │
+  │ Skills        platform/skills/*/SKILL.md  (versioned)         │
+  │ Memory        wake-state (dedup) · wake-review (the outbox)   │
+  │ Agent         system prompt + agent toolset + Sillage &       │
+  │               FullEnrich MCP + all skills   (NO custom tools) │
+  │ Deployment    cron schedule + kickoff + vault + memory stores │
+  └──────────────────────────────────────────────────────────────┘
+     cron fires ↓ (autonomous — nothing attached, no listener)
+  Session runs on Anthropic's side:
+     read wake-state → Sillage MCP (signals) → HubSpot guard (curl)
+     → FullEnrich MCP (enrich) → draft → gate-qa → write proposal
+       or BLOCK to wake-review → record in wake-state
+     (never sends — no send capability)
+     reviewed by ↓
+  deploy/inbox.js  →  a human approves and sends by hand
 ```
+
+Why no custom tools? Custom tools are the only Managed Agents feature that forces
+a host-side process (their calls stream out to be answered by *your* code). With
+none, a scheduled session runs to completion entirely on Anthropic's side. Wake
+uses **no custom tools** — only the built-in agent toolset (bash, file tools,
+web) + MCP + skills + memory. That's what makes "no production JS" possible.
+
+## The pieces
 
 | Piece | Where |
 |---|---|
-| Agent definition (model, doctrine, MCP servers, tools) | `src/platform/agent-config.js` + `platform/*.yaml` |
-| Doctrine (system prompt, single source of truth) | `platform/system-prompt.md` |
-| One-time control-plane setup (Environment, Vault, Agent) | `src/platform/setup.js` |
-| Host-side guardrails (gate + enrichment write-back) | `src/platform/gate-tool.js` (reuses `src/backbone/gate.js`) |
-| Session runtime (one Session per run) | `src/platform/run.js` |
+| Doctrine (agent system prompt) | `platform/system-prompt.md` |
+| Strategies (signals, enrichment, craft, guard, gate) | `platform/skills/*/SKILL.md` |
+| The deploy toolkit | `deploy/{config,deploy,run-once,inbox}.js` |
+| Resolved resource ids (gitignored) | `deploy/.deploy-state.json` |
 
-The gate lives host-side on purpose: the do-not-contact list, protected
-accounts, evidence and verified-email checks run against **our** store, so no
-MCP data and no model output can get a bad action past them. Claude proposes,
-the gate disposes.
+## Sponsor tools
+
+- **Sillage + FullEnrich** attach as remote MCP servers (`SILLAGE_MCP_URL`,
+  `FULLENRICH_MCP_URL`). The agent calls them itself (read-only). Their API keys
+  are wired into the vault as `static_bearer` MCP credentials, injected at egress.
+- **HubSpot** has no remote MCP (only a local stdio package), so it is **not** an
+  MCP server. The agent reads HubSpot's REST API directly with `curl`/`jq`
+  (read-only) guided by the `hubspot-crm` skill. `HUBSPOT_TOKEN` is a vault
+  `environment_variable` credential scoped to `api.hubapi.com`, substituted into
+  the request at egress — the agent's shell only ever sees an opaque placeholder,
+  and the token never touches this repo.
+
+## The guardrail
+
+Two mechanisms keep bad outreach out:
+
+1. **No send capability.** The agent has no tool that sends. Its only output is a
+   draft in `wake-review`; a human approves and sends. Draft-only by construction.
+2. **The `gate-qa` skill** runs a fail-closed checklist before any proposal —
+   evidence cited, verified email, no placeholders, no candidate PII, and a **live
+   HubSpot check** (customer / owned / opted-out → refuse). On any failure the agent
+   writes a visible `BLOCKED` note instead of a proposal, grounded in real live CRM
+   data queried that run. On a HubSpot lookup error it fails closed (block, don't
+   guess), so a bad token or outage never lets a bad action through.
 
 ## Run it
 
-1. **Prereqs.** Anthropic key with the Managed Agents beta enabled, plus the
-   Sillage / FullEnrich MCP endpoint URLs from onboarding.
-   ```
-   cp .env.example .env       # fill ANTHROPIC_API_KEY, SILLAGE_MCP_URL, FULLENRICH_MCP_URL,
-                              # SILLAGE_API_KEY, FULLENRICH_API_KEY
-   npm install
-   ```
-2. **Setup (once).** Creates the Environment, Vault (+ MCP credentials) and Agent.
-   ```
-   npm run platform:setup      # prints WAKE_ENVIRONMENT_ID / WAKE_VAULT_ID / WAKE_AGENT_ID
-   ```
-   Paste those three ids into `.env`. Re-run with `--update` after editing the
-   doctrine or tools to push a new Agent version.
-3. **Run.** Prepares the roster locally, then opens a hosted Session.
-   ```
-   npm run platform:run        # prints a platform.claude.com link to watch it live
-   ```
+Prereqs: an Anthropic key with Managed Agents enabled, plus `SILLAGE_API_KEY`,
+`FULLENRICH_API_KEY`, `HUBSPOT_TOKEN` in `.env`.
 
-`ant` CLI is the alternative control plane — apply `platform/*.yaml` with
-`ant beta:agents create` / `ant beta:environments create` (see the comments in
-those files).
+```
+cp .env.example .env       # fill the four keys
+npm install
+npm run deploy:dry         # preview what will be created/updated
+npm run deploy             # apply (idempotent; safe to re-run)
+npm run run-once           # fire a run now; prints a platform.claude.com session link
+npm run inbox              # review the agent's proposals + blocks
+```
 
-## Graceful degradation
-
-`npm run platform:run` always produces an inbox:
-
-- **No `ANTHROPIC_API_KEY`, or setup not run** → it falls back to the local
-  planners (`src/actions`), so the demo works offline.
-- **Session error** → same fallback, with a warning.
-- **No `SILLAGE_MCP_URL` / `FULLENRICH_MCP_URL`** → the Agent is created without
-  those MCP servers and reasons over the roster alone. Invalid MCP credentials
-  don't block session creation (they surface as `session.error` and retry), so a
-  wrong token never dead-ends the demo.
+The deploy is idempotent — resources are reused by name. Editing a `SKILL.md` or
+`platform/system-prompt.md` and re-running `npm run deploy` versions the change;
+the next scheduled run picks it up (skills are pinned to `latest`).
 
 ## Notes / gotchas
 
-- Model is `claude-opus-4-8` (override with `CLAUDE_MODEL`).
-- MCP auth tokens are **not** always the same as REST API keys. `setup.js` wires
-  the REST keys as `static_bearer` MCP credentials as a best-effort; if an MCP
-  server needs OAuth instead, swap the credential in the vault — session creation
-  still succeeds either way.
-- The Agent is created **once** and reused by name; don't create one per run.
+- Model is `claude-opus-4-8` (override `CLAUDE_MODEL`).
+- Schedule defaults to weekday 07:00 Europe/Paris (`WAKE_CRON` / `WAKE_TZ`).
+- `deploy/.deploy-state.json` (gitignored) holds the resolved resource ids +
+  per-skill content hashes. Delete it only if you want deploy to re-discover /
+  recreate resources by name.
+- On any HubSpot lookup error the `gate-qa`/`hubspot-crm` skills fail **closed**
+  (treat "can't verify" as a block), so a bad token or outage never lets a bad
+  action through — it just blocks everything until fixed.
+- A known soft spot: with no host store, `gate-qa`'s "evidence cited" check trusts
+  that the cited Sillage signal ids are real (the agent is told to cite only ids
+  it actually retrieved). Bounded by the human-approval step.

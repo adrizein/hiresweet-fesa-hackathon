@@ -1,8 +1,8 @@
 # Wake, Agentic GTM Hackathon (working title)
 
 > Read this file at the start of every Claude Code session on this repo.
-> `src/*` and `platform/` each have their own `CLAUDE.md` with component-level detail —
-> read the one for the directory you're touching before changing its code.
+> `platform/`, `platform/skills/`, and `deploy/` each have their own `CLAUDE.md` —
+> read the one for the directory you're touching before changing it.
 
 ## What this project is
 
@@ -33,124 +33,121 @@ One-day build for the **Agentic GTM Hackathon** (Anthropic x FullEnrich x Sillag
 
 ## What's actually built
 
-Two run modes, same guardrails, same store:
-
-1. **Local backbone** — `npm start` (`src/cli.js`). Three deterministic tiers
-   (`src/signals/` → `src/processing/` → `src/actions/`) run in-process; Claude
-   is called per-strategy for scoring/drafting (`src/backbone/llm.js`), with a
-   heuristic fallback whenever `ANTHROPIC_API_KEY` is absent. Full detail: **README.md**.
-2. **Claude Managed Agents** — `npm run platform:setup` then `npm run platform:run`
-   (`src/platform/`). Same tier-3 decision (route / enrich / craft), but hosted:
-   Anthropic runs the agent loop, the agent calls Sillage + FullEnrich itself as
-   MCP servers, and proposes activations through host-side custom tools whose
-   handlers run in *our* process. Full detail: **docs/CLAUDE-PLATFORM.md**.
-
-Don't duplicate the architecture write-up here — read those two docs (and the
-`CLAUDE.md` in the directory you're editing) before changing pipeline code.
+Wake runs **entirely on Claude Managed Agents** (platform.claude.com). There is
+**no production JS** — the only code in this repo is a local deploy toolkit
+(`deploy/`) you run from a dev machine. Everything else is prompt text (a system
+prompt + Skills) that runs on Anthropic's infrastructure. Full detail:
+**docs/CLAUDE-PLATFORM.md**; don't duplicate the architecture write-up here.
 
 ```
-tiers 1-2 (local, deterministic)         tier 3: EITHER local planners (src/actions)
-signals ─▶ processing ─▶ store ─roster─▶          OR a hosted Claude agent (src/platform)
-                                          │
-                                          ▼
-                     fail-closed gate (src/backbone/gate.js, host-side, always)
-                                          │
-                                          ▼
-                          inbox (human approves or rejects — nothing auto-sends)
+     deploy/deploy.js (local, dev machine only)
+        provisions/updates ↓ (idempotent)
+   ┌─────────────────────────────────────────────────────────┐
+   │  Managed Agent (Anthropic-hosted)                        │
+   │   system prompt + Skills (platform/skills/*/SKILL.md)    │
+   │   tools: agent toolset (bash/curl) + Sillage & FullEnrich│
+   │          MCP servers                                     │
+   │   memory: wake-state (dedup), wake-review (the outbox)   │
+   └─────────────────────────────────────────────────────────┘
+        started by ↓ a cron Deployment (autonomous, no listener)
+   run → discover Sillage signals → HubSpot guard (curl) → FullEnrich
+       → draft → write proposal / BLOCK to wake-review (never sends)
+        reviewed by ↓
+     deploy/inbox.js  → a human approves and sends by hand
 ```
 
-Sponsor tools, as actually wired today:
+Sponsor tools, as wired:
 
-- **Sillage** (`SILLAGE_API_KEY`) — fixtures by default; live V2 REST once
-  keyed (`src/backbone/clients/sillage.js`). Feeds `src/signals/*`. On the
-  platform path it is *also* handed to the hosted agent directly as an MCP
-  server (`SILLAGE_MCP_URL`).
-- **FullEnrich** (`FULLENRICH_API_KEY`) — live credits check is wired
-  (`/account/credits`); person enrichment still reads the fixture map pending
-  the async bulk flow (`POST /contact/enrich/bulk` + poll — TODO, tagged in
-  `src/backbone/clients/fullenrich.js`). Feeds `src/processing/20-enrich-contacts.js`,
-  budget-aware. On the platform path the hosted agent calls FullEnrich MCP
-  itself and writes verified contacts back via the `record_enrichment` host tool.
-- **Claude** (`ANTHROPIC_API_KEY`) — scores leads and drafts copy locally, or
-  runs the entire tier-3 decision as a hosted Managed Agent. Model defaults to
-  `claude-opus-4-8` (override with `CLAUDE_MODEL`).
-- **HubSpot** (`HUBSPOT_TOKEN`) — not wired into the backbone yet (see the
-  `adrizein/hubspot-mcp` branch for in-progress work).
-- **Gamma / Gradium** — **not implemented.** Still just placeholder env vars in
-  `.env.example`. Would be new `src/actions/*` planners (Gamma → an `asset`
-  step; Gradium → a `voice` step) if picked up — see README's "Adding a
-  strategy" section for the contract.
+- **Sillage** (`SILLAGE_API_KEY`) — attached to the hosted agent as a remote MCP
+  server (`SILLAGE_MCP_URL`, default `https://api.getsillage.com/api/mcp/v2`).
+  The agent calls it directly (read-only) to find and qualify signals.
+- **FullEnrich** (`FULLENRICH_API_KEY`) — remote MCP server (`FULLENRICH_MCP_URL`).
+  The agent enriches a chosen contact itself, credit-budgeted per the
+  `enrichment` skill.
+- **Claude** (`ANTHROPIC_API_KEY`) — *is* the agent. Model `claude-opus-4-8`
+  (override `CLAUDE_MODEL`). Used at deploy time to create/update resources.
+- **HubSpot** (`HUBSPOT_TOKEN`) — the CRM source of truth for "is this account
+  already ours". The agent reads it live with `curl`/`jq` (read-only) guided by
+  the `hubspot-crm` skill. HubSpot has no remote MCP, so it is NOT an MCP server;
+  the token is wired into the vault as an `environment_variable` credential,
+  injected into the agent's request to `api.hubapi.com` at egress (the agent
+  never sees the raw token).
+- **Gamma / Gradium** — not implemented. Would become additional Skills if picked up.
 
-## Deep-usage, already implemented (criteria 2 & 3)
+## The guardrail
 
-- Multi-signal corroboration per account before anything spends credits or
-  drafts copy (`src/processing/10-corroborate.js`).
-- Power-map role routing: champion > decision_maker > anyone, do-not-contact
-  people/companies filtered out before a contact is even picked
-  (`src/backbone/selectors.js` → `pickPrimaryContact`).
-- Do-not-contact / protected-account hard blocks enforced at the gate, not in
-  a strategy — no planner and no hosted-agent tool call can bypass them
-  (`src/backbone/gate.js`).
-- Sillage → FullEnrich chaining the moment a contact is identified
-  (`src/processing/20-enrich-contacts.js`, or `record_enrichment` on the
-  platform path).
-- Credit-aware enrichment: checks `FullEnrich.getCredits()` and respects a
-  per-run budget (`config.enrichBudget`) before spending.
-- The HireSweet-specific edge: anonymized marketplace candidates matched to
-  each company's open roles as the value-first hook in outreach
-  (`src/processing/40-match-candidates.js`).
+Two mechanisms keep bad outreach out:
+
+1. **No send capability.** The agent can read Sillage / FullEnrich / HubSpot and
+   draft, but the only place its work goes is the `wake-review` memory store; a
+   human approves and sends by hand.
+2. **The `gate-qa` skill** runs a fail-closed checklist against every draft
+   (evidence cited, verified email, no placeholders, no PII, and a **live HubSpot
+   do-not-contact / customer / owned / opt-out check**). On any failure it writes a
+   visible `BLOCKED` note instead of a proposal — the memorable demo moment,
+   grounded in real live CRM data.
+
+## Deep-usage (criteria 2 & 3), as designed into the skills
+
+- Multi-signal corroboration before acting (`signal-*` skills reward convergence).
+- Read-only power-map routing via Sillage's own persona/stakeholder data.
+- Live HubSpot guard as a hard block, re-checked every run (`gate-qa` + `hubspot-crm`).
+- Sillage → FullEnrich chaining the moment a contact is chosen (`enrichment`).
+- Credit-aware enrichment (check credits, cap spend) in the `enrichment` skill.
+- Persistence/dedup across nightly runs via the `wake-state` memory store.
 
 ## Two workstreams in this repo — know which one you're in
 
-This file and the `src/` tree describe the **Wake backbone**: a CLI pipeline
-(signal → processing → gated action → inbox), runnable locally or on Claude
-Managed Agents. There is a **second, parallel effort** in this same repo — the
-"Account Intelligence Tool" (an org-chart UI: account list → org chart →
-person brief → one-click draft) — specified in `docs/SPECS.md`, `docs/PLAN.md`,
-`docs/FRONT-BRIEF.md` and `criteria/lead-criteria.md`, built on other branches
-(`front`, `backend-server`, `lead`). Those docs note in their own text that the
-CLI/inbox product "no longer matches" their direction (pivot toward the
-org-chart view). The two efforts share fixtures/conventions but are not the
-same product — if you're picking up this repo cold, confirm with the captain
-(Léo) which one is being demoed before assuming this backbone is it.
+This file, `platform/`, and `deploy/` describe **Wake**: the acquisition agent
+on Claude Managed Agents (signal → guard → enrich → draft → review). There is a
+**second, parallel effort** in this same repo — the "Account Intelligence Tool"
+(an org-chart UI: account list → org chart → person brief → one-click draft) —
+specified in `docs/SPECS.md`, `docs/PLAN.md`, `docs/FRONT-BRIEF.md` and
+`criteria/lead-criteria.md`, built on other branches (`front`, `backend-server`,
+`lead`), and it still references `fixtures/accounts.example.json`. That's why
+`fixtures/` is left in place even though Wake no longer reads it. The two efforts
+are not the same product — if you're picking up this repo cold, confirm with the
+captain (Léo) which one is being demoed before assuming this agent is it.
 
 ## Team and ownership
 
 Scope is arbitrated by the captain to avoid a twelve-headed monster. Each person owns a module; the captain decides what ships.
 
 - **Léo** captain / head of product: arbitrates scope, owns coherence of the whole.
-- **Adrien** user and pragmatic anchor: carries the real revenue use case, owns the engine that runs — this backbone (`src/`, `platform/`) is his module.
+- **Adrien** user and pragmatic anchor: carries the real revenue use case, owns the engine that runs — the Managed Agents deployment (`platform/`, `deploy/`) is his module.
 - **Mathieu** vision, the activation / warm-path "high notes", jury and sponsor relations, co-pitch.
 - **Kubilay** data pipeline: FullEnrich (chaining, credit budgeting), demo accounts.
 - **Valériane** copy quality and presentation: demo script, deck, the LinkedIn side challenge.
 
 ## Stack (as built)
 
-Node (ESM, `>=20`) + `@anthropic-ai/sdk`, zero other runtime dependencies,
-`node:test` for tests. No web server and no UI on this branch — the backbone
-is CLI-only (`src/cli.js`, and `src/platform/run.js` for the hosted variant),
-state and inbox printed straight to the terminal / `data/*.json`. (The org-chart
-UI mentioned above is a separate, unrelated front end — see the workstream
-note.)
+Node (ESM, `>=20`) + `@anthropic-ai/sdk`, zero other runtime dependencies — but
+that JS is **deploy-only** (`deploy/*.js`, run from a dev machine). Production is
+100% hosted: a system prompt + Skills (markdown) running on Claude Managed Agents,
+with two memory stores and a cron deployment. No server, no UI, no runtime
+process on our side.
+
+Everyday commands: `npm run deploy:dry` (preview), `npm run deploy` (apply),
+`npm run run-once` (fire a run now), `npm run inbox` (review proposals/blocks).
 
 ## Conventions
 
-- Code and comments in English.
-- **Secrets live in `.env`, never committed.** `.gitignore` covers `.env`, `data/`, `node_modules/`. `.env.example` is the template.
+- Code and comments in English. Skills are plain prompt text a non-engineer can edit.
+- **Secrets live in `.env`, never committed.** `.gitignore` covers `.env`, `data/`, `deploy/.deploy-state.json`, `node_modules/`. `.env.example` is the template.
 - **PUBLIC repo (confirmed):** this repo WILL be public. No confidential data, no real client names, no candidate PII, no API keys, ever.
-- **Guardrails doctrine:** the agent must refuse to act on protected accounts or unverifiable claims. Draft-only. A human approves.
-- Keep the demo data realistic but fictional or consented.
+- **HubSpot response data never touches the repo** — no fixtures, no example docs, no committed cache. Live CRM data lives only in the hosted memory stores and the transient sandbox. (Note: with the agent reading HubSpot directly, that data does transit Anthropic's infrastructure during a run — an accepted trade-off, see `docs/CLAUDE-PLATFORM.md`.)
+- **Guardrails doctrine:** the agent refuses to act on customer/owned/opted-out accounts or unverifiable claims, and has no send capability. Draft-only. A human approves.
 
-## Definition of done (by 17:30) — status on this backbone
+## Definition of done (by 17:30)
 
-- ✅ A real signal enters and the chain runs end to end into the inbox (`npm start` on fixtures, or live via `SILLAGE_API_KEY`).
-- ✅ Real tool calls from all three: Sillage (live V2 REST), FullEnrich (live credits check), Claude (scoring + drafting) — see README's "Live Sillage wiring".
-- ✅ A non-engineer can operate the demo: `npm start` / `npm run inbox` print a plain-language inbox; on the platform path there's also a `platform.claude.com` session link to watch live.
-- ✅ A guardrail visibly blocks a bad action: the fixtures always produce a `do-not-contact` block (Astrelle) and a `protected-account` block (Fluxline) — see README's gate table.
-- ⚠️ FullEnrich *person* enrichment is still fixture-backed live (bulk async flow not wired — see "What's actually built" above); the credits check is the live sponsor call today.
+- A cron deployment runs the agent autonomously; a manual run fires with `npm run run-once`.
+- Real tool use from all three, visible in the session transcript: Sillage MCP, FullEnrich MCP, HubSpot via curl.
+- A non-engineer can operate it: `npm run inbox` prints proposals + blocks in plain language.
+- A guardrail visibly blocks a bad action: a live HubSpot customer/owned/opted-out account produces a `BLOCKED` note (the memorable moment).
+- Strategies are updatable by editing a `platform/skills/*/SKILL.md` and re-running `npm run deploy`.
 
 ## Working with Claude Code here
 
 - Multiple people in parallel: one short-lived branch per module, the captain merges.
 - Start every session by reading this file, then the `CLAUDE.md` in whichever directory you're about to touch. Ask the captain before expanding scope.
-- Test-first where it matters (the gate, the routing logic — see `test/`). Keep state in files, not in chat.
+- To change agent behavior, edit the system prompt or a skill (prompt text) — not code. Re-run `npm run deploy` to push it; the next scheduled run picks it up.
