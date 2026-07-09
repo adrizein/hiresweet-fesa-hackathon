@@ -1,0 +1,20 @@
+{
+  "name": "wake-backbone",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Wake — agentic GTM backbone: signal mapping → processing → gated actions",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/cli.js run",
+    "inbox": "node src/cli.js inbox",
+    "status": "node src/cli.js status",
+    "reset": "node src/cli.js reset",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.110.0"
+  }
+}
