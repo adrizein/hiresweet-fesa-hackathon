@@ -157,3 +157,5 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+deploy/.deploy-state.json
+.claude/worktrees
